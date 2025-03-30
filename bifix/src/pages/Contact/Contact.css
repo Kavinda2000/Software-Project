@@ -1,0 +1,135 @@
+.contact-box {
+    background-image: url("./test3.jpg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 200px;
+    
+}
+
+
+.contact-card h6 {
+    font-size: 24px;
+    color: white;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    text-align: center;
+    width: auto;
+    padding-right: 200px;
+}
+
+.icon {
+    margin-left: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+
+}
+
+.icon.linkedin {
+    color: #1877f2;
+    margin-left: 30px;
+}
+
+.icon.github {
+    color: #f4f4f4;
+    margin-left: 20px;
+}
+
+.icon.facebook {
+    color: #1877f2;
+    margin-left: 20px;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+
+.line {
+    height: 1px;
+    width: 45%;
+    background-color: white;
+    margin-top: 10px;
+}
+
+.or {
+    display: flex;
+    width: 10%;
+    font-weight: bold;
+    color: white;
+}
+
+.contact-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.border-line {
+    border-right: 1px solid #e0e0e0;
+}
+
+::placeholder {
+    color: #a3a3a3da;
+    opacity: 1;
+    font-weight: 300;
+}
+
+.contact-inp1, .contact-inp2, .contact-text {
+    padding: 10px 12px;
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    margin-top: 5px;
+    width: 100%;
+    color: black;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.contact-inp1, .contact-inp2, .contact-text:focus {
+    box-shadow: none !important;
+    outline: 1px solid #223ca4 !important;
+    outline-width: 0px;
+}
+
+.submit-button:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.submit-button {
+    background-color: #223ca4;
+    color: white;
+    border: none;
+    margin-top: 15px;
+    padding: 10px;
+    cursor: pointer;
+    transition:  0.3s;
+}
+
+.submit-button:hover {
+    background-color: #0ec8c8;
+    color: black;
+    border: none;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-inp1, .contact-inp2, .contact-text{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-text {
+    height: 100px;
+    resize: none;
+}

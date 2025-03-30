@@ -1,0 +1,39 @@
+.nav-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    border-bottom: 2px solid #f3f3f3;
+    background-image: url('../Login_Background.jpg');
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    width: 50%;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.icon-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.search-input {
+    padding: 12px 20px;
+    border: none;
+    background: #f7f6f6;
+    outline: none;
+    border-radius: 5px;
+    width: 19rem;
+    
+}
+
+.nav-icons {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    color: #f3f3f3;
+}

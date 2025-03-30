@@ -1,0 +1,95 @@
+.product-container {
+    background-image: url("./Login_Background.jpg");
+    background-size: cover; 
+    padding-top: 150px;
+    padding-left: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .product-content {
+    display: flex;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background: rgba(82, 89, 82, 0.35);
+    padding: 30px;
+    border-radius: 5px;
+    margin-bottom: 50px;
+
+  }
+  
+  .product-image {
+    height: 500px;
+    width: 500px;
+    border-radius: 5px;
+    box-shadow: rgba(219, 220, 220, 0.2) 0px 8px 24px;
+  }
+  
+  .product-info {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+  
+  .product-title {
+    font-size: 36px;
+    padding-top: 20px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .product-info p {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+  }
+  
+  .product-info .flex {
+    margin-top: 20px;
+  }
+
+
+/* CSS */
+.button-87 {
+  background: #08b91c;
+  border: 1px solid #08b91c;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+  margin-top: 40px;
+}
+
+.button-87:hover,
+.button-87:active {
+  background-color: #1fe03f;
+  background-position: 0 0;
+  color: black;
+}
+
+.button-87:active {
+  opacity: .5;
+}

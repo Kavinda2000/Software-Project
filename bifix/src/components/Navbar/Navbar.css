@@ -1,0 +1,91 @@
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent; /* Start with transparent background */
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: 0.3s ease; /* Smooth transition for background change */
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  height: 37px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.logo a {
+  display: flex; /* Make the Link behave like a block element */
+  text-decoration: none; /* Remove any default underlines */
+}
+
+.logo img {
+  width: 100%; /* Optional: Set width to fit your layout */
+}
+
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+}
+
+.nav-links li {
+  margin: 0 20px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: rgba(255, 255, 255, 0.649);
+  text-decoration: none;
+  position: relative;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-links a:hover {
+  color: white;
+}
+
+/* Underline effect on hover */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: white;
+  opacity: 0;
+  transition:  0.3s ease-in-out,  0.3s ease-in-out;
+}
+
+/* Show underline on hover */
+.nav-links a:hover::after {
+  opacity: 1;
+  width: 100%;
+}
+
+/* Logo hover effect */
+.logo:hover {
+  filter: drop-shadow(0 0 5px white);
+}
+
+/* Navbar background when scrolled */
+.navbar-scrolled {
+  background-color: black; /* Black background when scrolled */
+}

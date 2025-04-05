@@ -7,6 +7,7 @@ import Services from './pages/Services/Services'
 import Contact from './pages/Contact/Contact'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import { ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import ProductDetails from './pages/Parts/ProductDetails/ProductDetails'
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/Parts/:id" element={<ProductDetails />} /> 
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );

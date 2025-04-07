@@ -1,61 +1,93 @@
 .product-container {
-    background-image: url("./Login_Background.jpg");
-    background-size: cover; 
-    padding-top: 150px;
-    padding-left: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .product-content {
-    display: flex;
-    align-items: flex-start;
-    max-width: 1200px;
-    width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background: rgba(82, 89, 82, 0.35);
-    padding: 30px;
-    border-radius: 5px;
-    margin-bottom: 50px;
+  background-image: url("./Login_Background.jpg");
+  background-size: cover; 
+  padding-top: 150px;
+  padding-left: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-  }
-  
-  .product-image {
-    height: 500px;
-    width: 500px;
-    border-radius: 5px;
-    box-shadow: rgba(219, 220, 220, 0.2) 0px 8px 24px;
-  }
-  
-  .product-info {
-    margin-left: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 20px;
-  }
-  
-  .product-title {
-    font-size: 36px;
-    padding-top: 20px;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .product-info p {
-    margin-top: 20px;
-    font-size: 1rem;
-    color: white;
-  }
-  
-  .product-info .flex {
-    margin-top: 20px;
-  }
+.product-content {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1200px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background: rgba(82, 89, 82, 0.35);
+  padding: 30px;
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
 
+.product-image {
+  height: 500px;
+  width: 500px;
+  border-radius: 5px;
+  box-shadow: rgba(219, 220, 220, 0.2) 0px 8px 24px;
+}
 
-/* CSS */
+.product-info {
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+.product-title {
+  font-size: 36px;
+  padding-top: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.product-info p {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: white;
+}
+
+.product-info .flex {
+  margin-top: 20px;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  gap: 10px;
+}
+
+.quantity-button {
+  background: transparent;
+  border: 1px solid white;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  user-select: none;
+}
+
+.quantity-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  font-size: 16px;
+  padding: 5px;
+}
+
 .button-87 {
   background: #08b91c;
   border: 1px solid #08b91c;
@@ -80,7 +112,7 @@
   touch-action: manipulation;
   vertical-align: middle;
   width: 100px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .button-87:hover,

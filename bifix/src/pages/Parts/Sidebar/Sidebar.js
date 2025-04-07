@@ -1,8 +1,7 @@
 import React from 'react'
 import './Sidebar.css'
 import Category from './Category/Category'
-import Price from './Price/Price'
-import Brand from './Brand/Brand'
+
 
 function Sidebar({handleChange}) {
 

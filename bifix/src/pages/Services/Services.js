@@ -1,15 +1,38 @@
-import React from 'react'
-import './Services.css'
 
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Services.css';
 
 function Services() {
+  const navigate = useNavigate();
+
   return (
     <>
-        <h1>
-            Services
-        </h1>
+    <div className='service-page'>
+      <h1 className='head'>Our Services</h1>
+
+      <div className='services-container'>
+        {/* Online Service Scheduling */}
+        <div className='service-card'>
+          <h2 className='services-title'>Bike repair</h2>
+          <p className='services-paragraph'>Book an appointment with trusted repair centers for hassle-free servicing.</p>
+          <button className='service-btn' onClick={() => navigate('/Services/BikeRepair')}>
+            Schedule Now
+          </button>
+        </div>
+
+        {/* Online Payments */}
+        <div className='service-card'>
+          <h2 className='services-title'>Bike Service</h2>
+          <p className='services-paragraph'>Schedule a visit to trusted service centers for smooth and reliable maintenance.</p>
+          <button className='service-btn' onClick={() => navigate('/Services/BikeService')}>
+            Schedule Now
+          </button>
+        </div>
+      </div>
+    </div>
     </>
-  )
+  );
 }
 
-export default Services
+export default Services;

@@ -10,6 +10,10 @@ import Register from './pages/Register/Register';
 import { ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import ProductDetails from './pages/Parts/ProductDetails/ProductDetails'
+import Checkout from './pages/Parts/Checkout/Checkout';
+import BikeRepair from './pages/Services/Bike Repair/BikeRepair';
+import BikeService from './pages/Services/Bike Service/BikeService';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 
 function App() {
   return (
@@ -20,10 +24,14 @@ function App() {
         <Route path="/" element={<Home /> } />  
         <Route path="/Parts" element={<Parts />} />
         <Route path="/Services" element={<Services />} />
+        <Route path="/Services/BikeRepair" element={<BikeRepair />} />
+        <Route path="/Services/BikeService" element={<BikeService />} />
         <Route path="/Contact" element={<Contact /> } />
         <Route path="/Login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/Parts/:id" element={<ProductDetails />} /> 
+        <Route path="/Parts/:id/checkout" element={<Checkout />} /> 
       </Routes>
     </Router>
   );

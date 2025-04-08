@@ -23,6 +23,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData); // Debugging: Check the form data before submission
       const res = await axios.post("http://localhost:8080/api/v1/users/register", formData);
       if (res.data.success) {
         alert(res.data.message);

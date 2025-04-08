@@ -1,11 +1,39 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./Register.css";
 
 function Register() {
   const [activeForm, setActiveForm] = useState("customer");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "customer",
+  });
 
   const handleTabClick = (type) => {
     setActiveForm(type);
+    setFormData({ ...formData, role: type });
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://localhost:8080/api/v1/users/register", formData);
+      if (res.data.success) {
+        alert(res.data.message);
+        setFormData({ name: "", email: "", password: "", role: "customer" });
+      } else {
+        alert(res.data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -30,86 +58,37 @@ function Register() {
           />
         </div>
 
-        <div className="register-form-container">
-          {activeForm === "customer" && (
-            <form className="register-form">
-              <h2>Customer Registration</h2>
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="customer-name">Name</label>
-                  <input type="text" id="customer-name" placeholder="Enter your name" required />
-                </div>
-                <div className="form-column">
-                  <label htmlFor="customer-email">Email</label>
-                  <input type="email" id="customer-email" placeholder="Enter your email" required />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="phone-number">Phone Number</label>
-                  <input type="tel" id="phone-number" placeholder="Enter phone number" required />
-                </div>
-                <div className="form-column">
-                  <label htmlFor="password">Password</label>
-                  <input type="password" id="password" required />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-column">
-                  <label>Gender</label>
-                  <div className="gender-options">
-                    <div className="option">
-                      <input type="radio" id="male" name="gender" value="male" required />
-                      <label htmlFor="male">Male</label>
-                    </div>
-                    <div className="option">
-                      <input type="radio" id="female" name="gender" value="female" required />
-                      <label htmlFor="female">Female</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button type="submit">Register as Customer</button>
-            </form>
-          )}
-
-          {activeForm === "vendor" && (
-            <form className="register-form">
-              <h2>Vendor Registration</h2>
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="vendor-name">Business Name</label>
-                  <input type="text" id="vendor-name" placeholder="Enter your business name" required />
-                </div>
-                <div className="form-column">
-                  <label htmlFor="vendor-email">Business Email</label>
-                  <input type="email" id="vendor-email" placeholder="Enter your business email" required />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="vendor-phone">Telephone Number</label>
-                  <input type="tel" id="vendor-phone" placeholder="Enter your phone number" required />
-                </div>
-                <div className="form-column">
-                  <label htmlFor="vendor-password">Password</label>
-                  <input type="password" id="vendor-password" required />
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="address">Address</label>
-                  <input type="text" id="address" placeholder="Enter your address" required />
-                </div>
-              </div>
-              <button type="submit">Register as Vendor</button>
-            </form>
-          )}
-        </div>
+        <form className="register-form" onSubmit={handleSubmit}>
+          <h2>{activeForm === "customer" ? "Customer Registration" : "Vendor Registration"}</h2>
+          <label>Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
       </div>
     </div>
   );

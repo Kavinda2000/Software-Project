@@ -1,35 +1,40 @@
+// filepath: d:\6th Sem\Software_Project\Bike_repair\Software-Project\backend\server.js
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const path = require("path");
+const userRoutes = require("./routes/UserRoutes");
 const { sendEmailController } = require("./controllers/SendEmailController");
-const path =require('path')
 
-
-//dotenv configuartion
+// dotenv configuration
 dotenv.config();
 
-//rest object
+// Initialize Express app
 const app = express();
 
-//midlewares
-app.use(cors());
+// Middleware
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
 
-//static files
-app.use(express.static(path.join(__dirname, './')))
 
-//routes
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
+// Routes
 app.post("/api/v1/bifix/sendEmail", sendEmailController);
+app.use("/api/v1/users",userRoutes );
 
-app.get('*', function(req,res){
-  res.sendFile(path.join(__dirname, './bifix/build/index.html'))
+// Serve static files (React frontend)
+app.use(express.static(path.join(__dirname, "../bifix/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../bifix/build/index.html"));
 });
 
-
-//port
+// Start the server
 const PORT = process.env.PORT || 8080;
-
-//listen
 app.listen(PORT, () => {
-  console.log(`Server Runnning On PORT ${PORT} `);
+  console.log(`Server running on port ${PORT}`);
 });

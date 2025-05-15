@@ -1,6 +1,5 @@
 import React from 'react'
 import './Home.css'
-import Navbar from '../../components/Navbar/Navbar'
 import { Zoom } from "react-awesome-reveal";
 import { Fade } from "react-awesome-reveal";
 import { Link } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <>
-        <Navbar />
+
         <div className="home-background">
         <Fade duration={700}>
             <div className="home-content">

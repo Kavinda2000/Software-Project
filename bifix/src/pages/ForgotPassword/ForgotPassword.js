@@ -1,13 +1,13 @@
 import React from 'react'
 import './ForgotPassword.css';
-import Navbar from '../../components/Navbar/Navbar';
+//import Navbar from '../../components/Navbar/Navbar';
 import { Link } from 'react-router-dom';
 import { Fade } from "react-awesome-reveal";
 
 function ForgotPassword() {
   return (
     <>
-          <Navbar />
+
           <div className="forgot-password-page">
           <Fade duration={500}>
             <div className="forgot-wrapper">

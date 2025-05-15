@@ -77,7 +77,7 @@
     display: flex;
   }
   
-  form h2 {
+  .register-container h2 {
     margin-bottom: 30px;
     margin-top: 5px;
     text-align: center;
@@ -174,4 +174,37 @@
     border-radius: 5px;
     width: 100%;
   }
+
+  .dropdown-selector {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-selector label {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  
+  .dropdown-selector select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  /* Add transition to form container */
+  .register-form-container {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+  
+  /* When form expands */
+  .register-form-container.expand {
+    max-height: 2000px; /* should be large enough to show entire form */
+    opacity: 1;
+  }
+  
   

@@ -14,6 +14,8 @@ import Checkout from './pages/Parts/Checkout/Checkout';
 import BikeRepair from './pages/Services/Bike Repair/BikeRepair';
 import BikeService from './pages/Services/Bike Service/BikeService';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import CustomerDashBoard from './pages/DashBoards/Customer DashBoard/CusDashBoard';
+import VenDashBoard from './pages/DashBoards/Vendor  DashBoard/VenDashBoard';
 
 function App() {
   return (
@@ -31,7 +33,9 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/Parts/:id" element={<ProductDetails />} /> 
-        <Route path="/Parts/:id/checkout" element={<Checkout />} /> 
+        <Route path="/Parts/checkout/:id" element={<Checkout />} /> 
+        <Route path="/customer-dashboard" element={<CustomerDashBoard />} />
+        <Route path="/vendor-dashboard" element={<VenDashBoard />} />
       </Routes>
     </Router>
   );

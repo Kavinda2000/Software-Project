@@ -1,0 +1,93 @@
+.ven-dashboard-background {
+    padding: 20px;
+    background-image: url('./creative-7581718_1920.jpg');
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+  
+  .ven-dashboard-container {
+    padding: 20px;
+  }
+  
+  .dashboard-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .title-underline {
+    border: 1px solid #333;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Big Card (section) */
+  .your-products-card{
+    background-color: #dacba4a9;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(212, 221, 213, 0.632);
+  }
+  
+  .your-products-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #222;
+  }
+  
+  /* Inner Cards inside Big Cards */
+  .vencard-containerr {
+    display: flex;
+    gap: 20px;
+
+  }
+  
+  .vencard {
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(15, 15, 15, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .vencard:hover {
+    transform: scale(1.03);
+  }
+  
+  .vencard.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .vencard-title {
+    font-size: 16px;
+    color: #444444;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Plus icon styling */
+  .plus-icon-container {
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .plus-icon-container:hover {
+    background-color: #0056b3;
+  }

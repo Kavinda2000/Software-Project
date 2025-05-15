@@ -4,7 +4,6 @@ import { FaLinkedin, FaGithub, FaFacebook } from "react-icons/fa";
 import { Fade } from "react-awesome-reveal";
 import { toast } from "react-toastify";
 import axios from "axios";
-import Navbar from "../../components/Navbar/Navbar";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -42,7 +41,7 @@ const Contact = () => {
 
   return (
     <>
-      <Navbar />
+
         <div className="contact-box">
         <Fade duration={500}>
           <div className="contact-card">

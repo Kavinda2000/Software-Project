@@ -1,17 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Checkout.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useLocation } from "react-router-dom";
-import PartList from '../PartList';
+
 
 const Checkout = () => {
   const { id } = useParams();
-  const product = PartList[id];
-
   const location = useLocation();
+  const [product, setProduct] = useState(location.state?.product || null);
   const initialQuantity = location.state?.quantity || 1;
   const [quantity, setQuantity] = useState(initialQuantity);
+  const [loading, setLoading] = useState(!location.state?.product);
+ 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const data = await res.json();
+        if (data.success) {
+          setProduct(data.data);
+        } else {
+          console.log('Product not found:', data);
+        }
+      } catch (err) {
+        console.error('Error fetching product:', err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchProduct();
+  }, [id]);
+
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -52,11 +73,18 @@ const Checkout = () => {
     toast.success("Order placed successfully!", { position: "top-center", autoClose: 5000 });
   };
 
+
+  // Loading or product not found
+  if (loading) {
+    return <div className="p-4 text-blue-600">Loading product...</div>;
+  }
+
   if (!product) {
     return <div className="p-4 text-red-600">Product not found</div>;
   }
 
-  const subtotal = product.pprice * quantity;
+  // Calculate totals
+  const subtotal = product.price * quantity;
   const shipping = 300;
   const total = subtotal + shipping;
 

@@ -1,35 +1,39 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const { sendEmailController } = require("../controllers/SendEmailController");
-const path =require('path')
+import express from 'express'
+import dotenv from "dotenv"
+import {connectDB} from './config/db.js'
+import productRoutes from "./routes/product.route.js"
+import emailRoutes from './routes/email.route.js'
+import cors from 'cors'
+import userRouter from './routes/user.route.js'
+import userDetails from './routes/user.route.js'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import  userLoginRoutes  from './routes/user.login.route.js'
 
-
-//dotenv configuartion
 dotenv.config();
 
-//rest object
 const app = express();
+const PORT = process.env.PORT || 5000
 
-//midlewares
 app.use(cors());
 app.use(express.json());
 
-//static files
-app.use(express.static(path.join(__dirname, './')))
 
-//routes
-app.post("/api/v1/bifix/sendEmail", sendEmailController);
+app.use("/api/products",productRoutes)
+app.use("/api/postEmails",emailRoutes)
+app.use("/api/registerUser", userRouter)
+app.use('/api/userDetails', userDetails);
+app.use('/api/loginDetails', userLoginRoutes );
 
-app.get('*', function(req,res){
-  res.sendFile(path.join(__dirname, '../bifix/build/index.html'))
-});
+// Serve static files (React frontend)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
-//port
-const PORT = process.env.PORT || 8080;
+app.listen(5000, ()=> {
+  connectDB();
+  console.log('Server Started at http://localhost:'+ PORT);
+})
 
-//listen
-app.listen(PORT, () => {
-  console.log(`Server Runnning On PORT ${PORT} `);
-});
+
+

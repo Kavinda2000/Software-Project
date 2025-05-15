@@ -1,36 +1,31 @@
 import React from 'react'
 import {BsFillBagHeartFill} from "react-icons/bs"
-import { useNavigate } from "react-router-dom";
+import './Card.css'
 
 
-function Card({img, title, star, pprice, PartId}) {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/Parts/${PartId}`);
-  };
-
+function Card({title, price, brand, category, img, warranty, owner, _id}) {
   return (
-    <section className='card' onClick={handleClick} style={{ cursor: "pointer" }}>
-                <img className='card-img' src={img} alt={title}/>
-                <div className='card-details'>
-                  <h3 className='card-title'>{title}</h3>
-                  <section className='card-review'>
-                    {star} {star} {star} {star} 
+    <section className='card' style={{ cursor: "pointer" }}>
+      <img className='card-img' src={img} alt={title} />
+      <div className='card-details'>
+        <h3 className='card-title'>{title}</h3>
 
-                    <span className='total-reviews'>4</span>
-                  </section>
-                  <section className='card-price'>
-                    <div className='price'>
-                      <a>Rs. {pprice}</a>
-                    </div>
-                    <div className='bag'>
-                      <BsFillBagHeartFill className='bag-icon'/>
-                    </div>
-                  </section>
-                </div>
-              </section>
-  )
+        <p className='card-brand'><strong>Brand:</strong> {brand}</p>
+        <p className='card-category'><strong>Category:</strong> {category}</p>
+        <p className='card-warranty'><strong>Warranty:</strong> {warranty}</p>
+        <p className='card-owner'><strong>Seller:</strong> {owner}</p>
+
+        <section className='card-price'>
+          <div className='price'>
+            <>Rs. {price}</>
+          </div>
+          <div className='bag'>
+            <BsFillBagHeartFill className='bag-icon' />
+          </div>
+        </section>
+      </div>
+    </section>
+  );
 }
 
-export default Card
+export default Card;

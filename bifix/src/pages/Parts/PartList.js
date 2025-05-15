@@ -2,107 +2,107 @@ import { AiFillStar } from "react-icons/ai";
 
 
 const PartList = [
-        {
-          img: "https://5.imimg.com/data5/SELLER/Default/2024/8/446750218/HS/QN/RE/228537391/ceat-zoom-plus-tyre-500x500.jpeg",
-          title: "Honda CRF 150L Rear Tire 120/80-18",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "200",
-          pprice: "6500",
-          Brand: "Honda",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "0",
-        },
-        {
-          img: "https://www.ubuy.com.lk/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNjFLSE1OK3g2REwuX1NTNDAwXy5qcGc.jpg",
-          title: "TVS Eurogrip Thunder 100/90-18",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "250",
-          pprice: "5500",
-          Brand: "TVS",
-          category: "Tires",
-          warranty: "1 Year",
-          PartId: "1",
-        },
-        {
-          img: "https://tyremanmc.com.au/wp-content/uploads/2023/02/119461L.png",
-          title: "Yamaha YZF-R15 100/80-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "300",
-          pprice: "8500",
-          Brand: "Yamaha",
-          category: "Tires",
-          warranty: "2 Years",
+  {
+    img: "https://5.imimg.com/data5/SELLER/Default/2024/8/446750218/HS/QN/RE/228537391/ceat-zoom-plus-tyre-500x500.jpeg",
+    title: "Honda CRF 150L Rear Tire 120/80-18",
+    star: <AiFillStar className="rating-star" />,
+    reviews: "200",
+    pprice: "6500",
+    Brand: "Honda",
+    category: "Tires",
+    warranty: "2 Years",
+    PartId: "0",
+    },
+    {
+      img: "https://www.ubuy.com.lk/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvNjFLSE1OK3g2REwuX1NTNDAwXy5qcGc.jpg",
+      title: "TVS Eurogrip Thunder 100/90-18",
+      star: <AiFillStar className="rating-star" />,
+      reviews: "250",
+      pprice: "5500",
+      Brand: "TVS",
+      category: "Tires",
+      warranty: "1 Year",
+      PartId: "1",
+      },
+      {
+        img: "https://tyremanmc.com.au/wp-content/uploads/2023/02/119461L.png",
+        title: "Yamaha YZF-R15 100/80-17",
+        star: <AiFillStar className="rating-star" />,
+        reviews: "300",
+        pprice: "8500",
+        Brand: "Yamaha",
+        category: "Tires",
+        warranty: "2 Years",
           PartId: "2"
-        },
-        {
-          img: "https://www.tyres4bikes.com.au/assets/thumbL/8002241.png?20240625144236",
-          title: "Bajaj Pulsar 150 Front Tire 90/90-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "280",
-          pprice: "4000",
-          Brand: "Bajaj",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "3"
-        },
-        {
-          img: "https://m.media-amazon.com/images/I/71jeAaUd65L.jpg",
-          title: "Hero Splendor Rear Tire 3.00-18",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "150",
-          pprice: "3000",
-          Brand: "Hero",
-          category: "Tires",
-          warranty: "1 Year",
-          PartId: "4"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxUoQMfnXPyiI3r3oMpLV93YciIaSaYYt9bg&s",
-          title: "Honda CB Hornet 160R Rear Tire 140/70-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "220",
-          pprice: "7500",
-          Brand: "Honda",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "5"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY0GsAT4JbRPolDgiUTQzcYgH6b7pJGmYWBw&s",
-          title: "TVS Apache RTR 160 Front Tire 90/90-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "310",
-          pprice: "4000",
-          Brand: "TVS",
-          category: "Tires",
-          warranty: "1 Year",
-          PartId: "6"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXWFk7289E5wEE2o65p_zPhaZ5CGnrnPnGmA&s",
-          title: "Yamaha FZ-S V3 Rear Tire 140/60-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "250",
-          pprice: "9500",
-          Brand: "Yamaha",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: '7'
-        },
-        {
-          img: "https://dxm.contentcenter.michelin.com/api/wedia/dam/transform/b98rpyxf61b4q4enu14gk4a79o/mo-125_tire_michelin_road-6_ww_set_a_main_1-30_nopad.webp?t=resize&height=700",
-          title: "Bajaj Dominar 400 Rear Tire 150/60-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "180",
-          pprice: "10000",
-          Brand: "Bajaj",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "8"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCyGWiWNPvD44wUol5xCpvCa35rOQlvbybmw&s",
+          },
+          {
+            img: "https://www.tyres4bikes.com.au/assets/thumbL/8002241.png?20240625144236",
+            title: "Bajaj Pulsar 150 Front Tire 90/90-17",
+            star: <AiFillStar className="rating-star" />,
+            reviews: "280",
+            pprice: "4000",
+            Brand: "Bajaj",
+            category: "Tires",
+            warranty: "2 Years",
+            PartId: "3"
+            },
+            {
+              img: "https://m.media-amazon.com/images/I/71jeAaUd65L.jpg",
+              title: "Hero Splendor Rear Tire 3.00-18",
+              star: <AiFillStar className="rating-star" />,
+              reviews: "150",
+              pprice: "3000",
+              Brand: "Hero",
+              category: "Tires",
+              warranty: "1 Year",
+              PartId: "4"
+              },
+              {
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxUoQMfnXPyiI3r3oMpLV93YciIaSaYYt9bg&s",
+                title: "Honda CB Hornet 160R Rear Tire 140/70-17",
+                star: <AiFillStar className="rating-star" />,
+                reviews: "220",
+                pprice: "7500",
+                Brand: "Honda",
+                category: "Tires",
+                warranty: "2 Years",
+                PartId: "5"
+                },
+                {
+                  img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY0GsAT4JbRPolDgiUTQzcYgH6b7pJGmYWBw&s",
+                  title: "TVS Apache RTR 160 Front Tire 90/90-17",
+                  star: <AiFillStar className="rating-star" />,
+                  reviews: "310",
+                  pprice: "4000",
+                  Brand: "TVS",
+                  category: "Tires",
+                  warranty: "1 Year",
+                  PartId: "6"
+                  },
+                  {
+                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXWFk7289E5wEE2o65p_zPhaZ5CGnrnPnGmA&s",
+                    title: "Yamaha FZ-S V3 Rear Tire 140/60-17",
+                    star: <AiFillStar className="rating-star" />,
+                    reviews: "250",
+                    pprice: "9500",
+                    Brand: "Yamaha",
+                    category: "Tires",
+                    warranty: "2 Years",
+                    PartId: '7'
+                    },
+                    {
+                      img: "https://dxm.contentcenter.michelin.com/api/wedia/dam/transform/b98rpyxf61b4q4enu14gk4a79o/mo-125_tire_michelin_road-6_ww_set_a_main_1-30_nopad.webp?t=resize&height=700",
+                      title: "Bajaj Dominar 400 Rear Tire 150/60-17",
+                      star: <AiFillStar className="rating-star" />,
+                      reviews: "180",
+                      pprice: "10000",
+                      Brand: "Bajaj",
+                      category: "Tires",
+                      warranty: "2 Years",
+                      PartId: "8"
+                      },
+                      {
+                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCyGWiWNPvD44wUol5xCpvCa35rOQlvbybmw&s",
           title: "Hero Xpulse 200 Front Tire 90/90-21",
           star: <AiFillStar className="rating-star" />,
           reviews: "300",
@@ -111,57 +111,58 @@ const PartList = [
           category: "Tires",
           warranty: "1 Year",
           PartId: "9"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3D_4GlXFSoQkpUeSJeEJY2qFy61XVw5EwQ&s",
-          title: "Honda CBR 250R Front Tire 110/70-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "210",
-          pprice: "9500",
-          Brand: "Honda",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "10"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsMWT1n5uYWjDEihwsoea7NOYCeqZ93mjP7Q&s",
-          title: "TVS Ntorq 125 Front Tire 90/90-12",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "190",
-          pprice: "3500",
-          Brand: "TVS",
-          category: "Tires",
-          warranty: "1 Year",
-          PartId: "11"
-        },
-        {
-          img: "https://m.media-amazon.com/images/I/715wLZ1oUiL._SS1000_.jpg",
-          title: "Yamaha R15 V3 Rear Tire 140/70-17",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "240",
-          pprice: "9000",
-          Brand: "Yamaha",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "12"
-        },
-        {
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQznTQwDuyiAY47X7awsr7Edvq68jNLhmnRyA&s",
-          title: "Bajaj Avenger Street 160 Rear Tire 130/90-15",
-          star: <AiFillStar className="rating-star" />,
-          reviews: "270",
-          pprice: "8200",
-          Brand: "Bajaj",
-          category: "Tires",
-          warranty: "2 Years",
-          PartId: "13"
-        },
-        {
+          },
+          {
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ3D_4GlXFSoQkpUeSJeEJY2qFy61XVw5EwQ&s",
+            title: "Honda CBR 250R Front Tire 110/70-17",
+            star: <AiFillStar className="rating-star" />,
+            reviews: "210",
+            pprice: "9500",
+            Brand: "Honda",
+            category: "Tires",
+            warranty: "2 Years",
+            PartId: "10"
+            },
+            {
+              img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsMWT1n5uYWjDEihwsoea7NOYCeqZ93mjP7Q&s",
+              title: "TVS Ntorq 125 Front Tire 90/90-12",
+              star: <AiFillStar className="rating-star" />,
+              reviews: "190",
+              pprice: "3500",
+              Brand: "TVS",
+              category: "Tires",
+              warranty: "1 Year",
+              PartId: "11"
+              },
+              {
+                img: "https://m.media-amazon.com/images/I/715wLZ1oUiL._SS1000_.jpg",
+                title: "Yamaha R15 V3 Rear Tire 140/70-17",
+                star: <AiFillStar className="rating-star" />,
+                reviews: "240",
+                pprice: "9000",
+                Brand: "Yamaha",
+                category: "Tires",
+                warranty: "2 Years",
+                PartId: "12"
+                },
+                {
+                  img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQznTQwDuyiAY47X7awsr7Edvq68jNLhmnRyA&s",
+                  title: "Bajaj Avenger Street 160 Rear Tire 130/90-15",
+                  star: <AiFillStar className="rating-star" />,
+                  reviews: "270",
+                  pprice: "8200",
+                  Brand: "Bajaj",
+                  category: "Tires",
+                  warranty: "2 Years",
+                  PartId: "13"
+                  },
+                  {
           img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe65zOOEuITR2Kx4jK6gqrWi0dm0EcuScxjA&s",
           title: "Hero Passion Pro Rear Tire 3.00-18",
           star: <AiFillStar className="rating-star" />,
           reviews: "150",
           pprice: "3800",
+          
           Brand: "Hero",
           category: "Tires",
           warranty: "1 Year",
@@ -377,6 +378,6 @@ const PartList = [
 },
 
       ];
- 
 
-  export default PartList;
+      export default PartList;
+

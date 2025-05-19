@@ -9,6 +9,8 @@ import userDetails from './routes/user.route.js'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import  userLoginRoutes  from './routes/user.login.route.js'
+import vendorRoutes from './routes/vendor.route.js';
+import repairScheduleRoutes from './routes/repairSchedule.route.js';
 
 dotenv.config();
 
@@ -24,6 +26,10 @@ app.use("/api/postEmails",emailRoutes)
 app.use("/api/registerUser", userRouter)
 app.use('/api/userDetails', userDetails);
 app.use('/api/loginDetails', userLoginRoutes );
+app.use("/api/vendors", vendorRoutes);
+app.use("/api/repair-schedule", repairScheduleRoutes);
+app.use("/api/repair-schedule", repairScheduleRoutes);
+
 
 // Serve static files (React frontend)
 const __filename = fileURLToPath(import.meta.url);

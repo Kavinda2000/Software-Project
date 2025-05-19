@@ -1,0 +1,71 @@
+.bike-service-booking-bg{
+  min-height: 100vh;
+  background-image: url('../Testing.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bike-service-booking-container {
+  background: rgb(255, 255, 255);
+  padding: 32px 32px 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  max-width: 500px;
+  width: 100%;
+}
+
+.bike-service-booking-form .form-group {
+  margin-bottom: 18px;
+}
+
+.bike-service-booking-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.bike-service-booking-form input,
+.bike-service-booking-form select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.bike-service-booking-form .payment-options {
+  display: flex;
+  gap: 20px;
+  margin-top: 6px;
+}
+
+.bike-service-booking-form .form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.bike-service-booking-btn {
+  width: 100%;
+  background: #0ed33c;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.bike-service-booking-btn:hover {
+  background: #0bb32e;
+}
+
+.success-message {
+  margin-top: 16px;
+  color: #0bb32e;
+  font-weight: bold;
+  text-align: center;
+}

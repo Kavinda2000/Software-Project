@@ -12,10 +12,10 @@ import "react-toastify/dist/ReactToastify.css";
 import ProductDetails from './pages/Parts/ProductDetails/ProductDetails'
 import Checkout from './pages/Parts/Checkout/Checkout';
 import BikeRepair from './pages/Services/Bike Repair/BikeRepair';
-import BikeService from './pages/Services/Bike Service/BikeService';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import CustomerDashBoard from './pages/DashBoards/Customer DashBoard/CusDashBoard';
 import VenDashBoard from './pages/DashBoards/Vendor  DashBoard/VenDashBoard';
+import BikeServiceBooking from './pages/Services/Bike Service/BikeServiceBooking';
 
 function App() {
   return (
@@ -27,7 +27,6 @@ function App() {
         <Route path="/Parts" element={<Parts />} />
         <Route path="/Services" element={<Services />} />
         <Route path="/Services/BikeRepair" element={<BikeRepair />} />
-        <Route path="/Services/BikeService" element={<BikeService />} />
         <Route path="/Contact" element={<Contact /> } />
         <Route path="/Login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -36,6 +35,7 @@ function App() {
         <Route path="/Parts/checkout/:id" element={<Checkout />} /> 
         <Route path="/customer-dashboard" element={<CustomerDashBoard />} />
         <Route path="/vendor-dashboard" element={<VenDashBoard />} />
+        <Route path="/Services/BikeServiceBooking" element={<BikeServiceBooking />} />
       </Routes>
     </Router>
   );

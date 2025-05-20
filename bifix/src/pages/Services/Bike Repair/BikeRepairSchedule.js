@@ -24,16 +24,19 @@ function BikeRepairSchedule() {
   const [cvv, setCvv] = useState("");
   const [message, setMessage] = useState("");
 
-  // Fetch companies from backend
+  // Fetch companies on mount
   useEffect(() => {
     axios.get("http://localhost:5000/api/vendors")
       .then(res => {
         setCompanies(res.data);
         setFilteredCompanies(res.data);
+      })
+      .catch(err => {
+        setMessage("Failed to load companies.");
       });
   }, []);
 
-  // Filter companies as user types
+  // Filter companies when search changes
   useEffect(() => {
     setFilteredCompanies(
       companies.filter(c =>
@@ -63,15 +66,21 @@ function BikeRepairSchedule() {
 
     try {
       await axios.post("http://localhost:5000/api/repair-schedule", {
+        companyName: selectedCompany,
         customerName,
         bikeModel,
         repairDate: date,
+        timeSlot,
         issueDescription,
-        contactNumber
+        contactNumber,
+        paymentMethod,
+        cardNumber,
+        expiry,
+        cvv
       });
-
       setMessage("Booking successful! The company will confirm your time after checking your bike.");
-    } catch {
+      // Optionally reset form here
+    } catch (error) {
       setMessage("Booking failed. Try again.");
     }
   };
@@ -81,13 +90,15 @@ function BikeRepairSchedule() {
       <div className="bike-repair-schedule-container">
         <h2>Schedule Bike Repair</h2>
         <form onSubmit={handleSubmit} className="bike-repair-form">
-          <div>
-            <label>Search Company:</label>
+          <div className="input-group">
+            <label htmlFor="search-company">Search Company:</label>
             <input
+              id="search-company"
               type="text"
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Type company name..."
+              autoComplete="off"
             />
             <div className="company-list">
               {filteredCompanies.map(c => (
@@ -95,104 +106,151 @@ function BikeRepairSchedule() {
                   key={c._id}
                   className={`company-item${selectedCompany === c.name ? " selected" : ""}`}
                   onClick={() => setSelectedCompany(c.name)}
+                  tabIndex={0}
+                  onKeyPress={e => { if (e.key === 'Enter') setSelectedCompany(c.name); }}
+                  role="button"
+                  aria-pressed={selectedCompany === c.name}
                 >
                   {c.name}
                 </div>
               ))}
             </div>
           </div>
-          <div>
-            <label>Customer Name:</label>
+
+          <div className="input-group">
+            <label htmlFor="customer-name">Customer Name:</label>
             <input
+              id="customer-name"
               type="text"
               value={customerName}
               onChange={e => setCustomerName(e.target.value)}
               required
             />
           </div>
-          <div>
-            <label>Bike Model:</label>
+
+          <div className="input-group">
+            <label htmlFor="bike-model">Bike Model:</label>
             <input
+              id="bike-model"
               type="text"
               value={bikeModel}
               onChange={e => setBikeModel(e.target.value)}
               required
             />
           </div>
-          <div>
-            <label>Date:</label>
+
+          <div className="input-group">
+            <label htmlFor="repair-date">Date:</label>
             <input
+              id="repair-date"
               type="date"
               value={date}
               onChange={e => setDate(e.target.value)}
               required
             />
           </div>
-          <div>
-            <label>Time Slot:</label>
-            <select value={timeSlot} onChange={e => setTimeSlot(e.target.value)} required>
+
+          <div className="input-group">
+            <label htmlFor="time-slot">Time Slot:</label>
+            <select
+              id="time-slot"
+              value={timeSlot}
+              onChange={e => setTimeSlot(e.target.value)}
+              required
+            >
               <option value="">Select a slot</option>
               {TIME_SLOTS.map(slot => (
                 <option key={slot} value={slot}>{slot}</option>
               ))}
             </select>
-            <div className="slot-info">
+            <small className="slot-info">
               * Time slots are for initial inspection. Final repair time will be provided after checking your bike.
-            </div>
+            </small>
           </div>
-          <div>
-            <label>Issue Description:</label>
+
+          <div className="input-group">
+            <label htmlFor="issue-description">Issue Description:</label>
             <textarea
+              id="issue-description"
               value={issueDescription}
               onChange={e => setIssueDescription(e.target.value)}
               required
             />
           </div>
-          <div>
-            <label>Contact Number:</label>
+
+          <div className="input-group">
+            <label htmlFor="contact-number">Contact Number:</label>
             <input
-              type="text"
+              id="contact-number"
+              type="tel"
               value={contactNumber}
               onChange={e => setContactNumber(e.target.value)}
               required
             />
           </div>
-          <div>
-            <label>Payment Method:</label>
-            <select value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
+
+          <div className="input-group">
+            <label htmlFor="payment-method">Payment Method:</label>
+            <select
+              id="payment-method"
+              value={paymentMethod}
+              onChange={e => setPaymentMethod(e.target.value)}
+            >
               <option value="visa">Visa</option>
               <option value="master">Master</option>
             </select>
           </div>
-          <div>
-            <label>Card Number:</label>
+
+          <div className="input-group">
+            <label htmlFor="card-number">Card Number:</label>
             <input
+              id="card-number"
               type="text"
               value={cardNumber}
               onChange={e => setCardNumber(e.target.value)}
               required
+              maxLength={16}
+              pattern="\d{16}"
+              title="Enter 16 digit card number"
             />
           </div>
-          <div>
-            <label>Expiry:</label>
+          <button
+            type="button"
+              className="nearby-btn"
+              onClick={handleFindNearby}
+>
+              Find Repair Centers Near Me
+          </button>
+
+          <div className="input-group">
+            <label htmlFor="expiry">Expiry (MM/YY):</label>
             <input
+              id="expiry"
               type="text"
               placeholder="MM/YY"
               value={expiry}
               onChange={e => setExpiry(e.target.value)}
               required
+              pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+              title="Enter expiry in MM/YY format"
             />
           </div>
-          <div>
-            <label>CVV:</label>
+
+          <div className="input-group">
+            <label htmlFor="cvv">CVV:</label>
             <input
+              id="cvv"
               type="password"
               value={cvv}
               onChange={e => setCvv(e.target.value)}
               required
+              maxLength={4}
+              pattern="\d{3,4}"
+              title="Enter 3 or 4 digit CVV"
             />
           </div>
-          <button type="submit">Book Now</button>
+
+          <button type="submit" className="btn">Book Now</button>
           {message && <div className="message">{message}</div>}
         </form>
       </div>

@@ -24,19 +24,17 @@ function BikeRepairSchedule() {
   const [cvv, setCvv] = useState("");
   const [message, setMessage] = useState("");
 
-  // Fetch companies on mount
   useEffect(() => {
     axios.get("http://localhost:5000/api/vendors")
       .then(res => {
         setCompanies(res.data);
         setFilteredCompanies(res.data);
       })
-      .catch(err => {
+      .catch(() => {
         setMessage("Failed to load companies.");
       });
   }, []);
 
-  // Filter companies when search changes
   useEffect(() => {
     setFilteredCompanies(
       companies.filter(c =>
@@ -47,18 +45,10 @@ function BikeRepairSchedule() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (
-      !selectedCompany ||
-      !customerName ||
-      !bikeModel ||
-      !date ||
-      !timeSlot ||
-      !issueDescription ||
-      !contactNumber ||
-      !cardNumber ||
-      !expiry ||
-      !cvv
+      !selectedCompany || !customerName || !bikeModel || !date ||
+      !timeSlot || !issueDescription || !contactNumber ||
+      !cardNumber || !expiry || !cvv
     ) {
       setMessage("Please fill all fields.");
       return;
@@ -78,11 +68,15 @@ function BikeRepairSchedule() {
         expiry,
         cvv
       });
-      setMessage("Booking successful! The company will confirm your time after checking your bike.");
-      // Optionally reset form here
+      setMessage("Booking successful! The company will confirm your time.");
     } catch (error) {
       setMessage("Booking failed. Try again.");
     }
+  };
+
+  const handleFindNearby = () => {
+    // Dummy logic for now
+    alert("Finding nearby repair centers... (to be implemented)");
   };
 
   return (
@@ -164,7 +158,7 @@ function BikeRepairSchedule() {
               ))}
             </select>
             <small className="slot-info">
-              * Time slots are for initial inspection. Final repair time will be provided after checking your bike.
+              * Time slots are for inspection. Final timing depends on evaluation.
             </small>
           </div>
 
@@ -210,16 +204,17 @@ function BikeRepairSchedule() {
               onChange={e => setCardNumber(e.target.value)}
               required
               maxLength={16}
-              pattern="\d{16}"
+              pattern="\\d{16}"
               title="Enter 16 digit card number"
             />
           </div>
+
           <button
             type="button"
-              className="nearby-btn"
-              onClick={handleFindNearby}
->
-              Find Repair Centers Near Me
+            className="btn"
+            onClick={handleFindNearby}
+          >
+            Find Repair Centers Near Me
           </button>
 
           <div className="input-group">
@@ -231,7 +226,7 @@ function BikeRepairSchedule() {
               value={expiry}
               onChange={e => setExpiry(e.target.value)}
               required
-              pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+              pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$"
               title="Enter expiry in MM/YY format"
             />
           </div>
@@ -245,7 +240,7 @@ function BikeRepairSchedule() {
               onChange={e => setCvv(e.target.value)}
               required
               maxLength={4}
-              pattern="\d{3,4}"
+              pattern="\\d{3,4}"
               title="Enter 3 or 4 digit CVV"
             />
           </div>

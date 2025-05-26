@@ -1,28 +1,27 @@
-import React, { useState } from 'react'; // Add useState
+import React, { useState } from 'react';
 import './Login.css';
-import { Link, useNavigate } from 'react-router-dom'; // Add useNavigate
+import { Link, useNavigate } from 'react-router-dom';
 import { Fade } from "react-awesome-reveal";
-import axios from 'axios'; // Import axios for API calls
-import { toast, ToastContainer } from 'react-toastify'; // Import toast
-import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // 👁️ Add icons
 
-function Login({setUser}) {
-  const [email, setEmail] = useState(''); // State for username
-  const [password, setPassword] = useState(''); // State for password
-  const navigate = useNavigate(); // For navigation
+function Login({ setUser }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // 👁️ State for visibility
+  const navigate = useNavigate();
 
-  // Handle form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/loginDetails', { email, password });
-  
+
       if (response.data.success) {
-        // Store the JWT token and user data
         sessionStorage.setItem('authToken', response.data.token);
         sessionStorage.setItem('userData', JSON.stringify(response.data.user));
-  
-        // Redirect to the appropriate dashboard
+
         if (response.data.user.role === 'customer') {
           navigate('/customer-dashboard');
         } else if (response.data.user.role === 'vendor') {
@@ -39,11 +38,21 @@ function Login({setUser}) {
 
   return (
     <>
-      <ToastContainer autoClose={3000}/> {/* Toast container for notifications */}
+      <ToastContainer autoClose={3000} />
       <div className="login-page">
+        <video
+        className="background-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src="/log.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>   
         <Fade duration={500}>
           <div className="login-wrapper">
-            <form onSubmit={handleLogin}> {/* Attach handleLogin */}
+            <form onSubmit={handleLogin}>
               <h1>Login</h1>
 
               <div className="input-box">
@@ -51,20 +60,27 @@ function Login({setUser}) {
                   type="text"
                   placeholder="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)} // Bind to state
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
                 <i className="bx bxs-user"></i>
               </div>
 
-              <div className="input-box">
+              <div className="input-box password-box">
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'} // 👁️ Toggle type
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} // Bind to state
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                <span
+                  className="password-toggle-icon"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
                 <i className="bx bx-lock"></i>
               </div>
 
@@ -75,7 +91,7 @@ function Login({setUser}) {
                 <Link to="/forgot-password">Forgot password?</Link>
               </div>
 
-              <button type="submit" className="btn">Login</button> {/* Submit button */}
+              <button type="submit" className="btn">Login</button>
 
               <div className="register-link">
                 <p>
@@ -91,4 +107,3 @@ function Login({setUser}) {
 }
 
 export default Login;
-

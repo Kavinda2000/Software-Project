@@ -30,10 +30,18 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleAddToCart = () => {
+    const token = sessionStorage.getItem('authToken');
+    if (!token) {
+      // User is not logged in — redirect to login
+      navigate('/login', { state: { from: `/parts/details/${id}` } });
+      return;
+    }
+
+    // User is logged in — proceed to checkout
     navigate(`/Parts/Checkout/${product._id}`, {
       state: {
-        product: product, // Pass product data to checkout
-        quantity: 1       // Default quantity
+        product: product,
+        quantity: 1
       }
     });
   };

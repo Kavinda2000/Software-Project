@@ -14,7 +14,9 @@ function Nav({ handleInputChange, query }) {
           placeholder='Enter your search'
         />
         <div className='icon-container'>
-          <a><FaSearch className='nav-icons' /></a>
+          <button className="icon-button">
+            <FaSearch className='nav-icons' />
+          </button>
         </div>
       </div>
     </div>

@@ -43,6 +43,13 @@ function BikeRepairSchedule() {
     );
   }, [search, companies]);
 
+// Added this function inside the component:
+const handleFindNearby = () => {
+  alert("Finding nearby repair centers...");
+  // You can implement actual location-based logic here later
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (

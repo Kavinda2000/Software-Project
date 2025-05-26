@@ -15,13 +15,14 @@ function Services() {
         <div className='service-card'>
           <h2 className='services-title'>Bike repair</h2>
           <p className='services-paragraph'>Book an appointment with trusted repair centers for hassle-free servicing.</p>
-        <Link to="/Services/BikeRepair">
-            <button className='service-btn' onClick={() => navigate('/Services/BikeRepair')}>
+        <Link to="/Services/BikeRepairSchedule">
+          <button className='service-btn' onClick={() => navigate('/Services/BikeRepairSchedule')}>
               Schedule Now
           </button>
         </Link>
-
         
+
+  
           
         </div>
 
@@ -29,7 +30,7 @@ function Services() {
         <div className='service-card'>
           <h2 className='services-title'>Bike Service</h2>
           <p className='services-paragraph'>Schedule a visit to trusted service centers for smooth and reliable maintenance.</p>
-          <Link to="/Services/BikeService">
+          <Link to="/Services/BikeServiceBooking">
             <button className='service-btn' onClick={() => navigate('/Services/BikeServiceBooking')}>
               Schedule Now
             </button>

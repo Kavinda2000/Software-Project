@@ -11,7 +11,11 @@ import { dirname } from 'path';
 import  userLoginRoutes  from './routes/user.login.route.js'
 import vendorRoutes from './routes/vendor.route.js';
 import repairScheduleRoutes from './routes/repairSchedule.route.js';
+import otpRoutes from './routes/otp.route.js';
+import checkoutRoutes from './routes/checkout.route.js';
 import passwordRoutes from './routes/password.route.js';
+import searchBarRoutes  from './routes/search_bar.route.js'
+
 
 dotenv.config();
 
@@ -29,19 +33,19 @@ app.use('/api/userDetails', userDetails);
 app.use('/api/loginDetails', userLoginRoutes );
 app.use("/api/vendors", vendorRoutes);
 app.use("/api/repair-schedule", repairScheduleRoutes);
-app.use("/api/repair-schedule", repairScheduleRoutes);
-app.use('/api/password', passwordRoutes);
+app.use("/api/otp",otpRoutes);
+app.use('/api/checkout', checkoutRoutes);
+app.use('/api/checkout/success', userLoginRoutes);
+app.use('/api/password/forgot-password', passwordRoutes);
+app.use('/api/search', searchBarRoutes);
+app.use('/uploads', express.static('uploads'));
+
+
 
 // Serve static files (React frontend)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Debug: List all registered routes
-app._router.stack
-  .filter(r => r.route)
-  .forEach(r => {
-    console.log(`${Object.keys(r.route.methods).join(',').toUpperCase()} ${r.route.path}`);
-  });
 
 app.listen(5000, ()=> {
   connectDB();

@@ -53,10 +53,10 @@ function Home() {
             <Zoom duration={1000}>
               <div>
                 <Link to="/Parts">
-                  <button type="button"><span>Find Parts</span></button>
+                  <button type="button"><span className='home-span'>Find Parts</span></button>
                 </Link>
                 <Link to="/Services">
-                  <button type="button"><span>Schedule Repair</span></button>
+                  <button type="button"><span className='home-span'>Schedule Repair</span></button>
                 </Link>
                   
               </div>
@@ -77,7 +77,7 @@ function Home() {
         <div className="about-grid">
           <div className="about-video">
             <video autoPlay loop muted playsInline>
-              <source src="/final.mp4" type="video/mp4" />
+              <source src="/cup.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>

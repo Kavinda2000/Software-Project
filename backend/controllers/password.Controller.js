@@ -1,7 +1,6 @@
 // controllers/password.controller.js
 import User from '../models/User.js';
 import crypto from 'crypto';
-import bcrypt from 'bcryptjs';
 import sendEmail from '../utils/sendEmail.js'; // Create this helper
 
 export const handleForgotPassword = async (req, res) => {
@@ -31,4 +30,3 @@ export const handleForgotPassword = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
-

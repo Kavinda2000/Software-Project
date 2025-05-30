@@ -13,41 +13,41 @@ export const getProducts = async (req,res) =>{
 }
 
 export const createProduct = async (req, res) => {
-    const product = req.body;
+    const { title, price, brand, category, warranty, reviews, owner } = req.body;
+    const image = req.file ? req.file.path : null;
 
-    if (
-        !product.title || 
-        !product.price || 
-        !product.brand || 
-        !product.category || 
-        !product.warranty || 
-        !product.image || 
-        !product.reviews ||
-        !product.owner
-    ) {
-        return res.status(400).json({ success: false, message: "Please provide all fields" });
+    if (!title || !price || !brand || !category || !warranty || !reviews || !owner || !image) {
+        return res.status(400).json({ success: false, message: "Please provide all fields including image" });
     }
 
     try {
-        // Check for duplicate based on title and brand
-        const existingProduct = await Product.findOne({ title: product.title, brand: product.brand });
+        const existingProduct = await Product.findOne({ title, brand });
 
         if (existingProduct) {
-            return res.status(409).json({ 
-                success: false, 
-                message: "Product already exists" 
+            return res.status(409).json({
+                success: false,
+                message: "Product already exists"
             });
         }
 
-        const newProduct = new Product(product);
-        await newProduct.save();
+        const newProduct = new Product({
+            title,
+            price,
+            brand,
+            category,
+            image,
+            warranty,
+            reviews,
+            owner
+        });
 
+        await newProduct.save();
         res.status(201).json({ success: true, data: newProduct });
     } catch (error) {
         console.error("Error in creating product:", error.message);
-        res.status(500).json({ 
-            success: false, 
-            message: "Server Error: Failed to create product" 
+        res.status(500).json({
+            success: false,
+            message: "Server Error: Failed to create product"
         });
     }
 };

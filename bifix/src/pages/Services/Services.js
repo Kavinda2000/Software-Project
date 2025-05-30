@@ -30,8 +30,8 @@ function Services() {
         <div className='service-card'>
           <h2 className='services-title'>Bike Service</h2>
           <p className='services-paragraph'>Schedule a visit to trusted service centers for smooth and reliable maintenance.</p>
-          <Link to="/Services/BikeServiceBooking">
-            <button className='service-btn' onClick={() => navigate('/Services/BikeServiceBooking')}>
+          <Link to="/Services/BikeServiceSchedule">
+            <button className='service-btn' onClick={() => navigate('/Services/BikeServiceSchedule')}>
               Schedule Now
             </button>
         </Link>

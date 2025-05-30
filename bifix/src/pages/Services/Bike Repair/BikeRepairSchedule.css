@@ -32,6 +32,12 @@
   flex-direction: column;
 }
 
+
+.bike-repair-form .input-group option {
+  color: black;
+}
+
+
 .bike-repair-form label {
   margin-bottom: 6px;
   font-weight: 600;
@@ -91,7 +97,7 @@
 
 .slot-info {
   font-size: 12px;
-  color: rgba(24, 23, 23, 0.7);
+  color: red;
   margin-top: 6px;
   font-style: italic;
 }

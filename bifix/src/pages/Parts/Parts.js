@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import Nav from './Navigation/Nav';
 import Sidebar from './Sidebar/Sidebar';
 import Card from './PartComponents/Card';
-import { Link } from 'react-router-dom'; // Import Link
-
+import { Link, useLocation } from 'react-router-dom'; // Added useLocation
 
 function Parts() {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [query, setQuery] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchQuery = params.get("search") || "";
+    setQuery(searchQuery);
+  }, [location.search]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,8 +59,8 @@ function Parts() {
     }
 
     return filteredProducts.map(({ title, price, brand, category, image, warranty, owner, _id }) => (
-      <Link to={`/Parts/${_id}`} key={_id} style={{ textDecoration: 'none', color: 'black' }}> 
-        <Card 
+      <Link to={`/Parts/${_id}`} key={_id} style={{ textDecoration: 'none', color: 'black' }}>
+        <Card
           title={title}
           price={price}
           brand={brand}

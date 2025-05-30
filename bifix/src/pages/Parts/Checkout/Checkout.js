@@ -3,6 +3,12 @@ import "./Checkout.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useLocation } from "react-router-dom";
+import { loadStripe } from '@stripe/stripe-js';
+
+// Load Stripe outside the component so it can be cached
+const stripePromise = loadStripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+
+
 
 
 const Checkout = () => {
@@ -56,22 +62,62 @@ const Checkout = () => {
     setQuantity(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const requiredFields = ["fullName", "email", "phone", "address", "city", "zip"];
-    if (formData.paymentMethod === "credit-card") {
-      requiredFields.push("creditCardNumber", "expiryDate", "cvv");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  const requiredFields = ["fullName", "email", "phone", "address", "city", "zip"];
+  if (formData.paymentMethod === "credit-card") {
+    requiredFields.push("creditCardNumber", "expiryDate", "cvv");
+  }
+
+  const isEmptyField = requiredFields.some((field) => !formData[field].trim());
+
+  if (isEmptyField) {
+    toast.error("Please fill in all required fields.", { position: "top-center", autoClose: 5000 });
+    return;
+  }
+
+  try {
+    const stripe = await stripePromise;
+
+    // Create the checkout session on your backend
+    const response = await fetch('http://localhost:5000/api/checkout/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        productId: product._id,
+        quantity,
+        customer: {
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          zip: formData.zip
+        }
+        // optionally pass paymentMethod or other info if needed
+      })
+    });
+
+    const session = await response.json();
+
+    if(session.id){
+      // Redirect to Stripe Checkout
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+      if (error) {
+        toast.error(error.message);
+      }
+    } else {
+      toast.error("Failed to create checkout session");
     }
-
-    const isEmptyField = requiredFields.some((field) => !formData[field].trim());
-
-    if (isEmptyField) {
-      toast.error("Please fill in all required fields.", { position: "top-center", autoClose: 5000 });
-      return;
-    }
-
-    toast.success("Order placed successfully!", { position: "top-center", autoClose: 5000 });
-  };
+  } catch (error) {
+    toast.error("Error during checkout: " + error.message);
+  }
+};
 
 
   // Loading or product not found

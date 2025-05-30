@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Register.css";
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify'; // Import toast and ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios';
 
 
 function Register() {
@@ -19,31 +19,32 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // Check if all fields are filled
-    if (!role || !name || !email || !phone || !password || (role === "customer" && !gender) || (role === "vendor" && !address)) {
-      toast.error("Please fill all fields!"); // Show error toast
-      return;
-    }
+  if (!email || !phone) {
+    toast.error("Missing required fields!");
+    return;
+  }
 
-    axios.post('http://localhost:5000/api/registerUser', { role, name, email, phone, password, gender, address })
-      .then(result => {
-        console.log(result);
-        toast.success("Account created successfully!"); // Show success toast
+  try {
+    const res = await axios.post('http://localhost:5000/api/otp/send', { email, phone });
+    console.log("OTP response:", res.data);
 
-        setTimeout(() => {
-        // Navigate to the appropriate page based on the role
-          navigate('/Login');
-          }, 2000);
+    localStorage.setItem("pendingUser", JSON.stringify({role, name, email, phone, password, gender, address}));
+    toast.success("OTP sent successfully!");
 
-      })
-      .catch(err => {
-        console.log(err);
-        toast.error("Something went wrong. Please try again."); // Show error toast
-      });
-  };
+    setTimeout(() => {
+      navigate("/Otp");
+    }, 1500);
+
+  } catch (err) {
+    console.error("Error sending OTP:", err);
+    toast.error("Failed to send OTP.");
+  }
+};
+
+
 
   return (
     <div className="register-page">

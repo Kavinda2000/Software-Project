@@ -1,10 +1,10 @@
 // routes/password.route.js
 import express from 'express';
-import { handleForgotPassword } from '../controllers/password.Controller.js';
+import { handleForgotPassword } from '../controllers/password.controller.js';
 
 const router = express.Router();
 
-router.post('/forgot-password', handleForgotPassword);
+router.post('/', handleForgotPassword);
 
 
 export default router;

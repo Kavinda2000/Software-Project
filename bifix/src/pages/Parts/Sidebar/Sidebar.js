@@ -8,7 +8,7 @@ function Sidebar({handleChange}) {
 
   return (
     <>
-        <section className='sidebar'>
+        <section className='parts-sidebar'>
             <div className='logo-container'>
                 <h1>🛒</h1>
             </div>

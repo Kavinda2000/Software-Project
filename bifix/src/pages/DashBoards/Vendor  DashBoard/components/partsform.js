@@ -10,7 +10,8 @@ function PartsForm({ onClose, user}) {
     price: '',
     brand: '',
     category: '',
-    image: '',
+    imageFile: null,
+    imageUrl: '',
     warranty: '',
     reviews: '',
     owner: user?.email || '',
@@ -94,28 +95,41 @@ function PartsForm({ onClose, user}) {
 
           <div className="form-group">
             <label htmlFor="brand">Brand</label>
-            <input
-              type="text"
-              id="brand"
-              name="brand"
-              placeholder="Brand"
-              onChange={handleChange}
-              value={formData.brand}
-              required
-            />
+              <select
+                id="brand"
+                name="brand"
+                value={formData.brand}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Brand</option>
+                <option value="Honda">Honda</option>
+                <option value="Yamaha">Yamaha</option>
+                <option value="TVS">TVS</option>
+                <option value="Bajaj">Bajaj</option>
+                <option value="Hero">Hero</option>
+                <option value="Suzuki">Suzuki</option>
+                <option value="Other">Other</option>
+              </select>
           </div>
 
           <div className="form-group">
             <label htmlFor="category">Category</label>
-            <input
-              type="text"
+            <select
               id="category"
               name="category"
-              placeholder="Category"
-              onChange={handleChange}
               value={formData.category}
+              onChange={handleChange}
               required
-            />
+            >
+              <option value="">Select Category</option>
+              <option value="Tire">Tire</option>
+              <option value="Brake Pads">Brake Pads</option>
+              <option value="Oil">Oil</option>
+              <option value="Battery">Battery</option>
+              <option value="Chain">Chain</option>
+              <option value="Others">Others</option>
+            </select>
           </div>
 
           <div className="form-group">
@@ -140,19 +154,6 @@ function PartsForm({ onClose, user}) {
               placeholder="Warranty"
               onChange={handleChange}
               value={formData.warranty}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="reviews">Reviews</label>
-            <input
-              type="text"
-              id="reviews"
-              name="reviews"
-              placeholder="Reviews"
-              onChange={handleChange}
-              value={formData.reviews}
               required
             />
           </div>

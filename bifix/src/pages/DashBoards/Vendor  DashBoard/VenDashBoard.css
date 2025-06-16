@@ -1,6 +1,6 @@
 .ven-dashboard-background {
     padding: 20px;
-    background-image: url('./creative-7581718_1920.jpg');
+    background-image: url('./90595.jpg');
     min-height: 100vh;
     padding-top: 80px;
   }
@@ -23,7 +23,7 @@
   
   /* Big Card (section) */
   .your-products-card{
-    background-color: #dacba4a9;
+    background-color: rgba(72, 106, 147, 0.823);
     padding: 20px;
     margin-top: 40px;
     border-radius: 12px;
@@ -33,7 +33,7 @@
   .your-products-title {
     font-size: 22px;
     margin-bottom: 20px;
-    color: #222;
+    color: white;
   }
   
   /* Inner Cards inside Big Cards */
@@ -69,7 +69,7 @@
   
   .vencard-title {
     font-size: 16px;
-    color: #444444;
+    color: black;
     text-align: center;
     margin-top: 10px;
   }
@@ -78,7 +78,7 @@
   .plus-icon-container {
     width: 50px;
     height: 50px;
-    background-color: #007bff;
+    background-color: #516c89;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -91,3 +91,8 @@
   .plus-icon-container:hover {
     background-color: #0056b3;
   }
+
+
+
+
+

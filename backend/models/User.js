@@ -34,6 +34,11 @@ const userSchema = new mongoose.Schema({
     enum: ["customer", "vendor"],
     default: "customer"
   },
+  profilePicture: {
+    type: String, // Will store URL or file path
+    default: ''   // Empty by default, image upload is optional
+  }
+  
 }, {
   timestamps: true,
 });

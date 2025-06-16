@@ -54,3 +54,22 @@ export const userDetails = async (req, res) => {
 };
 
 
+// Update user by email
+export const updateUser = async (req, res) => {
+  const { email } = req.params;
+  const updates = req.body;
+
+  try {
+    const updatedUser = await User.findOneAndUpdate({ email }, updates, {
+      new: true, // return the updated document
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({ success: true, message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};

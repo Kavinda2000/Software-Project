@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { FaUser, FaBoxOpen, FaCog, FaLifeRing, FaSignOutAlt } from 'react-icons/fa'
 import './Navbar.css';
 import logo from './Logo.png';
 
@@ -13,6 +14,8 @@ function Navbar() {
   const timeoutRef = useRef(null);
   const exitTimeoutRef = useRef(null);
   const location = useLocation();
+
+
 
   // Check login state whenever location changes (on route change)
   useEffect(() => {
@@ -96,30 +99,66 @@ function Navbar() {
               />
             </div>
             {isDropdownVisible && (
-                <ul 
-                className="dropdown-menu" 
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                >
-                  <li className='dropdown-elements'>
-                    <Link 
-                      to={`/${user.role}-dashboard`} 
-                      onClick={() => setIsDropdownVisible(false)}
-                    >Profile</Link>
-                  </li>
-                  <li className='dropdown-elements'>
+            <div 
+              className="dropdown-menu" 
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="dropdown-user-info">
+                <img src={user.avatar || "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"} alt="User Avatar" />
+                <div className="user-details">
+                  <div className="user-name">{user.name || user.username || 'User Name'}</div>
+                  <div className="user-email">{user.email || 'user@example.com'}</div>
+                </div>
+              </div>
+              <ul className="dropdown-list">
+                <li>
+                  <Link 
+                    to={`/${user.role}-dashboard`} 
+                    onClick={() => setIsDropdownVisible(false)}
+                    className="dropdown-link"
+                  >
+                    <FaUser className="dropdown-icon" /> Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/orders" 
+                    onClick={() => setIsDropdownVisible(false)}
+                    className="dropdown-link"
+                  >
+                    <FaBoxOpen className="dropdown-icon" /> Orders
+                  </Link>
+                </li>
+                <li>
                   <Link 
                     to="/profile" 
                     onClick={() => setIsDropdownVisible(false)}
-                  >Settings</Link>
-                  </li>
-                  <li 
-                    onClick={handleLogout} 
-                    className='dropdown-elements'
-                  >Log Out
-                  </li>
-               </ul>
-              )}
+                    className="dropdown-link"
+                  >
+                    <FaCog className="dropdown-icon" /> Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/Contact" 
+                    onClick={() => setIsDropdownVisible(false)}
+                    className="dropdown-link"
+                  >
+                    <FaLifeRing className="dropdown-icon" /> Support
+                  </Link>
+                </li>
+              </ul>
+              <hr className="dropdown-divider" />
+              <button 
+                onClick={handleLogout} 
+                className="dropdown-logout"
+                aria-label="Log out"
+              >
+                <FaSignOutAlt className="dropdown-icon" /> Log Out
+              </button>
+            </div>
+          )}
           </li>
         )}
         

@@ -1,7 +1,7 @@
 /* Main container for product details */
 .product-details-container {
-  background-image: url("./Login_Background.jpg");
   background-size: cover;
+  background-image: url('./19538131_6150433.jpg');
   background-position: center;
   padding-top: 100px;
   padding-left: 20px;
@@ -11,6 +11,7 @@
   align-items: center;
   min-height: 100vh;
   box-sizing: border-box;
+  background-color: black;
 }
 
 /* Product content container */

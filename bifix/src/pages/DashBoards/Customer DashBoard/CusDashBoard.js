@@ -3,6 +3,10 @@ import './CusDashBoard.css';
 //import Navbar from '../../../components/Navbar/Navbar';
 import { Fade } from "react-awesome-reveal";
 import { useLocation } from 'react-router-dom'; // Import useLocation to retrieve passed state
+import UserProfileBar from '../components/UserProfileBar';
+
+
+
 
 function CustomerDashBoard() {
   const [userName, setUserName] = useState('');
@@ -34,8 +38,16 @@ function CustomerDashBoard() {
 
       <div className="cusdashboard-page">
         <Fade duration={500}>
+          <div className="cusdashboard-header">
+
+          <UserProfileBar
+            userData={{ name: userName, email: location.state?.user?.email || JSON.parse(sessionStorage.getItem('userData'))?.email }}
+            onChangeProfile={() => alert('Change Profile clicked! Add your logic here.')}
+          />
+          </div>
+          
+          
           <div className="cusdashboard-wrapper">
-            <h1>Hello, {userName || 'User'}!</h1> {/* Personalized greeting */}
             <div className="cusdashboard-sections">
               <div className="cusdashboard-section">
                 <h2>Your Orders</h2>

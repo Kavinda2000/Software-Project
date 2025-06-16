@@ -43,3 +43,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
     transform: translateY(-5px); /* Slightly lift the section */
   }
+
+  .cusdashboard-header{
+    margin-bottom: 30px;
+  }

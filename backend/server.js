@@ -46,7 +46,7 @@ app.use("/api/repair-schedule", repairScheduleRoutes);
 app.use("/api/otp",otpRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/checkout/success', userLoginRoutes);
-app.use('/api/password/forgot-password', passwordRoutes);
+app.use('/api/password', passwordRoutes);
 app.use('/api/search', searchBarRoutes);
 
 

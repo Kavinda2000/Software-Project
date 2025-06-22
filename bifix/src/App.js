@@ -16,7 +16,7 @@ import CustomerDashBoard from './pages/DashBoards/Customer DashBoard/CusDashBoar
 import VenDashBoard from './pages/DashBoards/Vendor  DashBoard/VenDashBoard';
 import Login from './pages/Login/Login';
 import Otp from './pages/Otp/Otp';
-
+import ResetPassword from './pages/ForgotPassword/ResetPassword';
 
 function App() {
   return (
@@ -38,6 +38,7 @@ function App() {
         <Route path="/customer-dashboard" element={<CustomerDashBoard />} />
         <Route path="/vendor-dashboard" element={<VenDashBoard />} />
         <Route path="/Otp" element={<Otp/>} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

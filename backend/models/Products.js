@@ -15,17 +15,13 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: true,
+        required: false, // optional if not always used
     },
     image: {
-        type: String,
-        required: true,
+        type: String, // Will store URL or file path
+        default: ''   // Empty by default, image upload is optional
     },
     warranty: {
-        type: String,
-        required: true,
-    },
-    reviews: {
         type: String,
         required: true,
     },
@@ -33,10 +29,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-},
-{
+}, {
     timestamps: true,
-})
+});
 
 // Compound index to prevent duplicate products with same title + brand
 productSchema.index({ title: 1, brand: 1 }, { unique: true });

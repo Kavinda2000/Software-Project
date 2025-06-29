@@ -1,69 +1,65 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './partsform.css';
-import axios from 'axios'; // Import Axios
-import { toast, ToastContainer } from 'react-toastify';  // Import toast and ToastContainer
-import 'react-toastify/dist/ReactToastify.css'; // Import styles for react-toastify
 
-function PartsForm({ onClose, user}) {
+function PartsForm({ onClose, user }) {
   const [formData, setFormData] = useState({
     title: '',
     price: '',
     brand: '',
     category: '',
-    imageFile: null,
-    imageUrl: '',
-    warranty: '',
-    reviews: '',
     owner: user?.email || '',
   });
 
+  const [imageFile, setImageFile] = useState(null);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+  const { name, value, files } = e.target;
+  if (name === 'imageFile') {
+    setImageFile(files[0]);
+  } else {
     setFormData((prev) => ({ ...prev, [name]: value }));
+  }
   };
 
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    await axios.post('http://localhost:5000/api/products', formData);
-
-    // Show a success toast if the product is created successfully
-    toast.success('Product created successfully!', {
-      position: 'top-right',
-      autoClose: 3000,
-    });
-
-    // Close the modal after a short delay
-    setTimeout(() => {
-      onClose();
-    }, 3000);
-  } catch (error) {
-    if (error.response && error.response.status === 409) {
-      // Show an error toast for duplicate product
-      toast.error(error.response.data.message, {
-        position: 'top-right',
-        autoClose: 3000,
-      });
-    } else if (error.response && error.response.status === 400) {
-      // Show an error toast for missing fields
-      toast.error(error.response.data.message, {
-        position: 'top-right',
-        autoClose: 3000,
-      });
-    } else {
-      // Show a generic error toast for other errors
-      toast.error('Error creating product!', {
-        position: 'top-right',
-        autoClose: 3000,
-      });
+    if (!imageFile) {
+      toast.error('Please upload an image file!', { autoClose: 3000 });
+      return;
     }
-  }
-};
+
+    try {
+      const formDataToSend = new FormData();
+
+      // Append form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+
+      // Append image file
+      formDataToSend.append('image', imageFile);  // ✅ must be 'image'
+
+      await axios.post('http://localhost:5000/api/products', formDataToSend, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      toast.success('Product created successfully!', { autoClose: 3000 });
+      setTimeout(() => onClose(), 3000);
+    } catch (error) {
+      console.error(error);
+      toast.error('Error creating product!', { autoClose: 3000 });
+    }
+  };
+
 
   return (
     <div className="form-overlay">
-      <ToastContainer /> {/* Add ToastContainer here */}
+      <ToastContainer />
       <div className="form-container">
         <h2>Publish a Product</h2>
         <form onSubmit={handleSubmit} className="form-grid">
@@ -81,7 +77,7 @@ function PartsForm({ onClose, user}) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="price">Price (in $)</label>
+            <label htmlFor="price">Price (in Rs)</label>
             <input
               type="number"
               id="price"
@@ -95,22 +91,22 @@ function PartsForm({ onClose, user}) {
 
           <div className="form-group">
             <label htmlFor="brand">Brand</label>
-              <select
-                id="brand"
-                name="brand"
-                value={formData.brand}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Brand</option>
-                <option value="Honda">Honda</option>
-                <option value="Yamaha">Yamaha</option>
-                <option value="TVS">TVS</option>
-                <option value="Bajaj">Bajaj</option>
-                <option value="Hero">Hero</option>
-                <option value="Suzuki">Suzuki</option>
-                <option value="Other">Other</option>
-              </select>
+            <select
+              id="brand"
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Brand</option>
+              <option value="Honda">Honda</option>
+              <option value="Yamaha">Yamaha</option>
+              <option value="TVS">TVS</option>
+              <option value="Bajaj">Bajaj</option>
+              <option value="Hero">Hero</option>
+              <option value="Suzuki">Suzuki</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
 
           <div className="form-group">
@@ -133,16 +129,16 @@ function PartsForm({ onClose, user}) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="image">Image URL</label>
+            <label htmlFor="imageFile">Upload Image</label>
             <input
-              type="text"
-              id="image"
-              name="image"
-              placeholder="Image URL"
+              type="file"
+              id="imageFile"
+              name="imageFile"
+              accept="image/*"
               onChange={handleChange}
-              value={formData.image}
               required
             />
+
           </div>
 
           <div className="form-group">

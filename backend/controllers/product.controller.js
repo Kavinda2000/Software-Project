@@ -13,12 +13,13 @@ export const getProducts = async (req,res) =>{
 }
 
 export const createProduct = async (req, res) => {
-    const { title, price, brand, category, warranty, reviews, owner } = req.body;
+    const { title, price, brand, category, warranty, owner } = req.body;
     const image = req.file ? req.file.path : null;
 
-    if (!title || !price || !brand || !category || !warranty || !reviews || !owner || !image) {
+    if (!title || !price || !brand || !category || !warranty || !owner || !image) {
         return res.status(400).json({ success: false, message: "Please provide all fields including image" });
     }
+
 
     try {
         const existingProduct = await Product.findOne({ title, brand });
@@ -37,7 +38,6 @@ export const createProduct = async (req, res) => {
             category,
             image,
             warranty,
-            reviews,
             owner
         });
 

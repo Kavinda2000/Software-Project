@@ -37,6 +37,14 @@ const userSchema = new mongoose.Schema({
   profilePicture: {
     type: String, // Will store URL or file path
     default: ''   // Empty by default, image upload is optional
+  },
+  resetToken: {
+    type: String,
+    default: undefined
+  },
+  resetTokenExpiry: {
+    type: Date,
+    default: undefined
   }
   
 }, {
@@ -46,3 +54,5 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 export default User;
+
+

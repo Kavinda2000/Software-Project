@@ -20,6 +20,15 @@ import  updateUser  from './routes/user.route.js';
 dotenv.config();
 
 
+
+// Add this line to serve the uploads folder publicly
+
+
+
+
+
+
+
 const PORT = process.env.PORT || 5000
 
 // Before defining routes
@@ -29,7 +38,7 @@ const app = express();
 // ✅ Increase limit to handle base64 image
 app.use(express.json({ limit: '5mb' })); // or even '10mb' if needed
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
-
+app.use('/uploads', express.static('uploads'));
 
 app.use(cors());
 app.use(express.json());
@@ -46,7 +55,7 @@ app.use("/api/repair-schedule", repairScheduleRoutes);
 app.use("/api/otp",otpRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/checkout/success', userLoginRoutes);
-app.use('/api/password/forgot-password', passwordRoutes);
+app.use('/api/password', passwordRoutes);
 app.use('/api/search', searchBarRoutes);
 
 
@@ -60,6 +69,3 @@ app.listen(5000, ()=> {
   connectDB();
   console.log('Server Started at http://localhost:'+ PORT);
 })
-
-
-

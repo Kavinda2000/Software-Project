@@ -1,45 +1,35 @@
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+// pages/Services.js
+import React, { useState } from 'react';
 import './Services.css';
+import ServiceNav from './Navigation/ServiceNav';
+import ServiceSidebar from './sidebar/ServiceSidebar';
+import ServiceList from './components/ServiceList';
+import ServicesCards from './Serv'; // ✅ alias import to avoid conflict
 
 function Services() {
-  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   return (
     <>
-    <div className='service-page'>
-      <h1 className='head'>Our Services</h1>
+      <ServiceNav query={query} setQuery={setQuery} />
+      <div className="services-page">
+        <div className="services-content">
+          {/* Left side: Card-based Services component */}
+          <div style={{ flex: 1 }}>
+            <ServicesCards />
+          </div>
 
-      <div className='services-container'>
-        {/* Online Service Scheduling */}
-        <div className='service-card'>
-          <h2 className='services-title'>Bike repair</h2>
-          <p className='services-paragraph'>Book an appointment with trusted repair centers for hassle-free servicing.</p>
-        <Link to="/Services/BikeRepairSchedule">
-          <button className='service-btn' onClick={() => navigate('/Services/BikeRepairSchedule')}>
-              Schedule Now
-          </button>
-        </Link>
-        
-
-  
-          
-        </div>
-
-        {/* Online Payments */}
-        <div className='service-card'>
-          <h2 className='services-title'>Bike Service</h2>
-          <p className='services-paragraph'>Schedule a visit to trusted service centers for smooth and reliable maintenance.</p>
-          <Link to="/Services/BikeServiceSchedule">
-            <button className='service-btn' onClick={() => navigate('/Services/BikeServiceSchedule')}>
-              Schedule Now
-            </button>
-        </Link>
-          
-          
+          {/* Right side: Sidebar + List */}
+          <div style={{ flex: 2 }}>
+            <ServiceSidebar
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+            <ServiceList query={query} selectedCategory={selectedCategory} />
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

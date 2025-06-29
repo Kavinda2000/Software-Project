@@ -108,7 +108,7 @@ function VenDashBoard() {
 
       <div className="ven-dashboard-container">
         <div className="your-products-card">
-          <h2 className="your-products-title">Your Parts</h2>
+          <h2 className="your-products-title">Your Products</h2>
           <div className="vencard-container">
             <div className="vencard" onClick={() => setIsFormOpen(true)}>
               <div className="plus-icon-container">

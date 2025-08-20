@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
-=======
->>>>>>> origin/master
 import axios from "axios";
 import "./BikeRepairSchedule.css";
 
@@ -22,18 +19,10 @@ function BikeRepairSchedule() {
   const [timeSlot, setTimeSlot] = useState("");
   const [issueDescription, setIssueDescription] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-<<<<<<< HEAD
   const [message, setMessage] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const navigate = useNavigate();
-=======
-  const [paymentMethod, setPaymentMethod] = useState("visa");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [message, setMessage] = useState("");
->>>>>>> origin/master
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/vendors")
@@ -52,17 +41,13 @@ function BikeRepairSchedule() {
         c.name.toLowerCase().includes(search.toLowerCase())
       )
     );
-<<<<<<< HEAD
     setActiveIndex(-1);
-=======
->>>>>>> origin/master
   }, [search, companies]);
 
 // Added this function inside the component:
 
 
 
-<<<<<<< HEAD
   const handleSelect = (name) => {
     setSelectedCompany(name);
     setSearch(name);
@@ -87,24 +72,16 @@ function BikeRepairSchedule() {
     }
   };
 
-=======
->>>>>>> origin/master
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       !selectedCompany || !customerName || !bikeModel || !date ||
-<<<<<<< HEAD
       !timeSlot || !issueDescription || !contactNumber
-=======
-      !timeSlot || !issueDescription || !contactNumber ||
-      !cardNumber || !expiry || !cvv
->>>>>>> origin/master
     ) {
       setMessage("Please fill all fields.");
       return;
     }
 
-<<<<<<< HEAD
     navigate("/Services/BikeRepairPayment", {
       state: {
         selectedCompany,
@@ -116,26 +93,6 @@ function BikeRepairSchedule() {
         contactNumber
       }
     });
-=======
-    try {
-      await axios.post("http://localhost:5000/api/repair-schedule", {
-        companyName: selectedCompany,
-        customerName,
-        bikeModel,
-        repairDate: date,
-        timeSlot,
-        issueDescription,
-        contactNumber,
-        paymentMethod,
-        cardNumber,
-        expiry,
-        cvv
-      });
-      setMessage("Booking successful! The company will confirm your time.");
-    } catch (error) {
-      setMessage("Booking failed. Try again.");
-    }
->>>>>>> origin/master
   };
 
   const handleFindNearby = () => {
@@ -150,7 +107,6 @@ function BikeRepairSchedule() {
         <form onSubmit={handleSubmit} className="bike-repair-form">
           <div className="input-group">
             <label htmlFor="search-company">Search Company:</label>
-<<<<<<< HEAD
             <div className="autocomplete">
               <input
                 id="search-company"
@@ -186,30 +142,6 @@ function BikeRepairSchedule() {
                   )}
                 </div>
               )}
-=======
-            <input
-              id="search-company"
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Type company name..."
-              autoComplete="off"
-            />
-            <div className="company-list">
-              {filteredCompanies.map(c => (
-                <div
-                  key={c._id}
-                  className={`company-item${selectedCompany === c.name ? " selected" : ""}`}
-                  onClick={() => setSelectedCompany(c.name)}
-                  tabIndex={0}
-                  onKeyPress={e => { if (e.key === 'Enter') setSelectedCompany(c.name); }}
-                  role="button"
-                  aria-pressed={selectedCompany === c.name}
-                >
-                  {c.name}
-                </div>
-              ))}
->>>>>>> origin/master
             </div>
           </div>
 
@@ -242,11 +174,8 @@ function BikeRepairSchedule() {
               type="date"
               value={date}
               onChange={e => setDate(e.target.value)}
-<<<<<<< HEAD
               onFocus={e => { if (e.target.showPicker) { e.target.showPicker(); } }}
               min={new Date().toISOString().split('T')[0]}
-=======
->>>>>>> origin/master
               required
             />
           </div>
@@ -290,34 +219,6 @@ function BikeRepairSchedule() {
             />
           </div>
 
-<<<<<<< HEAD
-=======
-          <div className="input-group">
-            <label htmlFor="payment-method">Payment Method:</label>
-            <select
-              id="payment-method"
-              value={paymentMethod}
-              onChange={e => setPaymentMethod(e.target.value)}
-            >
-              <option value="visa">Visa</option>
-              <option value="master">Master</option>
-            </select>
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="card-number">Card Number:</label>
-            <input
-              id="card-number"
-              type="text"
-              value={cardNumber}
-              onChange={e => setCardNumber(e.target.value)}
-              required
-              maxLength={16}
-              pattern="\\d{16}"
-              title="Enter 16 digit card number"
-            />
-          </div>
->>>>>>> origin/master
 
           <button
             type="button"
@@ -327,39 +228,7 @@ function BikeRepairSchedule() {
             Find Repair Centers Near Me
           </button>
 
-<<<<<<< HEAD
           <button type="submit" className="btn">Continue to Payment</button>
-=======
-          <div className="input-group">
-            <label htmlFor="expiry">Expiry (MM/YY):</label>
-            <input
-              id="expiry"
-              type="text"
-              placeholder="MM/YY"
-              value={expiry}
-              onChange={e => setExpiry(e.target.value)}
-              required
-              pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$"
-              title="Enter expiry in MM/YY format"
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="cvv">CVV:</label>
-            <input
-              id="cvv"
-              type="password"
-              value={cvv}
-              onChange={e => setCvv(e.target.value)}
-              required
-              maxLength={4}
-              pattern="\\d{3,4}"
-              title="Enter 3 or 4 digit CVV"
-            />
-          </div>
-
-          <button type="submit" className="btn">Book Now</button>
->>>>>>> origin/master
           {message && <div className="message">{message}</div>}
         </form>
       </div>

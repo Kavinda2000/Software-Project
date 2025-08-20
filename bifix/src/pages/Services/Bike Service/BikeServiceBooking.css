@@ -8,7 +8,6 @@
   justify-content: center;
 }
 .bike-service-booking-container {
-<<<<<<< HEAD
   background: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -17,21 +16,6 @@
   width: min(680px, 92vw);
   color: #ffffff;
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-=======
-  /*background:transparent (255, 255, 255);
-  padding: 32px 32px 24px 32px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  max-width: 500px;
-  width: 100%;*/
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-  padding: 30px 40px;
-  width: 420px;
-  color: #ffffff;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
-
->>>>>>> origin/master
 }
 .bike-service-booking-forouprm .option {
   margin-bottom: 18px;
@@ -54,11 +38,7 @@
   padding: 12px 15px;
   font-size: 15px;
   border-radius: 8px;
-<<<<<<< HEAD
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-=======
-  border: 1.5px solid #ffffff(255, 255, 255, 0.4);
->>>>>>> origin/master
   background: transparent;
   color: #ffffff;
   outline: none;
@@ -70,20 +50,12 @@
   font-size: 15px;
   font-size: 15px;
   border-radius: 8px;
-<<<<<<< HEAD
   color: #ffffff !important;
-=======
-  color: #ffffff;
->>>>>>> origin/master
   outline: none;
   transition: border-color 0.3s ease;
   width: 100%;
   padding: 8px 10px;
-<<<<<<< HEAD
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-=======
-  border: 1.5px solid black(255, 255, 255, 0.4);
->>>>>>> origin/master
   border-radius: 5px;
   font-size: 1rem;
   background: transparent;
@@ -91,7 +63,6 @@
 
 }
 
-<<<<<<< HEAD
 /* Ensure dropdown list items are readable */
 .bike-service-booking-form select option {
   color: #000;
@@ -131,8 +102,6 @@
   background-color: rgba(0,180,216,0.5);
 }
 
-=======
->>>>>>> origin/master
 .bike-service-booking-form .payment-options {
   display: flex;
   gap: 20px;

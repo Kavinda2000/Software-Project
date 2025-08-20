@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+=======
+import React, { useState } from "react";
+>>>>>>> origin/master
 import "./BikeServiceBooking.css";
 
 const TIME_SLOTS = [
@@ -16,6 +20,7 @@ const TIME_SLOTS = [
 ];
 
 function BikeServiceBooking() {
+<<<<<<< HEAD
   const [companies, setCompanies] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
@@ -91,6 +96,21 @@ function BikeServiceBooking() {
         contactNumber
       }
     });
+=======
+  const [company, setCompany] = useState("");
+  const [date, setDate] = useState("");
+  const [timeSlot, setTimeSlot] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("visa");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    // You can add API call here
+>>>>>>> origin/master
   };
 
   return (
@@ -98,6 +118,7 @@ function BikeServiceBooking() {
       <div className="bike-service-booking-container">
         <h2>Book Your Bike Service</h2>
         <form className="bike-service-booking-form" onSubmit={handleSubmit}>
+<<<<<<< HEAD
           {/* Customer Name */}
           <div className="form-group">
             <label htmlFor="customer-name">Customer Name</label>
@@ -162,6 +183,18 @@ function BikeServiceBooking() {
                 </div>
               )}
             </div>
+=======
+          {/* Company Search */}
+          <div className="form-group">
+            <label>Search Company</label>
+            <input
+              type="text"
+              placeholder="Enter company name"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              required
+            />
+>>>>>>> origin/master
           </div>
           {/* Date Picker */}
           <div className="form-group">
@@ -170,7 +203,10 @@ function BikeServiceBooking() {
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
+<<<<<<< HEAD
               onFocus={(e) => { if (e.target.showPicker) { e.target.showPicker(); } }}
+=======
+>>>>>>> origin/master
               required
               min={new Date().toISOString().split("T")[0]}
             />
@@ -191,6 +227,7 @@ function BikeServiceBooking() {
               ))}
             </select>
           </div>
+<<<<<<< HEAD
           {/* Issue / Service Description */}
           <div className="form-group">
             <label htmlFor="issue-description">Describe Service Need</label>
@@ -217,6 +254,74 @@ function BikeServiceBooking() {
           </div>
           <button type="submit" className="bike-service-booking-btn">
             Continue to Payment
+=======
+          {/* Payment Method */}
+          <div className="form-group">
+            <label>Payment Method</label>
+            <div className="payment-options">
+              <label>
+                <input
+                  type="radio"
+                  name="payment"
+                  value="visa"
+                  checked={paymentMethod === "visa"}
+                  onChange={() => setPaymentMethod("visa")}
+                />
+                Visa
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="payment"
+                  value="master"
+                  checked={paymentMethod === "master"}
+                  onChange={() => setPaymentMethod("master")}
+                />
+                MasterCard
+              </label>
+            </div>
+          </div>
+          {/* Card Details */}
+          <div className="form-group">
+            <label>Card Number</label>
+            <input
+              type="text"
+              placeholder="Card Number"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              required
+              maxLength={16}
+              pattern="\d*"
+            />
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Expire Date</label>
+              <input
+                type="text"
+                placeholder="MM/YY"
+                value={expiry}
+                onChange={(e) => setExpiry(e.target.value)}
+                required
+                maxLength={5}
+              />
+            </div>
+            <div className="form-group">
+              <label>CVV</label>
+              <input
+                type="password"
+                placeholder="CVV"
+                value={cvv}
+                onChange={(e) => setCvv(e.target.value)}
+                required
+                maxLength={4}
+                pattern="\d*"
+              />
+            </div>
+          </div>
+          <button type="submit" className="bike-service-booking-btn">
+            Book Now
+>>>>>>> origin/master
           </button>
           {submitted && (
             <div className="success-message">

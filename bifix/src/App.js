@@ -18,11 +18,10 @@ import Otp from './pages/Otp/Otp';
 import ResetPassword from './pages/ForgotPassword/ResetPassword';
 import BikeRepair from './pages/Services/Bike Repair/BikeRepairSchedule';
 import BikeService from './pages/Services/Bike Service/BikeServiceBooking';
-<<<<<<< HEAD
 import BikeServicePayment from './pages/Services/Bike Service/BikeServicePayment';
 import BikeRepairPayment from './pages/Services/Bike Repair/BikeRepairPayment';
-=======
->>>>>>> origin/master
+import BikeServiceMap from './pages/Services/Bike Service/BikeServiceMap';
+import GoogleServiceMap from './pages/Services/Bike Service/GoogleServiceMap';
 
 function App() {
   return (
@@ -34,13 +33,11 @@ function App() {
         <Route path="/Parts" element={<Parts />} />
         <Route path="/Services" element={<Services />} />
         <Route path="/Services/BikeRepairSchedule" element={<BikeRepair />} />
-<<<<<<< HEAD
         <Route path="/Services/BikeRepairPayment" element={<BikeRepairPayment />} />
         <Route path="/Services/BikeServiceSchedule" element={<BikeService />} />
         <Route path="/Services/BikeServicePayment" element={<BikeServicePayment />} />
-=======
-        <Route path="/Services/BikeServiceSchedule" element={<BikeService />} />
->>>>>>> origin/master
+        <Route path="/Services/BikeServiceMap" element={<BikeServiceMap />} />
+        <Route path="/Services/GoogleServiceMap" element={<GoogleServiceMap />} />
         <Route path="/Contact" element={<Contact /> } />
         <Route path="/Login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

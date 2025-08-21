@@ -8,7 +8,6 @@
   justify-content: center;
 }
 .bike-service-booking-container {
-<<<<<<< HEAD
   background: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -17,21 +16,6 @@
   width: min(680px, 92vw);
   color: #ffffff;
   box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-=======
-  /*background:transparent (255, 255, 255);
-  padding: 32px 32px 24px 32px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  max-width: 500px;
-  width: 100%;*/
-  background: rgba(0, 0, 0, 0.6);
-  border-radius: 15px;
-  padding: 30px 40px;
-  width: 420px;
-  color: #ffffff;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
-
->>>>>>> origin/master
 }
 .bike-service-booking-forouprm .option {
   margin-bottom: 18px;
@@ -54,11 +38,7 @@
   padding: 12px 15px;
   font-size: 15px;
   border-radius: 8px;
-<<<<<<< HEAD
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-=======
-  border: 1.5px solid #ffffff(255, 255, 255, 0.4);
->>>>>>> origin/master
   background: transparent;
   color: #ffffff;
   outline: none;
@@ -70,20 +50,12 @@
   font-size: 15px;
   font-size: 15px;
   border-radius: 8px;
-<<<<<<< HEAD
   color: #ffffff !important;
-=======
-  color: #ffffff;
->>>>>>> origin/master
   outline: none;
   transition: border-color 0.3s ease;
   width: 100%;
   padding: 8px 10px;
-<<<<<<< HEAD
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-=======
-  border: 1.5px solid black(255, 255, 255, 0.4);
->>>>>>> origin/master
   border-radius: 5px;
   font-size: 1rem;
   background: transparent;
@@ -91,7 +63,6 @@
 
 }
 
-<<<<<<< HEAD
 /* Ensure dropdown list items are readable */
 .bike-service-booking-form select option {
   color: #000;
@@ -131,8 +102,6 @@
   background-color: rgba(0,180,216,0.5);
 }
 
-=======
->>>>>>> origin/master
 .bike-service-booking-form .payment-options {
   display: flex;
   gap: 20px;
@@ -161,9 +130,92 @@
   background: #7266ef;
 }
 
+
+
 .success-message {
   margin-top: 16px;
   color: #ffd700;
   font-weight: bold;
   text-align: center;
+}
+
+/* Booking Charge Section Styles */
+.booking-charge-section {
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.charge-display {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.charge-display h3 {
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.charge-amount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 15px 0;
+}
+
+.currency {
+  color: #ffd700;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.amount {
+  color: #ffd700;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.charge-description {
+  color: #cccccc;
+  font-size: 14px;
+  margin: 0;
+}
+
+.payment-note {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.payment-note h4 {
+  color: #ffd700;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.note-content p {
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.note-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.note-content li {
+  color: #cccccc;
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.note-content strong {
+  color: #ffd700;
 }

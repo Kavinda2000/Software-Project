@@ -34,6 +34,14 @@ function Services() {
           
           
         </div>
+        <div style={{ marginTop: 20, width: '100%' }}>
+          <button
+            className='service-btn'
+            onClick={() => navigate('/Services/BikeServiceMap')}
+          >
+            Find centers near me
+          </button>
+        </div>
       </div>
     </div>
     </>

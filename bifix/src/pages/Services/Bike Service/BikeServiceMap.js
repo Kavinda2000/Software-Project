@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './BikeServiceMap.css';
+import axios from 'axios';
 
 // Fix for default marker icons in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -23,14 +24,14 @@ const customIcon = new L.Icon({
 function BikeServiceMap() {
   const navigate = useNavigate();
   const [userLocation, setUserLocation] = useState(null);
-  const [bikeServiceCenters, setBikeServiceCenters] = useState([
-    { lat: 6.9271, lon: 79.8612, name: "Colombo Bike Repair Center", type: "Repair" },
-    { lat: 6.0480, lon: 80.2181, name: "Galle Bike Repair Shop", type: "Repair" },
-    { lat: 6.5244, lon: 79.9577, name: "Dehiwala Motorcycle Service", type: "Repair" },
-    { lat: 6.9271, lon: 79.8612, name: "Mount Lavinia Bike Center", type: "Repair" },
-  ]);
+  const [vendorCenters, setVendorCenters] = useState([]);
 
   // Get user location
+  useEffect(() => {
+    document.body.classList.add('map-dark-page');
+    return () => document.body.classList.remove('map-dark-page');
+  }, []);
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -45,15 +46,40 @@ function BikeServiceMap() {
     }
   }, []);
 
+  // Load nearby vendors from backend when location available
+  useEffect(() => {
+    const fetchNearby = async () => {
+      try {
+        if (!userLocation) return;
+        const [lat, lon] = userLocation;
+        const res = await axios.get(`http://localhost:5000/api/vendors/near?latitude=${lat}&longitude=${lon}&radiusMeters=15000`);
+        const centers = (res.data || [])
+          .filter(v => typeof v.latitude === 'number' && typeof v.longitude === 'number')
+          .map(v => ({
+            lat: v.latitude,
+            lon: v.longitude,
+            name: v.name || 'Vendor',
+            address: v.address || '',
+            type: 'Vendor'
+          }));
+        setVendorCenters(centers);
+      } catch (e) {
+        console.log('Failed to load nearby vendors', e);
+        setVendorCenters([]);
+      }
+    };
+    fetchNearby();
+  }, [userLocation]);
+
   return (
     <div className="map-container">
       <div className="map-header">
         <h2>Bike Repair Centers Near You</h2>
         <button 
           className="back-button"
-          onClick={() => navigate("/Services/BikeRepairSchedule")}
+          onClick={() => navigate("/services")}
         >
-          ← Back to Schedule
+          ← Back to Services
         </button>
       </div>
       <MapContainer 
@@ -70,11 +96,12 @@ function BikeServiceMap() {
           </Marker>
         )}
 
-        {bikeServiceCenters.map((center, index) => (
+        {vendorCenters.map((center, index) => (
           <Marker key={index} position={[center.lat, center.lon]} icon={customIcon}>
             <Popup>
               <div>
                 <h4>{center.name}</h4>
+                {center.address && <p>{center.address}</p>}
                 <p>Type: {center.type}</p>
                 <button 
                   onClick={() => navigate("/Services/BikeRepairSchedule")}

@@ -1,13 +1,18 @@
+.map-dark-page {
+    background-color: #0b1020; /* dark page background while viewing map */
+}
+
 .map-container {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 90px auto 20px; /* push content below fixed navbar */
     padding: 20px;
-    background-color: white;
+    background-color: #0f172a; /* dark container */
     border-radius: 10px;
-    border: 2px solid #ccc;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #1f2937; /* subtle dark border */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     position: relative;
+    color: #e5e7eb;
 }
 
 .map-header {
@@ -16,12 +21,12 @@
     align-items: center;
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #f0f0f0;
+    border-bottom: 1px solid #1f2937;
 }
 
 .map-header h2 {
     margin: 0;
-    color: #333;
+    color: #e5e7eb;
     font-size: 24px;
 }
 

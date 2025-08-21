@@ -17,6 +17,7 @@ function Navbar() {
 
 
 
+
   // Check login state whenever location changes (on route change)
   useEffect(() => {
     const token = sessionStorage.getItem('authToken');

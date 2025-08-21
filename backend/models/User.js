@@ -25,6 +25,17 @@ const userSchema = new mongoose.Schema({
       return this.role === 'vendor';  // Address is only required for vendors
     },
   },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number], // [longitude, latitude]
+      default: undefined
+    }
+  },
   password: {
     type: String,
     required: true,
@@ -50,6 +61,9 @@ const userSchema = new mongoose.Schema({
 }, {
   timestamps: true,
 });
+
+// Enable geospatial queries on vendor locations
+userSchema.index({ location: '2dsphere' });
 
 const User = mongoose.model('User', userSchema);
 

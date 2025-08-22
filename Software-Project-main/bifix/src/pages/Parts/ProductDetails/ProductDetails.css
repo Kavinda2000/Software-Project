@@ -1,0 +1,104 @@
+/* Main container for product details */
+.product-details-container {
+  background-size: cover;
+  background-image: url('./19538131_6150433.jpg');
+  background-position: center;
+  padding-top: 100px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+/* Product content container */
+.product-details-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 40px;
+  background: rgba(26, 20, 20, 0.247);
+  padding: 40px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Image styling */
+.product-details-image {
+  height: 500px;
+  width: 500px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 20px;
+}
+
+/* Product information section */
+.product-details-info {
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 20px;
+  max-width: 500px;
+}
+
+.product-details-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+}
+
+.product-details-brand,
+.product-details-warranty,
+.product-details-owner,
+.product-details-price {
+  font-size: 1.2rem;
+  color: white;
+}
+
+.product-details-info p {
+  margin-top: 10px;
+}
+
+/* Add to Cart Button */
+.button-87 {
+  background: #08b91c;
+  border: 1px solid #08b91c;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  padding: 12px 14px;
+  text-align: center;
+  width: 100%;
+  margin-top: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.button-87:hover {
+  background-color: #1fe03f;
+}
+
+.button-87:active {
+  opacity: 0.7;
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  font-size: 2rem;
+  color: #08b91c;
+  padding: 50px;
+}

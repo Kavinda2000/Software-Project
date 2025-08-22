@@ -1,4 +1,5 @@
 .service-page {
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,11 +62,66 @@
 }
 
 .services-paragraph {
+=======
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('./WhatsApp\ Image\ 2025-06-29\ at\ 09.34.59_aa4d08da.jpg');
+    color: white;
+    text-align: center;
+    padding: 20px;
+    background-size: cover;
+  }
+  
+  /* Header */
+  .head {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  /* Services Container */
+  .services-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 80%;
+  }
+  
+  /* Service Card */
+  .service-card {
+    background: #222;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    width: 350px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Service Heading */
+  .services-title{
+    color: #34d657;
+    margin-bottom: 15px;
+    font-size: 24px;
+  }
+
+.services-paragraph{
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
   margin-top: 5px;
   margin-bottom: 10px;
   font-size: 16px;
 }
 
+<<<<<<< HEAD
 
 /* Buttons */
 .service-btn {
@@ -100,3 +156,23 @@
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
+=======
+  
+  /* Buttons */
+  .service-btn {
+    background-color: #34d657;
+    color: black;
+    font-weight: 600;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .service-btn:hover {
+    background-color: #34d657;
+    transform: scale(1.05);
+  }
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b

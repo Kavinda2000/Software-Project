@@ -1,6 +1,10 @@
 import express from 'express'
 import dotenv from "dotenv"
+<<<<<<< HEAD
 import { connectDB } from './config/db.js'
+=======
+import {connectDB} from './config/db.js'
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 import productRoutes from "./routes/product.route.js"
 import emailRoutes from './routes/email.route.js'
 import cors from 'cors'
@@ -8,15 +12,24 @@ import userRouter from './routes/user.route.js'
 import userDetails from './routes/user.route.js'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+<<<<<<< HEAD
 import userLoginRoutes from './routes/user.login.route.js'
+=======
+import  userLoginRoutes  from './routes/user.login.route.js'
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 import vendorRoutes from './routes/vendor.route.js';
 import repairScheduleRoutes from './routes/repairSchedule.route.js';
 import otpRoutes from './routes/otp.route.js';
 import checkoutRoutes from './routes/checkout.route.js';
 import passwordRoutes from './routes/password.route.js';
+<<<<<<< HEAD
 import searchBarRoutes from './routes/search_bar.route.js'
 import updateUser from './routes/user.route.js';
 import bikeServiceRoutes from './routes/bikeService.route.js';
+=======
+import searchBarRoutes  from './routes/search_bar.route.js'
+import  updateUser  from './routes/user.route.js';
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 
 dotenv.config();
 
@@ -45,6 +58,7 @@ app.use(cors());
 app.use(express.json());
 
 
+<<<<<<< HEAD
 app.use("/api/products", productRoutes)
 app.use("/api/postEmails", emailRoutes)
 app.use("/api/registerUser", userRouter)
@@ -54,11 +68,25 @@ app.use('/api/loginDetails', userLoginRoutes);
 app.use("/api/vendors", vendorRoutes);
 app.use("/api/repair-schedule", repairScheduleRoutes);
 app.use("/api/otp", otpRoutes);
+=======
+app.use("/api/products",productRoutes)
+app.use("/api/postEmails",emailRoutes)
+app.use("/api/registerUser", userRouter)
+app.use('/api/userDetails', userDetails);
+app.use('/api/updateUser', updateUser);
+app.use('/api/loginDetails', userLoginRoutes );
+app.use("/api/vendors", vendorRoutes);
+app.use("/api/repair-schedule", repairScheduleRoutes);
+app.use("/api/otp",otpRoutes);
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/checkout/success', userLoginRoutes);
 app.use('/api/password', passwordRoutes);
 app.use('/api/search', searchBarRoutes);
+<<<<<<< HEAD
 app.use('/api/bike-service', bikeServiceRoutes);
+=======
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 
 
 
@@ -67,7 +95,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
+<<<<<<< HEAD
 app.listen(5000, () => {
   connectDB();
   console.log('Server Started at http://localhost:' + PORT);
+=======
+app.listen(5000, ()=> {
+  connectDB();
+  console.log('Server Started at http://localhost:'+ PORT);
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 })

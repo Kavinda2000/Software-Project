@@ -30,6 +30,7 @@ function BikeServiceBooking() {
   const [submitted, setSubmitted] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+<<<<<<< HEAD
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [loadingVendors, setLoadingVendors] = useState(true);
@@ -52,6 +53,18 @@ function BikeServiceBooking() {
         console.error('Error fetching vendors:', error);
         setVendorError('Failed to load service centers. Please try again.');
         setLoadingVendors(false);
+=======
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/api/vendors")
+      .then(res => {
+        setCompanies(res.data);
+        setFilteredCompanies(res.data);
+      })
+      .catch(() => {
+        // keep silent on failure for now
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
       });
   }, []);
 
@@ -64,6 +77,7 @@ function BikeServiceBooking() {
     }
   }, [location.state]);
 
+<<<<<<< HEAD
   // Check available time slots when date and service center are selected
   useEffect(() => {
     const checkAvailableSlots = async () => {
@@ -96,6 +110,12 @@ function BikeServiceBooking() {
     const filtered = companies.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
     console.log('Filtered companies:', filtered);
     setFilteredCompanies(filtered);
+=======
+  useEffect(() => {
+    setFilteredCompanies(
+      companies.filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+    );
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
     setActiveIndex(-1);
   }, [search, companies]);
 
@@ -123,12 +143,17 @@ function BikeServiceBooking() {
     }
   };
 
+<<<<<<< HEAD
   const handleSubmit = async (e) => {
+=======
+  const handleSubmit = (e) => {
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
     e.preventDefault();
     if (!selectedCompany || !customerName || !bikeModel || !date || !timeSlot || !issueDescription || !contactNumber) {
       setSubmitted(false);
       return;
     }
+<<<<<<< HEAD
 
     try {
       // Find the selected company's ID
@@ -179,6 +204,20 @@ function BikeServiceBooking() {
       }
       setSubmitted(false);
     }
+=======
+    setSubmitted(true);
+    navigate("/Services/BikeServicePayment", {
+      state: {
+        selectedCompany,
+        customerName,
+        bikeModel,
+        date,
+        timeSlot,
+        issueDescription,
+        contactNumber
+      }
+    });
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
   };
 
 
@@ -219,10 +258,17 @@ function BikeServiceBooking() {
               <input
                 id="service-search-company"
                 type="text"
+<<<<<<< HEAD
                 placeholder={loadingVendors ? "Loading service centers..." : "Enter company name"}
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setShowSuggestions(true); }}
                 onFocus={() => !loadingVendors && setShowSuggestions(true)}
+=======
+                placeholder="Enter company name"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setShowSuggestions(true); }}
+                onFocus={() => setShowSuggestions(true)}
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
                 onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
                 onKeyDown={handleKeyDown}
                 autoComplete="off"
@@ -230,6 +276,7 @@ function BikeServiceBooking() {
                 aria-expanded={showSuggestions}
                 aria-controls="service-company-suggestions"
                 required
+<<<<<<< HEAD
                 disabled={loadingVendors}
               />
               {loadingVendors && (
@@ -239,6 +286,10 @@ function BikeServiceBooking() {
                 <div className="error-message">{vendorError}</div>
               )}
               {showSuggestions && search && !loadingVendors && (
+=======
+              />
+              {showSuggestions && search && (
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
                 <div id="service-company-suggestions" className="company-list" role="listbox">
                   {filteredCompanies.length > 0 ? (
                     filteredCompanies.map((c, index) => (
@@ -250,12 +301,20 @@ function BikeServiceBooking() {
                         role="option"
                         aria-selected={selectedCompany === c.name}
                       >
+<<<<<<< HEAD
                         <div className="company-name">{c.name}</div>
                         {c.address && <div className="company-address">{c.address}</div>}
                       </div>
                     ))
                   ) : (
                     <div className="company-item">No service centers found</div>
+=======
+                        {c.name}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="company-item">No results</div>
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
                   )}
                 </div>
               )}
@@ -280,6 +339,7 @@ function BikeServiceBooking() {
               value={timeSlot}
               onChange={(e) => setTimeSlot(e.target.value)}
               required
+<<<<<<< HEAD
               disabled={loadingSlots || !date || !selectedCompany}
             >
               <option value="">
@@ -305,6 +365,16 @@ function BikeServiceBooking() {
                 {availableTimeSlots.length} of {TIME_SLOTS.length} slots available
               </small>
             )}
+=======
+            >
+              <option value="">-- Select --</option>
+              {TIME_SLOTS.map((slot) => (
+                <option key={slot} value={slot}>
+                  {slot}
+                </option>
+              ))}
+            </select>
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
           </div>
           {/* Issue / Service Description */}
           <div className="form-group">
@@ -318,6 +388,7 @@ function BikeServiceBooking() {
               required
             />
           </div>
+<<<<<<< HEAD
           {/* Contact Number */}
           <div className="form-group">
             <label htmlFor="contact-number">Contact Number</label>
@@ -356,6 +427,46 @@ function BikeServiceBooking() {
               </div>
             </div>
           </div>
+=======
+                     {/* Contact Number */}
+           <div className="form-group">
+             <label htmlFor="contact-number">Contact Number</label>
+                          <input
+                id="contact-number"
+                type="tel"
+                placeholder="Enter contact number"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                required
+              />
+           </div>
+
+           {/* Booking Charge Information */}
+           <div className="booking-charge-section">
+             <div className="charge-display">
+               <h3>Booking Charge</h3>
+               <div className="charge-amount">
+                 <span className="currency">Rs.</span>
+                 <span className="amount">300</span>
+               </div>
+               <p className="charge-description">Initial inspection and booking fee</p>
+             </div>
+             
+             <div className="payment-note">
+               <h4>Payment Information</h4>
+               <div className="note-content">
+                 <p><strong>Important Note:</strong></p>
+                 <ul>
+                   <li>This Rs. 300 is an <strong>initial booking charge</strong> for service inspection and scheduling.</li>
+                   <li>The actual service cost will be determined after the initial inspection.</li>
+                   <li>This booking charge will be <strong>deducted from the final service payment</strong>.</li>
+                   <li>Additional charges may apply based on the service requirements identified during inspection.</li>
+                   <li>Payment can be adjusted or refunded based on the final service assessment.</li>
+                 </ul>
+               </div>
+             </div>
+           </div>
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
           <button type="submit" className="bike-service-booking-btn">
             Continue to Payment
           </button>

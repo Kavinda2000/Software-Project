@@ -1,5 +1,9 @@
 import express from "express";
 import User from "../models/User.js";
+<<<<<<< HEAD
+=======
+import fetch from 'node-fetch';
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
 const router = express.Router();
 
 // List vendors (minimal fields used on map)
@@ -54,7 +58,11 @@ router.post("/location", async (req, res) => {
             }
           }
         }
+<<<<<<< HEAD
       } catch { }
+=======
+      } catch {}
+>>>>>>> cf08b2757c64ae03755541b2a3ebdf180c17b46b
     }
     await vendor.save();
     res.json({ success: true });

@@ -1,0 +1,84 @@
+.sidebar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 40px;
+  margin-top: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5px solid #2980b9;
+  padding-bottom: 6px;
+}
+
+.sidebar-label-container {
+  position: relative;
+  display: block;
+  padding-left: 35px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #34495e;
+  user-select: none;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: color 0.2s ease;
+}
+
+.sidebar-label-container:hover {
+  color: #2980b9;
+}
+
+.sidebar-label-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
+  background-color: #ecf0f1;
+  border-radius: 50%;
+  border: 2px solid #bdc3c7;
+  box-sizing: border-box;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.sidebar-label-container:hover input ~ .checkmark {
+  border-color: #2980b9;
+}
+
+.sidebar-label-container input:checked ~ .checkmark {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+}
+
+.sidebar-label-container input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.line {
+  margin-top: 2.5rem;
+  border-top: 1px solid #dcdde1;
+}

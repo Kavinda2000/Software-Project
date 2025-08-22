@@ -1,0 +1,256 @@
+.userprofilebar-container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  user-select: none;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  width: 97.5%;
+  margin-left: 20px;
+}
+
+.userprofilebar-container:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.userprofilebar-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 96px;
+}
+
+.userprofilebar-image {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #eaeaea;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  margin-left: 20px;
+}
+
+.userprofilebar-image-wrapper:hover .userprofilebar-image {
+  transform: scale(1.05);
+}
+
+.userprofilebar-change-btn {
+  margin-top: 12px;
+  margin-left: 20px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 123, 255, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 130px;
+  text-align: center;
+  user-select: none;
+}
+
+.userprofilebar-change-btn:hover {
+  background-color: #0056b3;
+  box-shadow: 0 5px 12px rgba(0, 86, 179, 0.6);
+}
+
+.userprofilebar-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0; /* Fixes text overflow */
+}
+
+.userprofilebar-name {
+  margin: 0 0 6px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 20px;
+}
+
+.userprofilebar-role {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4a90e2;
+  user-select: text;
+  margin-left: 20px;
+}
+
+.userprofilebar-email,
+.userprofilebar-phone,
+.userprofilebar-address {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #666;
+  user-select: text;
+  word-break: break-word;
+  margin-left: 20px;
+}
+
+/* Overlay styling */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;  /* Highest */
+  user-select: none;
+}
+
+.updating-text {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0,0,0,0.8);
+  filter: none;
+  z-index: 10000; /* even higher */
+  pointer-events: none;
+}
+
+
+.userprofilebar-form {
+  animation: fadeScaleIn 0.3s ease forwards;
+  background: transparent; /* pure white, cleaner look */
+  padding: 16px 20px;  /* slightly smaller padding */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* lighter shadow */
+  max-width: 320px; /* smaller width */
+  width: 100%;
+  margin-left: 24px; /* space between profile pic and form */
+  color: #222;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: text;
+  box-sizing: border-box;
+}
+
+
+@keyframes fadeScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.userprofilebar-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.userprofilebar-form-modal {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  animation: fadeScaleIn 0.3s ease-out;
+}
+
+.userprofilebar-form-modal h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.userprofilebar-form-modal label {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.userprofilebar-form-modal input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.userprofilebar-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.userprofilebar-modal-buttons button {
+  flex: 1;
+  margin: 0 6px;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.userprofilebar-modal-buttons button[type="submit"] {
+  background-color: rgb(65, 65, 65);
+  color: white;
+}
+
+.userprofilebar-modal-buttons button[type="submit"]:hover {
+  background-color: #01a00c;
+}
+
+.userprofilebar-modal-buttons button[type="button"] {
+  background-color: rgb(65, 65, 65);
+  color: white;
+}
+
+.userprofilebar-modal-buttons button[type="button"]:hover {
+  background-color: #ce1f1f;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 12px;
+  border: 4px solid #ffffff;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

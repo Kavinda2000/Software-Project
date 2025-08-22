@@ -1,4 +1,5 @@
 .service-page {
+<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,38 +10,76 @@
     text-align: center;
     padding: 20px;
     background-size: cover;
+=======
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('./WhatsApp\ Image\ 2025-06-29\ at\ 09.34.59_aa4d08da.jpg');
+  color: white;
+  text-align: center;
+  padding: 20px;
+  background-size: cover;
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }
 
 /* Header */
 .head {
+<<<<<<< HEAD
     font-size: 36px;
     font-weight: bold;
     margin-bottom: 30px;
     text-transform: uppercase;
     letter-spacing: 2px;
+=======
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }
 
 /* Main Description */
 .main-description {
+<<<<<<< HEAD
     font-size: 18px;
     margin-bottom: 40px;
     max-width: 800px;
     line-height: 1.6;
     opacity: 0.9;
     font-weight: 300;
+=======
+  font-size: 18px;
+  margin-bottom: 40px;
+  max-width: 800px;
+  line-height: 1.6;
+  opacity: 0.9;
+  font-weight: 300;
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }
 
 /* Services Container */
 .services-container {
+<<<<<<< HEAD
     display: flex;
     justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
     width: 80%;
+=======
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  width: 80%;
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }
 
 /* Service Card */
 .service-card {
+<<<<<<< HEAD
     background: #222;
     padding: 25px;
     border-radius: 15px;
@@ -51,10 +90,23 @@
 
 .service-card:hover {
     transform: translateY(-5px);
+=======
+  background: #222;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+  width: 350px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }
 
 /* Service Heading */
 .services-title {
+<<<<<<< HEAD
     color: #34d657;
     margin-bottom: 15px;
     font-size: 24px;
@@ -82,10 +134,41 @@
 .service-btn:hover {
     background-color: #34d657;
     transform: scale(1.05);
+=======
+  color: #34d657;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.services-paragraph {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+
+/* Buttons */
+.service-btn {
+  background-color: #34d657;
+  color: black;
+  font-weight: 600;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.service-btn:hover {
+  background-color: #34d657;
+  transform: scale(1.05);
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }
 
 /* Find Centers Button */
 .find-centers-btn {
+<<<<<<< HEAD
     background-color: #ff6b35;
     color: white;
     font-size: 18px;
@@ -99,3 +182,18 @@
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
+=======
+  background-color: #ff6b35;
+  color: white;
+  font-size: 18px;
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.find-centers-btn:hover {
+  background-color: #ff5722;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc

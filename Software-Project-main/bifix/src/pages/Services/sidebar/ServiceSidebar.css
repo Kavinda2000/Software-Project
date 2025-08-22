@@ -42,6 +42,7 @@
 .service-sidebar-item:hover {
   background: #e0e7ff;
   color: #2563eb;
+<<<<<<< HEAD
 }
 
 /* New: Tabs and search/list styling to mirror Parts layout */
@@ -124,3 +125,6 @@
 
 .sidebar-message { color: #475569; font-size: 14px; }
 .sidebar-error { color: #b91c1c; font-size: 14px; }
+=======
+}
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc

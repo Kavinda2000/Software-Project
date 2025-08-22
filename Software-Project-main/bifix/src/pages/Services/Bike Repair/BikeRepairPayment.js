@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./BikeRepairSchedule.css";
+<<<<<<< HEAD
 import SuccessPopup from "../../../components/SuccessPopup";
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 
 function BikeRepairPayment() {
   const { state } = useLocation();
@@ -15,7 +18,10 @@ function BikeRepairPayment() {
   const [repairDate, setRepairDate] = useState(state?.date || "");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+<<<<<<< HEAD
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 
   if (!state) {
     return (
@@ -46,9 +52,14 @@ function BikeRepairPayment() {
         expiry,
         cvv
       });
+<<<<<<< HEAD
 
       // Show success popup instead of just message
       setShowSuccessPopup(true);
+=======
+      setMessage("Payment successful and booking confirmed!");
+      setTimeout(() => navigate("/"), 1200);
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
     } catch (err) {
       setMessage("Payment failed. Please try again.");
     } finally {
@@ -149,6 +160,7 @@ function BikeRepairPayment() {
           {message && <div className="message">{message}</div>}
         </form>
       </div>
+<<<<<<< HEAD
 
       {/* Success Popup */}
       <SuccessPopup
@@ -167,6 +179,8 @@ function BikeRepairPayment() {
         redirectTo="/"
         redirectDelay={5000}
       />
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
     </div>
   );
 }

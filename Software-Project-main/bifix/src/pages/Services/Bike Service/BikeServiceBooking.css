@@ -240,6 +240,7 @@ select:disabled {
 option {
   background-color: #2c2c2c;
   color: #ffffff;
+<<<<<<< HEAD
 }
 
 /* Loading and Error Messages */
@@ -291,4 +292,6 @@ input:disabled {
   background-color: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.5);
   cursor: not-allowed;
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 }

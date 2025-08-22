@@ -26,8 +26,22 @@ export const createBikeServiceBooking = async (req, res) => {
       return res.status(404).json({ error: 'Service center not found' });
     }
 
+<<<<<<< HEAD
     // Note: for Bike Service, we do not block duplicate time slots. Multiple
     // bookings can share the same time window.
+=======
+    // Check if the time slot is available for the selected date and service center
+    const existingBooking = await BikeServiceBooking.findOne({
+      serviceCenterId,
+      bookingDate: new Date(bookingDate),
+      timeSlot,
+      status: { $in: ['pending', 'confirmed', 'in-progress'] }
+    });
+
+    if (existingBooking) {
+      return res.status(409).json({ error: 'This time slot is already booked. Please select another time.' });
+    }
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 
     // Create new booking
     const newBooking = new BikeServiceBooking({
@@ -58,11 +72,19 @@ export const createBikeServiceBooking = async (req, res) => {
 // Get all bike service bookings (with optional filters)
 export const getBikeServiceBookings = async (req, res) => {
   try {
+<<<<<<< HEAD
     const {
       serviceCenterId,
       status,
       customerName,
       startDate,
+=======
+    const { 
+      serviceCenterId, 
+      status, 
+      customerName, 
+      startDate, 
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
       endDate,
       page = 1,
       limit = 10
@@ -258,12 +280,32 @@ export const getAvailableTimeSlots = async (req, res) => {
       "3:30pm - 4:30pm"
     ];
 
+<<<<<<< HEAD
     // For Bike Service, we expose all time slots regardless of existing bookings
     res.json({
       availableSlots: allTimeSlots,
       bookedSlots: [],
       totalSlots: allTimeSlots.length,
       availableCount: allTimeSlots.length
+=======
+    // Get booked time slots for the date
+    const bookedSlots = await BikeServiceBooking.find({
+      serviceCenterId,
+      bookingDate: new Date(date),
+      status: { $in: ['pending', 'confirmed', 'in-progress'] }
+    }).select('timeSlot');
+
+    const bookedTimeSlots = bookedSlots.map(booking => booking.timeSlot);
+
+    // Filter out booked slots
+    const availableSlots = allTimeSlots.filter(slot => !bookedTimeSlots.includes(slot));
+
+    res.json({
+      availableSlots,
+      bookedSlots: bookedTimeSlots,
+      totalSlots: allTimeSlots.length,
+      availableCount: availableSlots.length
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
     });
 
   } catch (error) {

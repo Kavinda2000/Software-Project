@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import './ServiceSidebar.css';
@@ -87,6 +88,36 @@ function ServiceSidebar({ onSelectCenter }) {
           </button>
         ))}
       </div>
+=======
+import React from 'react';
+import './ServiceSidebar.css';
+
+function ServiceSidebar({ selectedCategory, setSelectedCategory }) {
+  const categories = [
+    "All",
+    "Service Centers",
+    "Repair Centers",
+    "Brakes",
+    "Inspection",
+    "Tuning",
+    "Other"
+  ];
+
+  return (
+    <div className="service-sidebar">
+      <h3 className="service-sidebar-title">Filter by Category</h3>
+      <ul className="service-sidebar-list">
+        {categories.map(cat => (
+          <li
+            key={cat}
+            className={`service-sidebar-item${selectedCategory === cat ? ' active' : ''}`}
+            onClick={() => setSelectedCategory(cat)}
+          >
+            {cat}
+          </li>
+        ))}
+      </ul>
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
     </div>
   );
 }

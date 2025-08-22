@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Bike Repair/BikeRepairSchedule.css";
+<<<<<<< HEAD
 import SuccessPopup from "../../../components/SuccessPopup";
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 
 function BikeServicePayment() {
   const { state } = useLocation();
@@ -15,7 +18,10 @@ function BikeServicePayment() {
   const [serviceDate, setServiceDate] = useState(state?.date || "");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+<<<<<<< HEAD
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
 
   if (!state) {
     return (
@@ -33,6 +39,7 @@ function BikeServicePayment() {
     setIsSubmitting(true);
     setMessage("");
     try {
+<<<<<<< HEAD
       // Resolve serviceCenterId if missing by looking up vendors API
       let resolvedServiceCenterId = state.serviceCenterId;
       if (!resolvedServiceCenterId && state.selectedCompany) {
@@ -79,6 +86,25 @@ function BikeServicePayment() {
         ? `Payment failed: ${serverMsg}`
         : (err?.message ? `Payment failed: ${err.message}` : "Payment failed. Please try again.");
       setMessage(friendly);
+=======
+      await axios.post("http://localhost:5000/api/repair-schedule", {
+        companyName: state.selectedCompany,
+        customerName: state.customerName,
+        bikeModel: state.bikeModel,
+        repairDate: serviceDate,
+        timeSlot: state.timeSlot,
+        issueDescription: state.issueDescription,
+        contactNumber: state.contactNumber,
+        paymentMethod,
+        cardNumber,
+        expiry,
+        cvv
+      });
+      setMessage("Payment successful and service booking confirmed!");
+      setTimeout(() => navigate("/"), 1200);
+    } catch (err) {
+      setMessage("Payment failed. Please try again.");
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
     } finally {
       setIsSubmitting(false);
     }
@@ -170,6 +196,7 @@ function BikeServicePayment() {
           {message && <div className="message">{message}</div>}
         </form>
       </div>
+<<<<<<< HEAD
 
       {/* Success Popup */}
       <SuccessPopup
@@ -188,6 +215,8 @@ function BikeServicePayment() {
         redirectTo="/"
         redirectDelay={5000}
       />
+=======
+>>>>>>> f92b316531a7c0de4920f3e0a95d8d83825b1efc
     </div>
   );
 }

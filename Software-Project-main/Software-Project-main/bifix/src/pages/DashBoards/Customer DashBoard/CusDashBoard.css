@@ -1,0 +1,49 @@
+.cusdashboard-page {
+    padding: 20px;
+    background-image: url('./creative-7581718_1920.jpg');
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+  
+  .cusdashboard-wrapper {
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cusdashboard-sections {
+    margin-top: 20px;
+  }
+  
+  .cusdashboard-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer; 
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .cusdashboard-section h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .cusdashboard-section p {
+    margin: 0;
+    color: #555;
+  }
+
+  .cusdashboard-section:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+    transform: translateY(-5px); /* Slightly lift the section */
+  }
+
+  .cusdashboard-header{
+    margin-bottom: 30px;
+  }

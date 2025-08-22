@@ -1,0 +1,126 @@
+.service-sidebar {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 32px 20px;
+  min-width: 220px;
+  max-width: 240px;
+  height: fit-content;
+  position: sticky;
+  top: 32px;
+  left: 0;
+  z-index: 2;
+  margin-left: 0; /* Ensure no margin on the left */
+}
+
+.service-sidebar-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 22px;
+  color: #2563eb;
+  letter-spacing: 0.01em;
+}
+
+.service-sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service-sidebar-item {
+  padding: 12px 0 12px 8px;
+  cursor: pointer;
+  color: #22223b;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+  font-size: 1rem;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.service-sidebar-item.active,
+.service-sidebar-item:hover {
+  background: #e0e7ff;
+  color: #2563eb;
+}
+
+/* New: Tabs and search/list styling to mirror Parts layout */
+.service-sidebar-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.service-tab {
+  flex: 1;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.service-tab.active {
+  background: #e0e7ff;
+  color: #2563eb;
+  border-color: #c7d2fe;
+}
+
+.service-search input {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.service-list-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.service-list-item:hover {
+  background: #f8fafc;
+}
+
+.service-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  color: #2563eb;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-item-name {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.service-item-address {
+  color: #475569;
+  font-size: 12px;
+}
+
+.sidebar-message { color: #475569; font-size: 14px; }
+.sidebar-error { color: #b91c1c; font-size: 14px; }

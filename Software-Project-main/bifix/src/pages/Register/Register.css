@@ -1,0 +1,210 @@
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('test3.jpg');
+    background-size: cover ;
+
+  }
+  
+  .register-container {
+    background: rgba(23, 85, 62, 0.3);
+    padding: 45px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7);
+    max-width: 550px;
+    width: 100%;
+    color: #fff;
+
+  }
+  
+  .register-slider {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border-radius: 25px;
+    overflow: hidden;
+    padding: 5px;
+   
+  }
+  
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 2;
+    color: #fff;
+  }
+  
+  .tab.active-tab {
+    color: #fff;
+  }
+  
+  .slider-indicator {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 50%;
+    height: calc(100% - 10px);
+    background: #0fb874;
+    border-radius: 25px;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out, background 0.3s;
+  }
+  
+  .vendor-tab.active-tab ~ .slider-indicator {
+    background: #0fb874;
+  }
+  
+  .register-form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form {
+    display: none;
+    flex-direction: column;
+  }
+  
+  .form.active-form {
+    display: flex;
+  }
+  
+  .register-container h2 {
+    margin-bottom: 30px;
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  form label {
+    margin-bottom: 10px; /* Adds space below the label */
+  }
+  
+  form input, form select {
+    margin-top: 5px; /* Adds space above the input field */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  form button {
+    background-color: #0fb874;;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+  }
+  
+  form button:hover {
+    background-color: #0fb874;;
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px; /* Adjust for more or less space */
+    margin-bottom: 20px; /* Add margin at the bottom */
+  }
+  
+  .form-column {
+    flex: 1; /* Make each column take equal width */
+  }
+  
+  form input, form select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Full width for the inputs */
+  }
+  
+  form .form-row .form-column input {
+    width: 100%; /* Ensure inputs inside columns are full width */
+  }
+  
+  form select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Full width for the select input */
+  }
+  
+  .gender-options {
+    display: flex;
+    gap: 20px; /* Adds space between the radio button groups */
+    align-items: center; /* Aligns the radio buttons and labels vertically */
+  }
+  
+  .gender-options .option {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adds space between radio buttons and their labels */
+  }
+  
+  .gender-options input {
+    margin: 0; /* Removes default margin to ensure better alignment */
+  }
+  
+  /* Vendor Form New Additions */
+  form input[type="tel"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  form input[type="text"]#address {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .dropdown-selector {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-selector label {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  
+  .dropdown-selector select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  /* Add transition to form container */
+  .register-form-container {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+  
+  /* When form expands */
+  .register-form-container.expand {
+    max-height: 2000px; /* should be large enough to show entire form */
+    opacity: 1;
+  }
+  
+  

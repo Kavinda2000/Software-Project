@@ -1,0 +1,19 @@
+.service-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: auto;
+  background: none; /* Remove if using background image */
+  color: #333;
+  text-align: left;
+  padding: 10px;
+}
+
+
+.services-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  /* Remove margin: 0 auto; */
+}

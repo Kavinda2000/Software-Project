@@ -1,0 +1,23 @@
+.checkout-details {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .checkout-image {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .checkout-title {
+    font-size: 24px;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  .checkout-quantity {
+    font-size: 18px;
+    margin-top: 5px;
+    color: #555;
+  }
+  

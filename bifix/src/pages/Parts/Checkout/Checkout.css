@@ -56,8 +56,36 @@
   gap: 15px;
 }
 
-.checkout-row .form-group {
+.checkout-row {
   flex: 1;
+}
+
+
+
+
+/* Ensure select fields have proper background and text color */
+.form-group select {
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #fff; /* white background for dropdown */
+  color: #333;            /* dark text color */
+  appearance: none;        /* remove default arrow styling */
+}
+
+/* When focused */
+.form-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Dropdown options styling */
+.form-group select option {
+  background-color: #fff;  /* white background for each option */
+  color: #333;             /* dark text */
 }
 
 .checkout-button {
@@ -100,4 +128,36 @@
   font-size: 18px;
   margin-top: 50px;
   border-top: 1px solid;
+}
+
+
+.processing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

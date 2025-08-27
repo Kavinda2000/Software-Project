@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaUser, FaBoxOpen, FaCog, FaLifeRing, FaSignOutAlt } from 'react-icons/fa'
+import { FaUser, FaBoxOpen, FaLifeRing, FaSignOutAlt } from 'react-icons/fa'
 import './Navbar.css';
 import logo from './Logo.png';
 
@@ -19,11 +19,11 @@ function Navbar() {
 
   // Check login state whenever location changes (on route change)
   useEffect(() => {
-    const token = sessionStorage.getItem('authToken');
-    const userData = JSON.parse(sessionStorage.getItem('userData'));
-    setIsLoggedIn(!!token);
-    setUser(userData);
-  }, [location]);
+  const token = sessionStorage.getItem('authToken');
+  const userData = JSON.parse(sessionStorage.getItem('userData'));
+  setIsLoggedIn(!!token);
+  setUser(userData); // ✅ now you have name, email, role, profilePicture
+}, [location]);
 
   // Handle navbar scroll effect
   const changeBackground = () => {
@@ -93,9 +93,9 @@ function Navbar() {
           <li className="user-dropdown" ref={dropdownRef}>
             <div className="user-profile" onClick={toggleDropdown}>
               <img 
-                src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?semt=ais_hybrid&w=740" 
-                alt="User Avatar"
-                className="avatar" 
+                  src={user?.profilePicture || "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"} 
+                  alt="User Avatar"
+                  className="avatar" 
               />
             </div>
             {isDropdownVisible && (
@@ -105,7 +105,11 @@ function Navbar() {
               onMouseLeave={handleMouseLeave}
             >
               <div className="dropdown-user-info">
-                <img src={user.avatar || "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"} alt="User Avatar" />
+                <img 
+                  src={user?.profilePicture || "https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg"} 
+                  alt="User Avatar"
+                  className="avatar" 
+                />
                 <div className="user-details">
                   <div className="user-name">{user.name || user.username || 'User Name'}</div>
                   <div className="user-email">{user.email || 'user@example.com'}</div>
@@ -122,26 +126,17 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    to="/orders" 
-                    onClick={() => setIsDropdownVisible(false)}
-                    className="dropdown-link"
-                  >
-                    <FaBoxOpen className="dropdown-icon" /> Orders
-                  </Link>
-                </li>
+              <Link 
+                to={user.role === "customer" ? "/cusorders" : "/veorders"} 
+                onClick={() => setIsDropdownVisible(false)}
+                className="dropdown-link"
+              >
+                <FaBoxOpen className="dropdown-icon" /> Orders
+              </Link>
+            </li>
                 <li>
                   <Link 
-                    to="/profile" 
-                    onClick={() => setIsDropdownVisible(false)}
-                    className="dropdown-link"
-                  >
-                    <FaCog className="dropdown-icon" /> Settings
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    to="/Contact" 
+                    to="/Customer-support" 
                     onClick={() => setIsDropdownVisible(false)}
                     className="dropdown-link"
                   >

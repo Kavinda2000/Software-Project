@@ -1,17 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import './UserProfileBar.css';
+import { FaTrash } from 'react-icons/fa'; // import at the top
+import axios from 'axios'; 
+
 
 const defaultProfilePic = 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
 
-function UserProfileBar({ userData, onUpdateProfile, isUpdating }) {
+function UserProfileBar({ userData, onUpdateProfile, onDeleteAccount, isUpdating }) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: userData?.name || '',
-    role: userData?.role || '',
-    phone: userData?.phone || '',
-    address: userData?.address || '',
-    profilePicture: userData?.profilePicture || '',
+    name: '',
+    role: '',
+    phone: '',
+    address: '',
+    profilePicture: '',
   });
+  
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        name: userData.name || '',
+        role: userData.role || '',
+        phone: userData.phone || '',
+        address: userData.address || '',
+        profilePicture: userData.profilePicture || '',
+      });
+    }
+  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +37,6 @@ function UserProfileBar({ userData, onUpdateProfile, isUpdating }) {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onloadend = () => {
       setFormData((prev) => ({ ...prev, profilePicture: reader.result }));
@@ -29,15 +44,26 @@ function UserProfileBar({ userData, onUpdateProfile, isUpdating }) {
     reader.readAsDataURL(file);
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  await onUpdateProfile(formData); // let parent handle isUpdating
-  setIsEditing(false);
-};
+// ✅ Delete account handler
+  const handleDeleteAccount = async () => {
+    if (!userData?.email) return;
 
+    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      try {
+        await axios.delete(`http://localhost:5000/api/users/${userData.email}`);
+        sessionStorage.clear();
+        alert("Account deleted successfully.");
+        window.location.href = "/login"; // redirect
+      } catch (error) {
+        console.error(error);
+        alert("Failed to delete account.");
+      }
+    }
+  };
 
   return (
     <div className="userprofilebar-container" style={{ pointerEvents: isUpdating ? 'none' : 'auto' }}>
+      {/* Profile picture */}
       <div className="userprofilebar-image-wrapper">
         <img
           src={formData.profilePicture || defaultProfilePic}
@@ -45,58 +71,101 @@ const handleSubmit = async (e) => {
           className="userprofilebar-image"
         />
         {!isEditing && (
-          <button className="userprofilebar-change-btn" onClick={() => setIsEditing(true)} disabled={isUpdating}>
+          <button
+            className="userprofilebar-change-btn"
+            onClick={() => setIsEditing(true)}
+            disabled={isUpdating}
+          >
             Update Profile
           </button>
         )}
       </div>
 
-      {!isEditing ? (
-  <div
-    className="userprofilebar-info"
-    style={{ filter: isUpdating ? 'blur(2px)' : 'none', pointerEvents: isUpdating ? 'none' : 'auto' }}
-  >
-    <h3 className="userprofilebar-name">{formData.name || 'User Name'}</h3>
-    <p className="userprofilebar-role">Role: {formData.role || 'Customer'}</p>
-    <p className="userprofilebar-email">Email: {userData?.email || 'user@example.com'}</p>
-    <p className="userprofilebar-phone">Tel: {formData.phone || '123-456-7890'}</p>
-    <p className="userprofilebar-address">Address: {formData.address || '123 Main St, City, Country'}</p>
-  </div>
-) : (
-  <div className="userprofilebar-modal-overlay">
-    <form className="userprofilebar-form-modal" onSubmit={handleSubmit}>
-      <h2>Edit Profile</h2>
-      <label>
-        Name:
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-      </label>
-      <label>
-        Role:
-        <input type="text" value={formData.role} disabled readOnly />
-      </label>
-      <label>
-        Email:
-        <input type="email" value={userData?.email || ''} disabled readOnly />
-      </label>
-      <label>
-        Phone:
-        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
-      </label>
-      <label>
-        Address:
-        <input type="text" name="address" value={formData.address} onChange={handleChange} />
-      </label>
-      <label>
-        Upload Profile Picture:
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-      </label>
-      <div className="userprofilebar-modal-buttons">
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-      </div>
-    </form>
-  </div>
-)}
+      {/* Display info */}
+      {!isEditing && (
+        <div
+          className="userprofilebar-info"
+          style={{ filter: isUpdating ? 'blur(2px)' : 'none', pointerEvents: isUpdating ? 'none' : 'auto' }}
+        >
+          <h3 className="userprofilebar-name">{formData.name || 'User Name'}</h3>
+          <p className="userprofilebar-role">Role: {formData.role || 'Customer'}</p>
+          <p className="userprofilebar-email">Email: {userData?.email || 'user@example.com'}</p>
+          <p className="userprofilebar-phone">Tel: {formData.phone || '123-456-7890'}</p>
+          <p className="userprofilebar-address">Address: {formData.address || '123 Main St, City, Country'}</p>
+        </div>
+      )}
+
+      {/* Edit form in modal */}
+{isEditing &&
+  createPortal(
+    <div className="userprofilebar-modal-overlay" onClick={() => setIsEditing(false)}>
+      <form
+        className="userprofilebar-form-modal"
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (onUpdateProfile) {
+            await onUpdateProfile(formData);
+          }
+          setIsEditing(false);
+        }}
+      >
+        <h2>Edit Profile</h2>
+
+        <label>
+          Name:
+          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+        </label>
+
+        <label>
+          Role:
+          <input type="text" value={formData.role} disabled readOnly />
+        </label>
+
+        <label>
+          Email:
+          <input type="email" value={userData?.email || ''} disabled readOnly />
+        </label>
+
+        <label>
+          Phone:
+          <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
+        </label>
+
+        <label>
+          Address:
+          <input type="text" name="address" value={formData.address} onChange={handleChange} />
+        </label>
+
+        <label>
+          Upload Profile Picture:
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
+        </label>
+
+        {/* Delete Account Button */}
+      <div className="delete-account-row">
+                <label>Delete Your Account</label>
+                <button
+                  type="button"
+                  className="delete-account-btn"
+                  onClick={handleDeleteAccount}
+                  disabled={isUpdating}
+                >
+                  <FaTrash />
+                </button>
+              </div>
+
+
+        {/* Save & Cancel Buttons */}
+        <div className="userprofilebar-modal-buttons">
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+        </div>
+      </form>
+    </div>,
+    document.body
+  )}
+
 
     </div>
   );

@@ -28,39 +28,52 @@ function Login({ setUser }) {
   }, []);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/loginDetails', { email, password });
+  e.preventDefault();
 
-      if (response.data.success) {
-        // Save credentials if Remember Me is checked
-        if (rememberMe) {
-          localStorage.setItem('rememberedEmail', email);
-          localStorage.setItem('rememberedPassword', password);
-          localStorage.setItem('rememberMe', 'true');
-        } else {
-          localStorage.removeItem('rememberedEmail');
-          localStorage.removeItem('rememberedPassword');
-          localStorage.removeItem('rememberMe');
-        }
+  try {
+    // Send login request to backend
+    const response = await axios.post(
+      'http://localhost:5000/api/loginDetails',
+      { email, password },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
-        // Save auth data in sessionStorage
-        sessionStorage.setItem('authToken', response.data.token);
-        sessionStorage.setItem('userData', JSON.stringify(response.data.user));
-
-        if (response.data.user.role === 'customer') {
-          navigate('/customer-dashboard');
-        } else if (response.data.user.role === 'vendor') {
-          navigate('/vendor-dashboard');
-        }
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error('An error occurred. Please try again.');
+    // Check if login failed
+    if (!response.data.success) {
+      toast.error(response.data.message);
+      return;
     }
-  };
+
+    // Get user from response (no extra GET request needed)
+    const fullUser = response.data.user;
+
+    // Save user data and token in sessionStorage
+    sessionStorage.setItem('userData', JSON.stringify(fullUser));
+    sessionStorage.setItem('authToken', response.data.token);
+
+    // Save credentials if "Remember Me" is checked
+    if (rememberMe) {
+      localStorage.setItem('rememberedEmail', email);
+      localStorage.setItem('rememberedPassword', password);
+      localStorage.setItem('rememberMe', 'true');
+    } else {
+      localStorage.removeItem('rememberedEmail');
+      localStorage.removeItem('rememberedPassword');
+      localStorage.removeItem('rememberMe');
+    }
+
+    // Navigate based on role
+    if (fullUser.role === 'customer') {
+      navigate('/customer-dashboard');
+    } else if (fullUser.role === 'vendor') {
+      navigate('/vendor-dashboard');
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error('An error occurred. Please try again.');
+  }
+};
+
 
   return (
     <>

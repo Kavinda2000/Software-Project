@@ -108,6 +108,12 @@ const handleSubmit = async (e) => {
                     </div>
                   </div>
                 </div>
+                <div className="form-row">
+                  <div className="form-column">
+                    <label htmlFor="address">Address</label>
+                    <input type="text" id="address" placeholder="Enter your address" onChange={(e) => setAddress(e.target.value)} required />
+                  </div>
+                </div>
                 <button type="submit">Register as Customer</button>
               </div>
             )}

@@ -1,10 +1,34 @@
 .ven-dashboard-background {
-    padding: 20px;
-    background-image: url('./90595.jpg');
-    min-height: 100vh;
-    padding-top: 80px;
-  }
-  
+  position: relative;
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;
+  z-index: 0;
+  background-color: #0a0a0a; /* fallback dark background */
+}
+
+/* The video will cover the whole background */
+.ven-dashboard-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: brightness(0.3) contrast(1.2); /* darken the video a bit */
+}
+
+/* Keep dashboard content above the video */
+.ven-dashboard-background > * {
+  position: relative;
+  z-index: 1;
+}
+
+
   .ven-dashboard-container {
     padding: 20px;
   }
@@ -23,11 +47,11 @@
   
   /* Big Card (section) */
   .your-products-card{
-    background-color: rgba(72, 106, 147, 0.823);
+    background-color: rgba(122, 29, 216, 0.368);
     padding: 20px;
     margin-top: 40px;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(212, 221, 213, 0.632);
+
   }
   
   .your-products-title {
@@ -44,7 +68,7 @@
   }
   
   .vencard {
-    width: 250px;
+    width: 235px;
     height: 100%;
     background-color: white;
     border-radius: 10px;
@@ -92,7 +116,17 @@
     background-color: #0056b3;
   }
 
-
+.ven-dashboard-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: brightness(0.5) contrast(1.5); /* brighter and more visible */
+}
 
 
 

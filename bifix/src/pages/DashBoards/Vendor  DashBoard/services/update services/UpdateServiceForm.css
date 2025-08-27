@@ -1,0 +1,141 @@
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  padding: 1rem;
+  padding-top: 1rem; /* adjust this to match your navbar height */
+  z-index: 2147483647;
+}
+
+.form-container {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  margin-top: 80px; /* pushes form down from top */
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; /* reduce overall form gap */
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1 1 45%; /* two fields per row */
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.4rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-buttons button[type="button"] {
+  background: #6c757d;
+}
+
+/* Time slots + Owner compact */
+.slots-column {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem; /* reduce gap between owner and time slots */
+}
+
+.owner-slot-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.owner-slot-row input {
+  flex: 1 1 40%; /* Owner field smaller */
+  padding: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.add-slot-row {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  flex: 1 1 60%; /* remaining space for time slot inputs */
+}
+
+.add-slot-row input {
+  width: 25%;
+  padding: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.add-slot-row button {
+  height: 31px;
+  width: 100px;
+  font-size: 0.8rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.slot-item {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+  align-items: center;
+}
+
+.slot-item input {
+  width: 25%;
+  padding: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.slot-item button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  height: 31px;
+  width: 100px;
+  margin-bottom: 12px;
+}

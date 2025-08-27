@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, role, phone, address, gender, password } = req.body;
+    const { name, email, role, phone, address, gender, password, latitude, longitude } = req.body;
 
     if (!name || !email || !role || !password) {
       return res.status(400).json({ success: false, message: "All fields are required" });
@@ -29,6 +29,38 @@ export const registerUser = async (req, res) => {
         gender,
         address
       });
+
+    // If vendor provided coordinates, store as GeoJSON Point
+    if (role === 'vendor' && typeof latitude === 'number' && typeof longitude === 'number') {
+      newUser.location = { type: 'Point', coordinates: [Number(longitude), Number(latitude)] };
+    }
+
+    // If vendor did not provide coordinates but provided address, attempt geocoding
+    if (role === 'vendor' && !newUser.location && address) {
+      try {
+        // Prefer native fetch if available
+        const q = encodeURIComponent(address);
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${q}`;
+        const resp = await fetch(url, {
+          headers: {
+            'User-Agent': 'bifix-app/1.0 (contact: admin@example.com)'
+          }
+        });
+        if (resp && resp.ok) {
+          const data = await resp.json();
+          if (Array.isArray(data) && data.length > 0) {
+            const best = data[0];
+            const lat = Number(best.lat);
+            const lon = Number(best.lon);
+            if (!Number.isNaN(lat) && !Number.isNaN(lon)) {
+              newUser.location = { type: 'Point', coordinates: [lon, lat] };
+            }
+          }
+        }
+      } catch (e) {
+        // Silent fail; registration proceeds without location
+      }
+    }
 
     await newUser.save();
 

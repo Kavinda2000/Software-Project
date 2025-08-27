@@ -72,7 +72,7 @@ function Otp() {
     }
   };
 
-  const handleOtpVerify = async (e) => {
+const handleOtpVerify = async (e) => {
   e.preventDefault();
 
   const storedUser = localStorage.getItem("pendingUser");
@@ -87,39 +87,45 @@ function Otp() {
     // Step 1: Verify OTP
     await axios.post("http://localhost:5000/api/otp/verify", {
       email: userData.email,
-      otp: otp.join(""), // Convert ["1","2","3","4","5","6"] => "123456"
+      otp: otp.join(""),
     });
-    toast.success("OTP verified! Account created.");
 
     // Step 2: Register the user
-    await axios.post("http://localhost:5000/api/registerUser", userData);
+    await axios.post("http://localhost:5000/api/users/registerUser", userData);
 
-    // Step 3: Automatically login the user
+    // Step 3: Login
     const loginResponse = await axios.post("http://localhost:5000/api/loginDetails", {
       email: userData.email,
-      password: userData.password, // assuming you're storing password in `pendingUser`
+      password: userData.password,
     });
 
     // Step 4: Store token and user data
     sessionStorage.setItem("authToken", loginResponse.data.token);
     sessionStorage.setItem("userData", JSON.stringify(loginResponse.data.user));
 
-    // Step 5: Redirect based on role
-    const role = loginResponse.data.user.role;
-    if (role === "customer") {
-      navigate("/customer-dashboard");
-    } else if (role === "vendor") {
-      navigate("/vendor-dashboard");
-    } else {
-      navigate("/"); // fallback
-    }
+    // ✅ Show success toast first
+    toast.success("OTP verified! Account created.");
 
-    localStorage.removeItem("pendingUser");
+    // Step 5: Delay and redirect
+    const role = loginResponse.data.user.role;
+    setTimeout(() => {
+      if (role === "customer") {
+        navigate("/customer-dashboard");
+      } else if (role === "vendor") {
+        navigate("/vendor-dashboard");
+      } else {
+        navigate("/");
+      }
+
+      localStorage.removeItem("pendingUser"); // clear after redirect
+    }, 1200); // 1.2 seconds delay so toast is visible
+
   } catch (err) {
     console.error(err);
     toast.error(err.response?.data?.message || "Verification or login failed");
   }
 };
+
 
 
 

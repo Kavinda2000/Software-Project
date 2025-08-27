@@ -1,66 +1,95 @@
 import React, { useEffect, useState } from 'react';
 import './CusDashBoard.css';
-//import Navbar from '../../../components/Navbar/Navbar';
 import { Fade } from "react-awesome-reveal";
-import { useLocation } from 'react-router-dom'; // Import useLocation to retrieve passed state
+import { useLocation, useNavigate } from 'react-router-dom';
 import UserProfileBar from '../components/UserProfileBar';
-
-
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 function CustomerDashBoard() {
-  const [userName, setUserName] = useState('');
-  const location = useLocation(); // Hook to access the passed state (from navigate)
+  const [userData, setUserData] = useState(null); 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      let user = location.state?.user; // Try to get user from navigate state
+      let user = location.state?.user;
 
       if (!user) {
-        // If user data is not passed via navigate, fallback to sessionStorage
         const storedUserData = JSON.parse(sessionStorage.getItem('userData'));
         user = storedUserData;
       }
 
       if (user) {
-        setUserName(user.name); // Set the user's name
+        setUserData(user); 
       } else {
-        // If no user data available, redirect to login
-        window.location.href = '/login';
+        navigate('/login'); 
       }
     };
 
     fetchUserData();
-  }, [location.state]);
+  }, [location.state, navigate]);
+
+  const handleUpdateProfile = async (updatedData) => {
+    setIsUpdating(true);
+    try {
+      const res = await fetch(`http://localhost:5000/api/updateUser/${userData.email}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        setUserData(result.user);
+        sessionStorage.setItem('userData', JSON.stringify(result.user));
+        toast.success('Profile updated successfully!');
+      } else {
+        toast.error('Update failed: ' + result.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error('Error updating profile');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  if (!userData) return <p>Loading...</p>;
 
   return (
     <>
-
+      <ToastContainer autoClose={3000} />
       <div className="cusdashboard-page">
         <Fade duration={500}>
           <div className="cusdashboard-header">
-
-          <UserProfileBar
-            userData={{ name: userName, email: location.state?.user?.email || JSON.parse(sessionStorage.getItem('userData'))?.email }}
-            onChangeProfile={() => alert('Change Profile clicked! Add your logic here.')}
-          />
+            <UserProfileBar 
+              userData={userData} 
+              onUpdateProfile={handleUpdateProfile} 
+              isUpdating={isUpdating} 
+            />
           </div>
-          
-          
+
           <div className="cusdashboard-wrapper">
             <div className="cusdashboard-sections">
+
               <div className="cusdashboard-section">
-                <h2>Your Orders</h2>
-                <p>You have no orders yet. Start shopping now!</p>
+                <Link to="/cusorders">
+                  <h2>Your Orders</h2>
+                  <p>You have no orders yet. Start shopping now!</p>
+                </Link>
               </div>
+
               <div className="cusdashboard-section">
-                <h2>Account Settings</h2>
-                <p>Manage your account details and preferences here.</p>
+                <Link to="/customer-support">
+                  <h2>Support</h2>
+                  <p>Need help? Contact our support team for assistance.</p>
+                </Link>
               </div>
-              <div className="cusdashboard-section">
-                <h2>Support</h2>
-                <p>Need help? Contact our support team for assistance.</p>
-              </div>
+
             </div>
           </div>
         </Fade>

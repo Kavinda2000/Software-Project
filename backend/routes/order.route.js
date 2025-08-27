@@ -3,7 +3,8 @@ import {
   createOrder, 
   getUserOrders, 
   getVendorOrders, 
-  deleteOrder 
+  deleteOrder,
+  updateOrderStatus   // <-- add this
 } from "../controllers/orders.controller.js";
 
 const router = express.Router();
@@ -19,5 +20,8 @@ router.get("/vendor/:ownerEmail", getVendorOrders);
 
 // Delete an order
 router.delete("/:id", deleteOrder);
+
+// Update order status
+router.patch("/:id", updateOrderStatus);   // <-- new route
 
 export default router;

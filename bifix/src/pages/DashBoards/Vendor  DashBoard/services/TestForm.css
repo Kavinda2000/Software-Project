@@ -1,0 +1,221 @@
+/* TestForm.css - specific styling for TestForm component */
+
+.testform-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(5px);
+}
+
+.testform-container {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 600px;
+  max-width: 95%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: box-shadow 0.3s ease;
+}
+
+.testform-container:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.testform-container h2 {
+  padding-bottom: 25px;
+  font-weight: 700;
+  font-size: 28px;
+  color: #222;
+  text-align: center;
+}
+
+.testform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.testform-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.testform-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.testform-group input{
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.testform-group select {
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #fff; /* white background for dropdown */
+  color: #333;            /* dark text color */
+  appearance: none;        /* remove default arrow styling */
+}
+
+
+/* When focused */
+.testform-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Dropdown options styling */
+.testform-group select option {
+  background-color: #fff;  /* white background for each option */
+  color: #333;             /* dark text */
+}
+
+.testform-group input:focus,
+.testform-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Time slots section spans full width */
+.testform-group.time-slots {
+  grid-column: span 2;
+}
+
+.time-slot-inputs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.time-slot-inputs input,
+.time-slot-inputs button {
+  flex: 1;
+  min-width: 100px;
+}
+
+.time-slot-inputs button {
+
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 47px;
+  margin-top: 5px;
+}
+
+.time-slot-inputs button:hover {
+  background-color: #0056b3;
+}
+
+.time-slot-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.time-slot-list button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.testform-buttons {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.testform-buttons button {
+  padding: 12px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.testform-buttons button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.testform-buttons button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.testform-buttons button[type="button"] {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1.5px solid #ccc;
+}
+
+.testform-buttons button[type="button"]:hover {
+  background-color: #e0e0e0;
+}
+
+/* Full-screen processing overlay */
+.testform-processing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.testform-spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.testform-processing-overlay p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}

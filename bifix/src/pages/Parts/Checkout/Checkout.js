@@ -1,44 +1,21 @@
 import React, { useState, useEffect } from "react";
-import "./Checkout.css";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams, useLocation } from "react-router-dom";
-import { loadStripe } from '@stripe/stripe-js';
+import "./Checkout.css";
 
-// Load Stripe outside the component so it can be cached
-const stripePromise = loadStripe('YOUR_STRIPE_PUBLISHABLE_KEY');
-
-
-
+const stripePromise = loadStripe("pk_test_51RA7nMQmAyVY8htLR2NNZpaafTitjhzaqKRbipejEibZYMDNIrNviwBiaeEKkRI4IM3OciFVWAZjrCPHUAWMm15j00dq9rgkST");
 
 const Checkout = () => {
   const { id } = useParams();
   const location = useLocation();
-  const [product, setProduct] = useState(location.state?.product || null);
-  const initialQuantity = location.state?.quantity || 1;
-  const [quantity, setQuantity] = useState(initialQuantity);
-  const [loading, setLoading] = useState(!location.state?.product);
- 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
-        const data = await res.json();
-        if (data.success) {
-          setProduct(data.data);
-        } else {
-          console.log('Product not found:', data);
-        }
-      } catch (err) {
-        console.error('Error fetching product:', err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    fetchProduct();
-  }, [id]);
+  const navigate = useNavigate();
 
+  const [product, setProduct] = useState(location.state?.product || null);
+  const [quantity, setQuantity] = useState(location.state?.quantity || 1);
+  const [loading, setLoading] = useState(!location.state?.product);
+  const [processing, setProcessing] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -47,89 +24,92 @@ const Checkout = () => {
     address: "",
     city: "",
     zip: "",
-    paymentMethod: "credit-card",
-    creditCardNumber: "",
-    expiryDate: "",
-    cvv: "",
+    paymentMethod: "Cash On Delivery",
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    if (product) return;
 
-  const handleQuantityChange = (e) => {
-    const value = Math.max(1, parseInt(e.target.value) || 1);
-    setQuantity(value);
-  };
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  const requiredFields = ["fullName", "email", "phone", "address", "city", "zip"];
-  if (formData.paymentMethod === "credit-card") {
-    requiredFields.push("creditCardNumber", "expiryDate", "cvv");
-  }
-
-  const isEmptyField = requiredFields.some((field) => !formData[field].trim());
-
-  if (isEmptyField) {
-    toast.error("Please fill in all required fields.", { position: "top-center", autoClose: 5000 });
-    return;
-  }
-
-  try {
-    const stripe = await stripePromise;
-
-    // Create the checkout session on your backend
-    const response = await fetch('http://localhost:5000/api/checkout/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        productId: product._id,
-        quantity,
-        customer: {
-          name: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-          city: formData.city,
-          zip: formData.zip
-        }
-        // optionally pass paymentMethod or other info if needed
-      })
-    });
-
-    const session = await response.json();
-
-    if(session.id){
-      // Redirect to Stripe Checkout
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-      if (error) {
-        toast.error(error.message);
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const data = await res.json();
+        if (data.success) setProduct(data.data);
+        else toast.error("Product not found");
+      } catch (err) {
+        toast.error("Failed to fetch product");
+      } finally {
+        setLoading(false);
       }
-    } else {
-      toast.error("Failed to create checkout session");
+    };
+    fetchProduct();
+  }, [id, product]);
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleQuantityChange = (e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const requiredFields = ["fullName", "email", "phone", "address", "city", "zip"];
+    if (requiredFields.some((field) => !formData[field].trim())) {
+      toast.error("Please fill in all required fields.");
+      return;
     }
-  } catch (error) {
-    toast.error("Error during checkout: " + error.message);
-  }
-};
 
+    try {
+      setProcessing(true);
 
-  // Loading or product not found
-  if (loading) {
-    return <div className="p-4 text-blue-600">Loading product...</div>;
-  }
+      if (formData.paymentMethod === "Credit Card") {
+        // Stripe flow
+        const stripe = await stripePromise;
+        const response = await fetch("http://localhost:5000/api/checkout/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId: product._id, quantity }),
+        });
+        const session = await response.json();
+        if (session.url) {
+          window.location.href = session.url; // redirect to Stripe checkout
+        } else {
+          toast.error("Failed to create checkout session");
+          setProcessing(false);
+        }
+        return;
+      }
 
-  if (!product) {
-    return <div className="p-4 text-red-600">Product not found</div>;
-  }
+      // Cash On Delivery flow
+      const orderResponse = await fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user: formData.email,
+          products: [{ productId: product._id, quantity }],
+          address: `${formData.address}, ${formData.city}, ${formData.zip}`,
+          paymentMethod: "Cash on Delivery",
+        }),
+      });
+      const orderResult = await orderResponse.json();
+      if (!orderResult.success) {
+        toast.error(orderResult.message || "Failed to place order");
+        setProcessing(false);
+        return;
+      }
 
-  // Calculate totals
+      toast.success("Order placed successfully!");
+      setTimeout(() => {
+        setProcessing(false);
+        navigate("/parts");
+      }, 1500);
+
+    } catch (err) {
+      toast.error("Error during checkout: " + err.message);
+      setProcessing(false);
+    }
+  };
+
+  if (loading) return <div className="p-4 text-blue-600">Loading product...</div>;
+  if (!product) return <div className="p-4 text-red-600">Product not found</div>;
+
   const subtotal = product.price * quantity;
   const shipping = 300;
   const total = subtotal + shipping;
@@ -137,164 +117,54 @@ const handleSubmit = async (e) => {
   return (
     <div className="checkout-background">
       <div className="checkout-wrapper">
-        {/* Left Side - Form */}
         <div className="checkout-left">
           <h2 className="checkout-title">Checkout</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="check-label">Full Name</label>
-              <input
-                className="check-input"
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                placeholder="Enter your full name"
-              />
+              <label>Full Name</label>
+              <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
             </div>
-
             <div className="checkout-row">
-              <div className="form-group">
-                <label className="check-label">Email Address</label>
-                <input
-                  className="check-input"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                />
-              </div>
-              <div className="form-group">
-                <label className="check-label">Phone Number</label>
-                <input
-                  className="check-input"
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Enter your phone number"
-                />
-              </div>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" />
             </div>
-
             <div className="form-group">
-              <label className="check-label">Shipping Address</label>
-              <input
-                className="check-input"
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="Enter your shipping address"
-              />
+              <label>Address</label>
+              <input type="text" name="address" value={formData.address} onChange={handleChange} />
             </div>
-
             <div className="checkout-row">
-              <div className="form-group">
-                <label className="check-label">City</label>
-                <input
-                  className="check-input"
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  placeholder="Enter your city"
-                />
-              </div>
-              <div className="form-group">
-                <label className="check-label">Postal Code</label>
-                <input
-                  className="check-input"
-                  type="text"
-                  name="zip"
-                  value={formData.zip}
-                  onChange={handleChange}
-                  placeholder="Enter your postal code"
-                />
-              </div>
+              <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
+              <input type="text" name="zip" value={formData.zip} onChange={handleChange} placeholder="Postal Code" />
             </div>
-
             <div className="form-group">
-              <label className="check-label">Payment Method</label>
-              <select
-                className="check-input"
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleChange}
-              >
-                <option value="credit-card">Credit Card</option>
-                <option value="paypal">Cash On Delivery</option>
+              <label>Payment Method</label>
+              <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
+                <option value="Cash On Delivery">Cash On Delivery</option>
+                <option value="Credit Card">Credit Card</option>
               </select>
             </div>
-
-            {formData.paymentMethod === "credit-card" && (
-              <>
-                <div className="form-group">
-                  <label className="check-label">Credit Card Number</label>
-                  <input
-                    className="check-input"
-                    type="text"
-                    name="creditCardNumber"
-                    value={formData.creditCardNumber}
-                    onChange={handleChange}
-                    placeholder="Enter your credit card number"
-                  />
-                </div>
-
-                <div className="checkout-row">
-                  <div className="form-group">
-                    <label className="check-label">Expiry Date</label>
-                    <input
-                      className="check-input"
-                      type="text"
-                      name="expiryDate"
-                      value={formData.expiryDate}
-                      onChange={handleChange}
-                      placeholder="MM/YY"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="check-label">CVV</label>
-                    <input
-                      className="check-input"
-                      type="text"
-                      name="cvv"
-                      value={formData.cvv}
-                      onChange={handleChange}
-                      placeholder="Enter your CVV"
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* Quantity Selection */}
             <div className="form-group">
-              <label className="check-label">Quantity</label>
-              <input
-                className="check-input"
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={handleQuantityChange}
-              />
+              <label>Quantity</label>
+              <input type="number" min="1" value={quantity} onChange={handleQuantityChange} />
             </div>
-
-            <button type="submit" className="checkout-button">
-              Place Order
-            </button>
+            <button type="submit" className="checkout-button">Place Order</button>
           </form>
         </div>
 
-        {/* Right Side - Summary */}
         <div className="checkout-right">
-          <h2 className="right">Order Summary</h2>
-          <p className="right-p">Subtotal ({quantity} item{quantity > 1 ? 's' : ''}): Rs. {subtotal}</p>
+          <h2>Order Summary</h2>
+          <p>Subtotal ({quantity} item{quantity > 1 ? "s" : ""}): Rs. {subtotal}</p>
           <p>Shipping: Rs. {shipping}</p>
-          <p className="right-ps"><strong>Total: Rs. {total}</strong></p>
+          <p><strong>Total: Rs. {total}</strong></p>
         </div>
       </div>
+
+      {processing && (
+        <div className="processing-overlay">
+          <div className="spinner"></div>
+          <p>Processing your order...</p>
+        </div>
+      )}
 
       <ToastContainer />
     </div>

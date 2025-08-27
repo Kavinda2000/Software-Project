@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import './partsform.css';
+import './partsform.css'; // unique CSS file
 
 function PartsForm({ onClose, user }) {
   const [formData, setFormData] = useState({
@@ -10,20 +11,22 @@ function PartsForm({ onClose, user }) {
     price: '',
     brand: '',
     category: '',
+    warranty: '',
     owner: user?.email || '',
   });
 
   const [imageFile, setImageFile] = useState(null);
+  const [processing, setProcessing] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-  const { name, value, files } = e.target;
-  if (name === 'imageFile') {
-    setImageFile(files[0]);
-  } else {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+    const { name, value, files } = e.target;
+    if (name === 'pf-imageFile') {
+      setImageFile(files[0]);
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,41 +36,51 @@ function PartsForm({ onClose, user }) {
       return;
     }
 
+    setProcessing(true);
+
     try {
-      const formDataToSend = new FormData();
-
-      // Append form fields
+      const data = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
+        data.append(key, value);
+      });
+      data.append("image", imageFile);
+
+      await axios.post("http://localhost:5000/api/products", data, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
-      // Append image file
-      formDataToSend.append('image', imageFile);  // ✅ must be 'image'
+      toast.success("Product created successfully!", { autoClose: 2000 });
 
-      await axios.post('http://localhost:5000/api/products', formDataToSend, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      setTimeout(() => {
+        setProcessing(false);
+        navigate("/parts");
+      }, 2000);
 
-      toast.success('Product created successfully!', { autoClose: 3000 });
-      setTimeout(() => onClose(), 3000);
     } catch (error) {
       console.error(error);
-      toast.error('Error creating product!', { autoClose: 3000 });
+      toast.error("Error creating product!", { autoClose: 3000 });
+      setProcessing(false);
     }
   };
 
-
   return (
-    <div className="form-overlay">
-      <ToastContainer />
-      <div className="form-container">
-        <h2>Publish a Product</h2>
-        <form onSubmit={handleSubmit} className="form-grid">
-          <div className="form-group">
-            <label htmlFor="title">Title</label>
+    <div className="pf-overlay">
+      <ToastContainer position="bottom-right" />
+      {processing && (
+        <div className="pf-processing-overlay">
+          <div className="pf-spinner"></div>
+          <p>Publishing...</p>
+        </div>
+      )}
+
+      <div className="pf-container">
+        <h2 className="pf-title">Publish a Product</h2>
+        <form onSubmit={handleSubmit} className="pf-form-grid">
+          <div className="pf-form-group">
+            <label htmlFor="pf-title">Title</label>
             <input
               type="text"
-              id="title"
+              id="pf-title"
               name="title"
               placeholder="Title"
               onChange={handleChange}
@@ -76,11 +89,11 @@ function PartsForm({ onClose, user }) {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="price">Price (in Rs)</label>
+          <div className="pf-form-group">
+            <label htmlFor="pf-price">Price (in Rs)</label>
             <input
               type="number"
-              id="price"
+              id="pf-price"
               name="price"
               placeholder="Price"
               onChange={handleChange}
@@ -89,10 +102,10 @@ function PartsForm({ onClose, user }) {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="brand">Brand</label>
+          <div className="pf-form-group">
+            <label htmlFor="pf-brand">Brand</label>
             <select
-              id="brand"
+              id="pf-brand"
               name="brand"
               value={formData.brand}
               onChange={handleChange}
@@ -109,10 +122,10 @@ function PartsForm({ onClose, user }) {
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="category">Category</label>
+          <div className="pf-form-group">
+            <label htmlFor="pf-category">Category</label>
             <select
-              id="category"
+              id="pf-category"
               name="category"
               value={formData.category}
               onChange={handleChange}
@@ -128,24 +141,23 @@ function PartsForm({ onClose, user }) {
             </select>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="imageFile">Upload Image</label>
+          <div className="pf-form-group">
+            <label htmlFor="pf-imageFile">Upload Image</label>
             <input
               type="file"
-              id="imageFile"
-              name="imageFile"
+              id="pf-imageFile"
+              name="pf-imageFile"
               accept="image/*"
               onChange={handleChange}
               required
             />
-
           </div>
 
-          <div className="form-group">
-            <label htmlFor="warranty">Warranty</label>
+          <div className="pf-form-group">
+            <label htmlFor="pf-warranty">Warranty</label>
             <input
               type="text"
-              id="warranty"
+              id="pf-warranty"
               name="warranty"
               placeholder="Warranty"
               onChange={handleChange}
@@ -154,11 +166,9 @@ function PartsForm({ onClose, user }) {
             />
           </div>
 
-          <div className="form-buttons">
+          <div className="pf-form-buttons">
             <button type="submit">Submit</button>
-            <button type="button" onClick={onClose}>
-              Cancel
-            </button>
+            <button type="button" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>

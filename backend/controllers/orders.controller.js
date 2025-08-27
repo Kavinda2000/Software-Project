@@ -105,3 +105,27 @@ export const deleteOrder = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+
+// Update order status
+export const updateOrderStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ success: false, message: "Status is required" });
+  }
+
+  try {
+    const order = await Order.findById(id);
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    order.status = status;
+    await order.save();
+
+    res.status(200).json({ success: true, data: order });
+  } catch (err) {
+    console.error("Error updating order status:", err.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};

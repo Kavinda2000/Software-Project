@@ -44,10 +44,6 @@ function BikeRepairSchedule() {
     setActiveIndex(-1);
   }, [search, companies]);
 
-// Added this function inside the component:
-
-
-
   const handleSelect = (name) => {
     setSelectedCompany(name);
     setSearch(name);
@@ -95,11 +91,6 @@ function BikeRepairSchedule() {
     });
   };
 
-  const handleFindNearby = () => {
-    // Dummy logic for now
-    alert("Finding nearby repair centers... (to be implemented)");
-  };
-
   return (
     <div className="bike-repair-schedule-background">
       <div className="bike-repair-schedule-container">
@@ -119,7 +110,6 @@ function BikeRepairSchedule() {
                 placeholder="Type company name..."
                 autoComplete="off"
                 aria-autocomplete="list"
-                aria-expanded={showSuggestions}
                 aria-controls="company-suggestions"
               />
               {showSuggestions && search && (
@@ -219,14 +209,31 @@ function BikeRepairSchedule() {
             />
           </div>
 
+          {/* Booking Charge Information */}
+          <div className="booking-charge-section">
+            <div className="charge-display">
+              <h3>Booking Charge</h3>
+              <div className="charge-amount">
+                <span className="currency">Rs.</span>
+                <span className="amount">300</span>
+              </div>
+              <p className="charge-description">Initial inspection and booking fee</p>
+            </div>
 
-          <button
-            type="button"
-            className="btn"
-            onClick={handleFindNearby}
-          >
-            Find Repair Centers Near Me
-          </button>
+            <div className="payment-note">
+              <h4>Payment Information</h4>
+              <div className="note-content">
+                <p><strong>Important Note:</strong></p>
+                <ul>
+                  <li>This Rs. 300 is an <strong>initial booking charge</strong> for repair inspection and scheduling.</li>
+                  <li>The actual repair cost will be determined after the initial inspection.</li>
+                  <li>This booking charge will be <strong>deducted from the final repair payment</strong>.</li>
+                  <li>Additional charges may apply based on the repair requirements identified during inspection.</li>
+                  <li>Payment can be adjusted or refunded based on the final repair assessment.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
           <button type="submit" className="btn">Continue to Payment</button>
           {message && <div className="message">{message}</div>}

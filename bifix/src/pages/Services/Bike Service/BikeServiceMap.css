@@ -1,3 +1,50 @@
+.map-dark-page {
+    background-color: #0b1020; /* dark page background while viewing map */
+}
+
+.map-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 90px auto 20px; /* push content below fixed navbar */
+    padding: 20px;
+    background-color: #0f172a; /* dark container */
+    border-radius: 10px;
+    border: 1px solid #1f2937; /* subtle dark border */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    color: #e5e7eb;
+}
+
+.map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #1f2937;
+}
+
+.map-header h2 {
+    margin: 0;
+    color: #e5e7eb;
+    font-size: 24px;
+}
+
+.back-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background: #0056b3;
+}
+
 .bike-service-map-container {
     width: 100%;
     max-width: 1000px; /* Ensure map doesn't stretch too wide */

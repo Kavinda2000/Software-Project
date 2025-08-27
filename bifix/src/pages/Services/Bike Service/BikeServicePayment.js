@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Bike Repair/BikeRepairSchedule.css";
+import SuccessPopup from "./components/SuccessPopup";
 
 function BikeServicePayment() {
   const { state } = useLocation();
@@ -14,6 +15,7 @@ function BikeServicePayment() {
   const [serviceDate, setServiceDate] = useState(state?.date || "");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   if (!state) {
     return (
@@ -31,23 +33,52 @@ function BikeServicePayment() {
     setIsSubmitting(true);
     setMessage("");
     try {
-      await axios.post("http://localhost:5000/api/repair-schedule", {
-        companyName: state.selectedCompany,
+      // Resolve serviceCenterId if missing by looking up vendors API
+      let resolvedServiceCenterId = state.serviceCenterId;
+      if (!resolvedServiceCenterId && state.selectedCompany) {
+        try {
+          const vendorsResp = await axios.get("http://localhost:5000/api/vendors");
+          const match = (vendorsResp.data || []).find(v => (v.name || "").toLowerCase() === state.selectedCompany.toLowerCase());
+          if (match && match._id) {
+            resolvedServiceCenterId = match._id;
+          }
+        } catch (_) {
+          // ignore; handled below
+        }
+      }
+
+      if (!resolvedServiceCenterId) {
+        throw new Error("Missing service center. Please go back and select a service center again.");
+      }
+
+      // First create the bike service booking
+      const bookingResponse = await axios.post("http://localhost:5000/api/bike-service/bookings", {
         customerName: state.customerName,
         bikeModel: state.bikeModel,
-        repairDate: serviceDate,
+        serviceCenter: state.selectedCompany,
+        serviceCenterId: resolvedServiceCenterId,
+        bookingDate: serviceDate,
         timeSlot: state.timeSlot,
         issueDescription: state.issueDescription,
-        contactNumber: state.contactNumber,
-        paymentMethod,
-        cardNumber,
-        expiry,
-        cvv
+        contactNumber: state.contactNumber
       });
-      setMessage("Payment successful and service booking confirmed!");
-      setTimeout(() => navigate("/"), 1200);
+
+      // Then update payment status
+      if (bookingResponse.data.booking._id) {
+        await axios.patch(`http://localhost:5000/api/bike-service/bookings/${bookingResponse.data.booking._id}/payment`, {
+          paymentStatus: 'paid'
+        });
+      }
+
+      // Show success popup
+      setShowSuccessPopup(true);
     } catch (err) {
-      setMessage("Payment failed. Please try again.");
+      console.error('Payment error:', err);
+      const serverMsg = err?.response?.data?.error || err?.response?.data?.message;
+      const friendly = serverMsg
+        ? `Payment failed: ${serverMsg}`
+        : (err?.message ? `Payment failed: ${err.message}` : "Payment failed. Please try again.");
+      setMessage(friendly);
     } finally {
       setIsSubmitting(false);
     }
@@ -139,6 +170,24 @@ function BikeServicePayment() {
           {message && <div className="message">{message}</div>}
         </form>
       </div>
+
+      {/* Success Popup */}
+      <SuccessPopup
+        isOpen={showSuccessPopup}
+        onClose={() => setShowSuccessPopup(false)}
+        title="Payment Successful! 🎉"
+        message="Your bike service booking has been confirmed and payment processed successfully."
+        bookingDetails={{
+          serviceCenter: state?.selectedCompany,
+          customerName: state?.customerName,
+          bikeModel: state?.bikeModel,
+          date: serviceDate,
+          timeSlot: state?.timeSlot,
+          bookingCharge: state?.bookingCharge || 300
+        }}
+        redirectTo="/"
+        redirectDelay={5000}
+      />
     </div>
   );
 }

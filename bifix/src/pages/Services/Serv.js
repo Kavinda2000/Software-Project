@@ -37,7 +37,7 @@ function Services() {
           <div style={{ marginTop: 20, width: '100%' }}>
             <button
               className='service-btn find-centers-btn'
-              onClick={() => navigate('/Services/BikeServiceMap')}
+              onClick={() => navigate('/Services/GoogleServiceMap')}
             >
               📍 Find Service Centers Near Me
             </button>

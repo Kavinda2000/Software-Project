@@ -1,30 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './GoogleServiceMap.css';
 
 function GoogleServiceMap() {
   const navigate = useNavigate();
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+  const markersRef = useRef([]);
   const [serviceCenters, setServiceCenters] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
+    // Load Google Maps JS if not present
+    if (!window.google) {
+      const script = document.createElement('script');
+      const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setMapLoaded(true);
+      script.onerror = () => console.error('Failed to load Google Maps API');
+      document.head.appendChild(script);
+    } else {
+      setMapLoaded(true);
+    }
+
     // Get user location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
+          setUserLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
         },
-        (error) => {
-          console.log('Error getting location:', error);
-          // Default to Colombo if location access is denied
-          setUserLocation({ lat: 6.9271, lng: 79.8612 });
-        }
+        () => setUserLocation({ lat: 6.9271, lng: 79.8612 })
       );
+    } else {
+      setUserLocation({ lat: 6.9271, lng: 79.8612 });
     }
 
     // Fetch service centers from backend
@@ -34,16 +47,14 @@ function GoogleServiceMap() {
   const fetchServiceCenters = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/vendors');
-      // Transform vendor data to include coordinates
       const centersWithCoords = response.data.map((vendor, index) => ({
         id: vendor._id,
         name: vendor.name,
         address: vendor.address || 'Address not available',
         phone: vendor.phone || 'Phone not available',
         email: vendor.email || 'Email not available',
-        // Generate coordinates around Sri Lanka for demo purposes
-        lat: 6.9271 + (Math.random() - 0.5) * 0.1,
-        lng: 79.8612 + (Math.random() - 0.5) * 0.1,
+        lat: 6.9271 + (Math.random() - 0.5) * 2.0,
+        lng: 79.8612 + (Math.random() - 0.5) * 2.0,
         type: 'Service Center'
       }));
       setServiceCenters(centersWithCoords);
@@ -111,6 +122,58 @@ function GoogleServiceMap() {
     return distanceA - distanceB;
   });
 
+  useEffect(() => {
+    if (mapLoaded && serviceCenters.length > 0 && userLocation && mapRef.current) {
+      initializeMap();
+    }
+  }, [mapLoaded, serviceCenters, userLocation]);
+
+  const initializeMap = () => {
+    if (!window.google || !mapRef.current) return;
+
+    const map = new window.google.maps.Map(mapRef.current, {
+      zoom: 8,
+      center: userLocation,
+      mapTypeId: 'roadmap',
+      styles: [{ featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }]
+    });
+
+    mapInstanceRef.current = map;
+
+    markersRef.current.forEach(marker => marker.setMap(null));
+    markersRef.current = [];
+
+    if (userLocation) {
+      const userMarker = new window.google.maps.Marker({
+        position: userLocation,
+        map,
+        title: 'Your Location'
+      });
+      markersRef.current.push(userMarker);
+    }
+
+    serviceCenters.forEach((center) => {
+      const marker = new window.google.maps.Marker({ position: { lat: center.lat, lng: center.lng }, map, title: center.name });
+      const distance = userLocation ? calculateDistance(userLocation.lat, userLocation.lng, center.lat, center.lng) : null;
+      const infoWindow = new window.google.maps.InfoWindow({
+        content: `<div style="padding: 8px; font-family: Arial, sans-serif; max-width: 280px;">
+            <h3 style="margin: 0 0 8px 0; color: #ea4335;">${center.name}</h3>
+            <p style="margin: 4px 0; color: #666;"><strong>Address:</strong> ${center.address}</p>
+            <p style="margin: 4px 0; color: #666;"><strong>Phone:</strong> ${center.phone}</p>
+            <p style="margin: 4px 0; color: #666;"><strong>Email:</strong> ${center.email}</p>
+            ${distance ? `<p style="margin: 4px 0; color: #666;"><strong>Distance:</strong> ${distance.toFixed(2)} km</p>` : ''}
+          </div>`
+      });
+      marker.addListener('click', () => infoWindow.open(map, marker));
+      markersRef.current.push(marker);
+    });
+
+    const bounds = new window.google.maps.LatLngBounds();
+    if (userLocation) bounds.extend(userLocation);
+    serviceCenters.forEach(center => bounds.extend({ lat: center.lat, lng: center.lng }));
+    map.fitBounds(bounds);
+  };
+
   if (loading) {
     return (
       <div className="google-map-container">
@@ -169,29 +232,14 @@ function GoogleServiceMap() {
         </div>
 
         <div className="map-display">
-          <div className="map-placeholder">
-            <h3>Google Maps Integration</h3>
-            <p>This would display an interactive Google Map showing all service centers.</p>
-            <p>To implement full Google Maps functionality, you would need:</p>
-            <ul>
-              <li>Google Maps API key</li>
-              <li>@googlemaps/js-api-loader package</li>
-              <li>Proper API billing setup</li>
-            </ul>
-            <div className="map-mockup">
-              <div className="map-mockup-content">
-                <h4>Interactive Map Area</h4>
-                <p>Service centers would be displayed as markers here</p>
-                <div className="mockup-markers">
-                  {sortedCenters.slice(0, 3).map((center, index) => (
-                    <div key={center.id} className="mockup-marker">
-                      📍 {center.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {!mapLoaded ? (
+            <div className="map-loading">
+              <h3>Loading Google Maps...</h3>
+              <p>Please wait while we load the interactive map.</p>
             </div>
-          </div>
+          ) : (
+            <div ref={mapRef} className="google-map" style={{ width: '100%', height: '100%', minHeight: '500px' }} />
+          )}
         </div>
       </div>
     </div>

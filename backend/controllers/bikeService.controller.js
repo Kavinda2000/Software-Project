@@ -5,6 +5,7 @@ import User from '../models/User.js';
 export const createBikeServiceBooking = async (req, res) => {
   try {
     const {
+      customerEmail,
       customerName,
       bikeModel,
       serviceCenter,
@@ -12,11 +13,12 @@ export const createBikeServiceBooking = async (req, res) => {
       bookingDate,
       timeSlot,
       issueDescription,
-      contactNumber
+      contactNumber,
+      serviceType = 'bike-service'
     } = req.body;
 
     // Validate required fields
-    if (!customerName || !bikeModel || !serviceCenter || !serviceCenterId || !bookingDate || !timeSlot || !issueDescription || !contactNumber) {
+    if (!customerEmail || !customerName || !bikeModel || !serviceCenter || !serviceCenterId || !bookingDate || !timeSlot || !issueDescription || !contactNumber) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -31,6 +33,7 @@ export const createBikeServiceBooking = async (req, res) => {
 
     // Create new booking
     const newBooking = new BikeServiceBooking({
+      customerEmail,
       customerName,
       bikeModel,
       serviceCenter,
@@ -39,7 +42,8 @@ export const createBikeServiceBooking = async (req, res) => {
       timeSlot,
       issueDescription,
       contactNumber,
-      bookingCharge: 300
+      bookingCharge: 300,
+      serviceType
     });
 
     const savedBooking = await newBooking.save();
@@ -52,6 +56,29 @@ export const createBikeServiceBooking = async (req, res) => {
   } catch (error) {
     console.error('Error creating bike service booking:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Get bookings by customer email
+export const getCustomerBookings = async (req, res) => {
+  try {
+    const { customerEmail } = req.params;
+
+    const bookings = await BikeServiceBooking.find({ customerEmail })
+      .populate('serviceCenterId', 'name email address phone')
+      .sort({ bookingDate: 1, timeSlot: 1 });
+
+    res.json({
+      success: true,
+      bookings
+    });
+
+  } catch (error) {
+    console.error('Error fetching customer bookings:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Internal server error' 
+    });
   }
 };
 

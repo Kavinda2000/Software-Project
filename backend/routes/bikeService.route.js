@@ -7,7 +7,8 @@ import {
   updatePaymentStatus,
   cancelBikeServiceBooking,
   getAvailableTimeSlots,
-  getBookingStatistics
+  getBookingStatistics,
+  getCustomerBookings
 } from '../controllers/bikeService.controller.js';
 
 const router = express.Router();
@@ -17,6 +18,9 @@ router.post('/bookings', createBikeServiceBooking);
 
 // Get all bike service bookings (with optional filters)
 router.get('/bookings', getBikeServiceBookings);
+
+// Get customer bookings by email
+router.get('/customer-bookings/:customerEmail', getCustomerBookings);
 
 // Get a specific bike service booking by ID
 router.get('/bookings/:id', getBikeServiceBookingById);

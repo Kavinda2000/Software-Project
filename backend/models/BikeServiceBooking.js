@@ -1,10 +1,20 @@
 import mongoose from 'mongoose';
 
 const bikeServiceBookingSchema = new mongoose.Schema({
+  customerEmail: {
+    type: String,
+    required: true,
+    trim: true
+  },
   customerName: {
     type: String,
     required: true,
     trim: true
+  },
+  serviceType: {
+    type: String,
+    enum: ['bike-service', 'bike-repair'],
+    default: 'bike-service'
   },
   bikeModel: {
     type: String,

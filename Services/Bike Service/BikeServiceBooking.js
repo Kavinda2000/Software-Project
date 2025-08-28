@@ -152,8 +152,12 @@ function BikeServiceBooking() {
         return;
       }
 
+      // Get user data for customer email
+      const userData = JSON.parse(sessionStorage.getItem('userData'));
+      
       // Create booking data
       const bookingData = {
+        customerEmail: userData.email,
         customerName,
         bikeModel,
         serviceCenter: selectedCompany,
@@ -161,7 +165,8 @@ function BikeServiceBooking() {
         bookingDate: date,
         timeSlot,
         issueDescription,
-        contactNumber
+        contactNumber,
+        serviceType: 'bike-service'
       };
 
       // Send booking to backend

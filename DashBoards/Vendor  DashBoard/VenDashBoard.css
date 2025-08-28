@@ -1,0 +1,132 @@
+.ven-dashboard-background {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;
+  z-index: 0;
+  background-color: #0a0a0a; /* fallback dark background */
+}
+
+/* The video will cover the whole background */
+.ven-dashboard-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: brightness(0.3) contrast(1.2); /* darken the video a bit */
+}
+
+/* Keep dashboard content above the video */
+.ven-dashboard-background > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+  .ven-dashboard-container {
+    padding: 20px;
+  }
+  
+  .dashboard-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  .title-underline {
+    border: 1px solid #333;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Big Card (section) */
+  .your-products-card{
+    background-color: rgba(122, 29, 216, 0.368);
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 12px;
+
+  }
+  
+  .your-products-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  /* Inner Cards inside Big Cards */
+  .vencard-containerr {
+    display: flex;
+    gap: 20px;
+
+  }
+  
+  .vencard {
+    width: 235px;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(15, 15, 15, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .vencard:hover {
+    transform: scale(1.03);
+  }
+  
+  .vencard.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  .vencard-title {
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  /* Plus icon styling */
+  .plus-icon-container {
+    width: 50px;
+    height: 50px;
+    background-color: #516c89;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .plus-icon-container:hover {
+    background-color: #0056b3;
+  }
+
+.ven-dashboard-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: brightness(0.5) contrast(1.5); /* brighter and more visible */
+}
+
+
+

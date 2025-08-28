@@ -13,6 +13,9 @@ function BikeServicePayment() {
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [serviceDate, setServiceDate] = useState(state?.date || "");
+  
+  // Debug: Log the state to see what's available
+  console.log('Payment component state:', state);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -33,42 +36,26 @@ function BikeServicePayment() {
     setIsSubmitting(true);
     setMessage("");
     try {
-      // Resolve serviceCenterId if missing by looking up vendors API
-      let resolvedServiceCenterId = state.serviceCenterId;
-      if (!resolvedServiceCenterId && state.selectedCompany) {
-        try {
-          const vendorsResp = await axios.get("http://localhost:5000/api/vendors");
-          const match = (vendorsResp.data || []).find(v => (v.name || "").toLowerCase() === state.selectedCompany.toLowerCase());
-          if (match && match._id) {
-            resolvedServiceCenterId = match._id;
-          }
-        } catch (_) {
-          // ignore; handled below
-        }
+
+      // Get user data for customer email
+      const userData = JSON.parse(sessionStorage.getItem('userData'));
+      if (!userData?.email) {
+        throw new Error("User not logged in. Please log in again.");
       }
 
-      if (!resolvedServiceCenterId) {
-        throw new Error("Missing service center. Please go back and select a service center again.");
+      // Debug: Log the state data
+      console.log('Payment state data:', state);
+      console.log('User data:', userData);
+
+      // Since the booking is already created, just update the payment status
+      if (!state.bookingId) {
+        throw new Error("No booking ID found. Please go back and create a booking first.");
       }
 
-      // First create the bike service booking
-      const bookingResponse = await axios.post("http://localhost:5000/api/bike-service/bookings", {
-        customerName: state.customerName,
-        bikeModel: state.bikeModel,
-        serviceCenter: state.selectedCompany,
-        serviceCenterId: resolvedServiceCenterId,
-        bookingDate: serviceDate,
-        timeSlot: state.timeSlot,
-        issueDescription: state.issueDescription,
-        contactNumber: state.contactNumber
+      // Update payment status for existing booking
+      await axios.patch(`http://localhost:5000/api/bike-service/bookings/${state.bookingId}/payment`, {
+        paymentStatus: 'paid'
       });
-
-      // Then update payment status
-      if (bookingResponse.data.booking._id) {
-        await axios.patch(`http://localhost:5000/api/bike-service/bookings/${bookingResponse.data.booking._id}/payment`, {
-          paymentStatus: 'paid'
-        });
-      }
 
       // Show success popup
       setShowSuccessPopup(true);
@@ -98,7 +85,7 @@ function BikeServicePayment() {
             <input
               id="service-date"
               type="date"
-              value={serviceDate}
+              value={serviceDate || state.date || ''}
               onChange={e => setServiceDate(e.target.value)}
               onFocus={e => { if (e.target.showPicker) { e.target.showPicker(); } }}
               required

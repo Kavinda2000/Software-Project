@@ -11,14 +11,31 @@ import 'react-toastify/dist/ReactToastify.css';
 const SERVER_URL = 'http://localhost:5000/api/';
 Modal.setAppElement('#root');
 
-const VendorTestList = ({ user, refresh }) => {
+const VendorTestList = ({ user, refresh, onRefresh }) => {
   const [tests, setTests] = useState([]);
   const [editingService, setEditingService] = useState(null);
   const [deleteServiceId, setDeleteServiceId] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [processing, setProcessing] = useState(false);
 
-  // ✅ Handle delete service like VendorProductList
+  // Fetch vendor tests
+  useEffect(() => {
+    const fetchVendorTests = async () => {
+      if (!user) return;
+      try {
+        const res = await axios.get(`${SERVER_URL}tests`);
+        const allTests = res.data.data;
+        const userTests = allTests.filter(t => t.owner === user.email || t.owner === user.name);
+        setTests(userTests);
+      } catch (err) {
+        console.error("Error fetching vendor tests:", err);
+      }
+    };
+
+    fetchVendorTests();
+  }, [user, refresh]); // refresh triggers re-fetch
+
+  // Delete service
   const handleDelete = async (id) => {
     if (!id) return;
     setProcessing(true);
@@ -26,6 +43,7 @@ const VendorTestList = ({ user, refresh }) => {
       await axios.delete(`${SERVER_URL}tests/${id}`);
       setTests(prev => prev.filter(t => t._id !== id));
       toast.success("Test deleted successfully!");
+      if (onRefresh) onRefresh(); // refresh parent
     } catch (err) {
       console.error("Error deleting test:", err);
       toast.error("Failed to delete test.");
@@ -36,13 +54,13 @@ const VendorTestList = ({ user, refresh }) => {
     }
   };
 
-  // ✅ Handle update service
+  // Update service
   const handleUpdate = async (updatedService) => {
     setProcessing(true);
     try {
-      await axios.put(`${SERVER_URL}tests/${updatedService._id}`, updatedService);
+      // Update locally
       setTests(prev => prev.map(t => t._id === updatedService._id ? updatedService : t));
-      toast.success("Test updated successfully!");
+      if (onRefresh) onRefresh(); // refresh parent
     } catch (err) {
       console.error("Error updating test:", err);
       toast.error("Failed to update test.");
@@ -52,24 +70,10 @@ const VendorTestList = ({ user, refresh }) => {
     }
   };
 
-  // Fetch vendor tests
-  useEffect(() => {
-    const fetchVendorTests = async () => {
-      try {
-        const res = await axios.get(`${SERVER_URL}tests`);
-        const allTests = res.data.data;
-        const userTests = allTests.filter(t => t.owner === user.email || t.owner === user.name);
-        setTests(userTests);
-      } catch (err) {
-        console.error("Error fetching vendor tests:", err);
-      }
-    };
-    if (user) fetchVendorTests();
-  }, [user, refresh]);
-
   return (
     <div className="vendor-test-list">
       <ToastContainer position="bottom-right" autoClose={3000} />
+
       {processing && (
         <div className="vendor-test-processing-overlay">
           <div className="vendor-test-spinner"></div>
@@ -85,7 +89,7 @@ const VendorTestList = ({ user, refresh }) => {
         />
       )}
 
-      {/* Delete confirmation modal */}
+      {/* Delete modal */}
       <Modal
         isOpen={isDeleteModalOpen}
         onRequestClose={() => setIsDeleteModalOpen(false)}

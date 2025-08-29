@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import './ForgotPassword.css';
 import { Link } from 'react-router-dom';
 import { Fade } from "react-awesome-reveal";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-//import Navbar from '../../components/Navbar/Navbar';
 
 
 function ForgotPassword() {
@@ -60,7 +59,7 @@ function ForgotPassword() {
           </div>
         </Fade>
       </div>
-      <ToastContainer />
+    
     </>
   );
 }

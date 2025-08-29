@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ForgotPassword.css'; // reuse styles if you want
 
@@ -72,7 +72,7 @@ function ResetPassword() {
           </button>
         </form>
       </div>
-      <ToastContainer />
+ 
     </div>
   );
 }

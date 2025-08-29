@@ -1,7 +1,7 @@
 // Otp.js
 import { useState, useRef, useEffect} from "react";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import './Otp.css'; // Add custom styling here
@@ -131,7 +131,7 @@ const handleOtpVerify = async (e) => {
 
  return (
     <div className="otp-container">
-      <ToastContainer />
+   
       <form onSubmit={handleOtpVerify} className="otp-form">
         <h2>Enter OTP</h2>
         <div className="otp-inputs">

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import "react-toastify/dist/ReactToastify.css";
 import "./Checkout.css";
@@ -61,7 +61,7 @@ const Checkout = () => {
 
       if (formData.paymentMethod === "Credit Card") {
         // Stripe flow
-        const stripe = await stripePromise;
+        const _stripe = await stripePromise; // eslint-disable-line no-unused-vars
         const response = await fetch("http://localhost:5000/api/checkout/create-checkout-session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -76,6 +76,7 @@ const Checkout = () => {
         }
         return;
       }
+
 
       // Cash On Delivery flow
       const orderResponse = await fetch("http://localhost:5000/api/orders", {
@@ -166,7 +167,7 @@ const Checkout = () => {
         </div>
       )}
 
-      <ToastContainer />
+
     </div>
   );
 };

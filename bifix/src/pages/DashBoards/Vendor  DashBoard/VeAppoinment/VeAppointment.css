@@ -1,0 +1,61 @@
+.appointments-dark-background {
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  padding: 20px;
+  color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.appointments-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #2c2c2c;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  margin-top: 50px;
+}
+
+.appointments-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: #f5f5f5;
+}
+
+.appointments-table th,
+.appointments-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.appointments-table th {
+  background-color: #333;
+  color: #fff;
+  font-weight: bold;
+}
+
+.appointments-table tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+.appointments-table tr:hover {
+  background-color: #444;
+}
+
+select {
+  background-color: #333;
+  color: #f5f5f5;
+  border: 1px solid #555;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.appointments-loading,
+.appointments-empty {
+  text-align: center;
+  font-size: 18px;
+  margin: 40px 0;
+  color: #ddd;
+}

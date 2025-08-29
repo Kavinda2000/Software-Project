@@ -10,9 +10,17 @@ const testSchema = new mongoose.Schema({
         enum: ["Bike Repair", "Bike Service"],
         required: true,
     },
-    address: {
-        type: String,
-        required: true,
+    // Replace address string with coordinates
+    location: {
+        type: {
+            lat: { type: Number, required: true },
+            lng: { type: Number, required: true }
+        },
+        required: true
+    },
+    formattedAddress: {
+        type: String, // optional, Google Maps can return this
+        required: false
     },
     price: {
         type: Number,

@@ -16,25 +16,25 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: function () {
-      return this.role === 'customer';  // Gender is only required for customers
+      return this.role === "customer"; // Gender is only required for customers
     },
   },
   address: {
     type: String,
     required: function () {
-      return this.role === 'vendor';  // Address is only required for vendors
+      return this.role === "vendor"; // Address is only required for vendors
     },
   },
   location: {
     type: {
       type: String,
-      enum: ['Point'],
-      default: 'Point'
+      enum: ["Point"],
+      default: undefined,   // allow completely undefined
     },
     coordinates: {
-      type: [Number], // [longitude, latitude]
-      default: undefined
-    }
+      type: [Number],       // [longitude, latitude]
+      default: undefined,   // no default, only set if vendor has coordinates
+    },
   },
   password: {
     type: String,
@@ -43,30 +43,27 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["customer", "vendor"],
-    default: "customer"
+    default: "customer",
   },
   profilePicture: {
     type: String, // Will store URL or file path
-    default: ''   // Empty by default, image upload is optional
+    default: "",  // Empty by default, image upload is optional
   },
   resetToken: {
     type: String,
-    default: undefined
+    default: undefined,
   },
   resetTokenExpiry: {
     type: Date,
-    default: undefined
-  }
-  
+    default: undefined,
+  },
 }, {
   timestamps: true,
 });
 
-// Enable geospatial queries on vendor locations
-userSchema.index({ location: '2dsphere' });
+// Enable geospatial queries only if vendor has a location
+userSchema.index({ location: "2dsphere" });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
-
-

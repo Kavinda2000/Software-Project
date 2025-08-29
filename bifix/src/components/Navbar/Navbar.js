@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaUser, FaBoxOpen, FaLifeRing, FaSignOutAlt } from 'react-icons/fa'
+import { FaUser, FaBoxOpen, FaLifeRing, FaSignOutAlt, FaCalendarAlt } from 'react-icons/fa'
 import './Navbar.css';
 import logo from './Logo.png';
 
@@ -133,7 +133,16 @@ function Navbar() {
               >
                 <FaBoxOpen className="dropdown-icon" /> Orders
               </Link>
-            </li>
+              </li>
+              <li>
+                <Link 
+                  to={user.role === "customer" ? "/customer-scheduling" : "/veappointments"} 
+                  onClick={() => setIsDropdownVisible(false)}
+                  className="dropdown-link"
+                >
+                  <FaCalendarAlt className="dropdown-icon" /> Appointments
+                </Link>
+              </li>
                 <li>
                   <Link 
                     to="/Customer-support" 

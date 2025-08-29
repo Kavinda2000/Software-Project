@@ -1,22 +1,23 @@
 // components/TestForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './TestForm.css';
+import MapPicker from './Map/MapPicker';
 
 const SERVER_URL = 'http://localhost:5000/api/';
 
 function TestForm({ onClose, user, onTestAdded }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    testType: 'Bike Repair',
-    address: '',
-    price: '',
-    owner: user?.email || '',
-    timeSlots: [],
-  });
-
+  const [showMapPicker, setShowMapPicker] = useState(false);  
+  const [location, setLocation] = useState(null); // separate state
+    const [formData, setFormData] = useState({
+      name: '',
+      testType: 'Bike Repair',
+      price: '',
+      owner: user?.email || '',
+      timeSlots: [],
+    });
   const [slot, setSlot] = useState({ date: '', startTime: '', endTime: '' });
   const [processing, setProcessing] = useState(false);
 
@@ -49,36 +50,51 @@ function TestForm({ onClose, user, onTestAdded }) {
     setSlot(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
+
+  // Validation: ensure at least one time slot
   if (formData.timeSlots.length === 0) {
     toast.error("Please add at least one time slot");
     return;
   }
+
+  // Validation: ensure location is selected
+  if (!location) {
+    toast.error("Please select a location on the map");
+    return;
+  }
+
   setProcessing(true);
 
   try {
-    // Transform timeSlots to match backend schema
+    // Transform timeSlots to backend format
     const transformedSlots = formData.timeSlots.map(ts => ({
       date: new Date(ts.date),
       slot: `${ts.startTime} - ${ts.endTime}`,
     }));
 
+    // Prepare data to send
     const dataToSend = {
       ...formData,
       price: formData.price ? Number(formData.price) : 0,
-      timeSlots: transformedSlots
+      timeSlots: transformedSlots,
+      location: location, // include lat/lng from MapPicker
     };
 
+    // Send POST request
     await axios.post(`${SERVER_URL}tests`, dataToSend);
-    toast.success("Test published successfully!", { autoClose: 2000 });
-    onTestAdded();
-    setTimeout(() => {
-      setProcessing(false);
-      onClose();
-    }, 2000);
+
+const toastId = toast.success("Test published successfully!", { autoClose: 2000 });
+
+setTimeout(() => {
+  setProcessing(false);
+  onClose();
+  toast.dismiss(toastId); // manually dismiss
+}, 2000);
+
   } catch (err) {
-    console.error(err);
+    console.error("Error publishing test:", err);
     toast.error("Error publishing test!", { autoClose: 3000 });
     setProcessing(false);
   }
@@ -87,7 +103,13 @@ function TestForm({ onClose, user, onTestAdded }) {
 
   return (
     <div className="testform-overlay">
-      <ToastContainer position="bottom-left" />
+        {showMapPicker && (
+          <MapPicker
+            location={location}
+            setLocation={setLocation}
+            onClose={() => setShowMapPicker(false)} // <-- this is passed here
+          />
+        )}
       {processing && (
         <div className="testform-processing-overlay">
           <div className="testform-spinner"></div>
@@ -111,8 +133,15 @@ function TestForm({ onClose, user, onTestAdded }) {
           </div>
 
           <div className="testform-group">
-            <label>Address</label>
-            <input type="text" name="address" value={formData.address} onChange={handleChange} required />
+            <label>Location</label>
+            {location ? (
+              <div>
+                <p>Lat: {location.lat}, Lng: {location.lng}</p>
+                <button type="button" onClick={() => setShowMapPicker(true)}>Change Location</button>
+              </div>
+            ) : (
+              <button type="button" onClick={() => setShowMapPicker(true)}>Select Location</button>
+            )}
           </div>
 
           <div className="testform-group">

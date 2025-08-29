@@ -1,16 +1,24 @@
 import { useState } from 'react';
-import TestForm from './TestForm'; // or AddServiceForm if you rename
+import TestForm from './TestForm';
 import VendorTestList from './VendorTestList';
 
 const VendorTest = ({ user }) => {
   const [refresh, setRefresh] = useState(false);
 
-  const handleTestAdded = () => setRefresh(prev => !prev); // toggle to refresh list
+  const handleRefresh = () => setRefresh(prev => !prev); // trigger refresh
 
   return (
     <div>
-      <TestForm user={user} onTestAdded={handleTestAdded} onClose={() => {}} />
-      <VendorTestList user={user} refresh={refresh} />
+      <TestForm 
+        user={user} 
+        onTestAdded={handleRefresh} 
+        onClose={() => {}}
+      />
+      <VendorTestList 
+        user={user} 
+        refresh={refresh} 
+        onRefresh={handleRefresh} 
+      />
     </div>
   );
 };

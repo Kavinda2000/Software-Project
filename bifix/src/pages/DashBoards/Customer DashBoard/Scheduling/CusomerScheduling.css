@@ -1,0 +1,225 @@
+.csu-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.csu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-top: 70px;
+  margin-bottom: 30px;
+}
+
+.csu-title {
+  color: #333;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center; /* add this */
+}
+
+.csu-back-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.csu-back-btn:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.csu-loading-container,
+.csu-error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.csu-loading {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.csu-error-container {
+  flex-direction: column;
+  text-align: center;
+  color: white;
+}
+
+.csu-error-container h2 {
+  margin-bottom: 16px;
+}
+
+.csu-error-container p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.csu-no-bookings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.csu-no-bookings {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-width: 500px;
+}
+
+.csu-no-bookings h2 {
+  color: #333;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+.csu-no-bookings p {
+  color: #666;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.csu-bookings-container {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.csu-bookings-summary {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.csu-bookings-summary h3 {
+  color: #333;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.csu-bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.csu-booking-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.csu-booking-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+
+.csu-booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.csu-booking-header h3 {
+  color: #333;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.csu-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.csu-status-pending { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+.csu-status-confirmed { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+.csu-status-in-progress { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.csu-status-completed { background: #c3e6cb; color: #155724; border: 1px solid #a8e6cf; }
+.csu-status-cancelled { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+.csu-booking-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.csu-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.csu-detail-row:last-child {
+  border-bottom: none;
+}
+
+.csu-label {
+  font-weight: 600;
+  color: #495057;
+  min-width: 120px;
+}
+
+.csu-value {
+  color: #333;
+  text-align: right;
+  flex: 1;
+  margin-left: 16px;
+}
+
+.csu-payment-status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.csu-paid { background: #d4edda; color: #155724; }
+.csu-pending { background: #fff3cd; color: #856404; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .csu-page { padding: 10px; }
+  .csu-header { flex-direction: column; gap: 20px; text-align: center; padding: 20px; }
+  .csu-title { font-size: 24px; }
+  .csu-bookings-container { padding: 20px; }
+  .csu-booking-card { padding: 16px; }
+  .csu-detail-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .csu-value { text-align: left; margin-left: 0; }
+  .csu-booking-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .csu-no-bookings { padding: 30px 20px; margin: 0 10px; }
+}

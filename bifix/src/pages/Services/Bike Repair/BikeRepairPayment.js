@@ -27,31 +27,35 @@ function BikeRepairPayment() {
   }
 
   const submitPayment = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setMessage("");
-    try {
-      await axios.post("http://localhost:5000/api/repair-schedule", {
-        companyName: state.selectedCompany,
-        customerName: state.customerName,
-        bikeModel: state.bikeModel,
-        repairDate,
-        timeSlot: state.timeSlot,
-        issueDescription: state.issueDescription,
-        contactNumber: state.contactNumber,
-        paymentMethod,
-        cardNumber,
-        expiry,
-        cvv
-      });
-      setMessage("Payment successful and booking confirmed!");
-      setTimeout(() => navigate("/"), 1200);
-    } catch (err) {
-      setMessage("Payment failed. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  e.preventDefault();
+  setIsSubmitting(true);
+  setMessage("");
+
+  try {
+    await axios.post("http://localhost:5000/api/repair-schedule", {
+    serviceId: state.selectedServiceId, // <-- important
+    companyName: state.selectedCompany,
+    customerName: state.customerName,
+    email: state.email,
+    bikeModel: state.bikeModel,
+    repairDate,
+    timeSlot: state.timeSlot,
+    issueDescription: state.issueDescription,
+    contactNumber: state.contactNumber,
+    paymentMethod,
+    cardNumber,
+    expiry,
+    cvv
+  });
+    setMessage("Payment successful and booking confirmed!");
+    setTimeout(() => navigate("/"), 1200);
+  } catch (err) {
+    setMessage("Payment failed. Please try again.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <div className="bike-repair-schedule-background">
@@ -151,5 +155,3 @@ function BikeRepairPayment() {
 }
 
 export default BikeRepairPayment;
-
-

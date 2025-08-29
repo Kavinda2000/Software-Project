@@ -4,7 +4,14 @@ import Test from "../models/test.js"
 // Get all Tests
 export const getTests = async (req, res) => {
     try {
-        const tests = await Test.find({});
+        const { type } = req.query;  // <-- read ?type=Bike Repair
+        let filter = {};
+
+        if (type) {
+            filter.testType = type;  // e.g. "Bike Repair"
+        }
+
+        const tests = await Test.find(filter);
         res.status(200).json({ success: true, data: tests });
     } catch (error) {
         console.error("Error fetching Tests:", error.message);
@@ -14,9 +21,9 @@ export const getTests = async (req, res) => {
 
 // Create a new Test
 export const createTest = async (req, res) => {
-    const { name, testType, address, price, owner, timeSlots } = req.body;
+    const { name, testType, location, formattedAddress, price, owner, timeSlots } = req.body;
 
-    if (!name || !testType || !address || !owner) {
+    if (!name || !testType || !location || !owner) {
         return res.status(400).json({ success: false, message: "Please provide all required fields" });
     }
 
@@ -29,7 +36,8 @@ export const createTest = async (req, res) => {
         const newTest = new Test({
             name,
             testType,
-            address,
+            location,
+            formattedAddress,
             price,
             owner,
             timeSlots
@@ -42,6 +50,7 @@ export const createTest = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+
 
 // Update a Test
 export const updateTest = async (req, res) => {
@@ -97,3 +106,4 @@ export const getTestById = async (req, res) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+

@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./BikeRepairSchedule.css";
 
-const TIME_SLOTS = [
-  "7:30-8:00", "8:00-8:30", "8:30-9:00", "9:00-9:30",
-  "9:30-10:00", "10:00-10:30", "10:30-11:00", "11:00-11:30"
-];
-
 function BikeRepairSchedule() {
-  const [companies, setCompanies] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState("");
+  const [selectedServiceId, setSelectedServiceId] = useState(""); // store service _id
   const [customerName, setCustomerName] = useState("");
   const [bikeModel, setBikeModel] = useState("");
   const [date, setDate] = useState("");
@@ -22,34 +17,30 @@ function BikeRepairSchedule() {
   const [message, setMessage] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [timeSlots, setTimeSlots] = useState([]);
   const navigate = useNavigate();
 
+  // Load repair centers
   useEffect(() => {
-    axios.get("http://localhost:5000/api/vendors")
-      .then(res => {
-        setCompanies(res.data);
-        setFilteredCompanies(res.data);
-      })
-      .catch(() => {
-        setMessage("Failed to load companies.");
-      });
+    axios.get("http://localhost:5000/api/tests?type=Bike Repair")
+      .then(res => setFilteredCompanies(res.data.data))
+      .catch(() => setMessage("Failed to load repair centers."));
   }, []);
 
-  useEffect(() => {
-    setFilteredCompanies(
-      companies.filter(c =>
-        c.name.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-    setActiveIndex(-1);
-  }, [search, companies]);
-
-  const handleSelect = (name) => {
+  // Select a company from the list
+  const handleSelect = (name, id) => {
     setSelectedCompany(name);
+    setSelectedServiceId(id);
     setSearch(name);
     setShowSuggestions(false);
+
+    // Load time slots for selected service
+    axios.get(`http://localhost:5000/api/tests/${id}`)
+      .then(res => setTimeSlots(res.data.data.timeSlots))
+      .catch(() => setMessage("Failed to load vendor details."));
   };
 
+  // Keyboard navigation in autocomplete
   const handleKeyDown = (e) => {
     if (!showSuggestions || filteredCompanies.length === 0) return;
     if (e.key === 'ArrowDown') {
@@ -61,32 +52,40 @@ function BikeRepairSchedule() {
     } else if (e.key === 'Enter') {
       if (activeIndex >= 0 && filteredCompanies[activeIndex]) {
         e.preventDefault();
-        handleSelect(filteredCompanies[activeIndex].name);
+        handleSelect(filteredCompanies[activeIndex].name, filteredCompanies[activeIndex]._id);
       }
     } else if (e.key === 'Escape') {
       setShowSuggestions(false);
     }
   };
 
-  const handleSubmit = async (e) => {
+  // Handle form submission
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      !selectedCompany || !customerName || !bikeModel || !date ||
-      !timeSlot || !issueDescription || !contactNumber
-    ) {
+
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    if (!userData) {
+      navigate('/login', { state: { from: '/Services/BikeRepairSchedule', message: 'Please log in to continue' }});
+      return;
+    }
+
+    if (!selectedCompany || !selectedServiceId || !customerName || !bikeModel || !date || !timeSlot || !issueDescription || !contactNumber) {
       setMessage("Please fill all fields.");
       return;
     }
 
+    // Navigate to payment page with all required info including serviceId
     navigate("/Services/BikeRepairPayment", {
       state: {
         selectedCompany,
+        selectedServiceId,
         customerName,
         bikeModel,
         date,
         timeSlot,
         issueDescription,
-        contactNumber
+        contactNumber,
+        email: userData.email
       }
     });
   };
@@ -96,8 +95,10 @@ function BikeRepairSchedule() {
       <div className="bike-repair-schedule-container">
         <h2>Schedule Bike Repair</h2>
         <form onSubmit={handleSubmit} className="bike-repair-form">
+
+          {/* Search Repair Center */}
           <div className="input-group">
-            <label htmlFor="search-company">Search Company:</label>
+            <label htmlFor="search-company">Search Repair Center:</label>
             <div className="autocomplete">
               <input
                 id="search-company"
@@ -107,24 +108,19 @@ function BikeRepairSchedule() {
                 onFocus={() => setShowSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
                 onKeyDown={handleKeyDown}
-                placeholder="Type company name..."
+                placeholder="Type repair center name..."
                 autoComplete="off"
-                aria-autocomplete="list"
-                aria-controls="company-suggestions"
               />
               {showSuggestions && search && (
-                <div id="company-suggestions" className="company-list" role="listbox">
+                <div className="company-list">
                   {filteredCompanies.length > 0 ? (
-                    filteredCompanies.map((c, index) => (
+                    filteredCompanies.map((test, index) => (
                       <div
-                        key={c._id}
-                        className={`company-item${selectedCompany === c.name ? " selected" : ""}${index === activeIndex ? " active" : ""}`}
-                        onMouseDown={() => handleSelect(c.name)}
-                        tabIndex={-1}
-                        role="option"
-                        aria-selected={selectedCompany === c.name}
+                        key={test._id}
+                        className={`company-item${selectedCompany === test.name ? " selected" : ""}${index === activeIndex ? " active" : ""}`}
+                        onMouseDown={() => handleSelect(test.name, test._id)}
                       >
-                        {c.name}
+                        {test.name}
                       </div>
                     ))
                   ) : (
@@ -135,6 +131,7 @@ function BikeRepairSchedule() {
             </div>
           </div>
 
+          {/* Customer Details */}
           <div className="input-group">
             <label htmlFor="customer-name">Customer Name:</label>
             <input
@@ -164,11 +161,12 @@ function BikeRepairSchedule() {
               type="date"
               value={date}
               onChange={e => setDate(e.target.value)}
-              onFocus={e => { if (e.target.showPicker) { e.target.showPicker(); } }}
               min={new Date().toISOString().split('T')[0]}
               required
+              style={{ appearance: 'auto' }}
             />
           </div>
+
 
           <div className="input-group">
             <label htmlFor="time-slot">Time Slot:</label>
@@ -179,8 +177,10 @@ function BikeRepairSchedule() {
               required
             >
               <option value="">Select a slot</option>
-              {TIME_SLOTS.map(slot => (
-                <option key={slot} value={slot}>{slot}</option>
+              {timeSlots.map(slotObj => (
+                <option key={slotObj._id} value={slotObj.slot}>
+                  {slotObj.slot}
+                </option>
               ))}
             </select>
             <small className="slot-info">
@@ -207,32 +207,6 @@ function BikeRepairSchedule() {
               onChange={e => setContactNumber(e.target.value)}
               required
             />
-          </div>
-
-          {/* Booking Charge Information */}
-          <div className="booking-charge-section">
-            <div className="charge-display">
-              <h3>Booking Charge</h3>
-              <div className="charge-amount">
-                <span className="currency">Rs.</span>
-                <span className="amount">300</span>
-              </div>
-              <p className="charge-description">Initial inspection and booking fee</p>
-            </div>
-
-            <div className="payment-note">
-              <h4>Payment Information</h4>
-              <div className="note-content">
-                <p><strong>Important Note:</strong></p>
-                <ul>
-                  <li>This Rs. 300 is an <strong>initial booking charge</strong> for repair inspection and scheduling.</li>
-                  <li>The actual repair cost will be determined after the initial inspection.</li>
-                  <li>This booking charge will be <strong>deducted from the final repair payment</strong>.</li>
-                  <li>Additional charges may apply based on the repair requirements identified during inspection.</li>
-                  <li>Payment can be adjusted or refunded based on the final repair assessment.</li>
-                </ul>
-              </div>
-            </div>
           </div>
 
           <button type="submit" className="btn">Continue to Payment</button>

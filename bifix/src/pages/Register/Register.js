@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Register.css";
-import { toast, ToastContainer } from 'react-toastify'; // Import toast and ToastContainer
+import { toast} from 'react-toastify'; // Import toast and ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import axios from 'axios';
@@ -48,7 +48,7 @@ const handleSubmit = async (e) => {
 
   return (
     <div className="register-page">
-      <ToastContainer /> {/* Toast container for displaying notifications */}
+       {/* Toast container for displaying notifications */}
       <div className="register-container">
         <h2>Registration</h2>
         <form onSubmit={handleSubmit}>

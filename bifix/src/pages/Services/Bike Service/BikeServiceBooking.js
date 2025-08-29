@@ -125,6 +125,20 @@ function BikeServiceBooking() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if user is logged in
+    const userData = sessionStorage.getItem('userData');
+    if (!userData) {
+      // User is not logged in, redirect to login page
+      navigate('/login', { 
+        state: { 
+          from: '/Services/BikeServiceSchedule',
+          message: 'Please log in to continue with your booking.'
+        }
+      });
+      return;
+    }
+    
     if (!selectedCompany || !customerName || !bikeModel || !date || !timeSlot || !issueDescription || !contactNumber) {
       setSubmitted(false);
       return;

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
+import { toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./VeOrders.css";
 
@@ -115,7 +115,7 @@ return (
             </table>
           </>
         )}
-        <ToastContainer />
+     
       </div>
     </div>
   );

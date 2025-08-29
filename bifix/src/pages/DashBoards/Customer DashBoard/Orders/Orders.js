@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Orders.css';
-import { Fade } from "react-awesome-reveal";
+
 
 function Orders() {
   const [orders, setOrders] = useState([]);
@@ -56,58 +56,63 @@ function Orders() {
   if (loading) return <p>Loading orders...</p>;
 
   return (
-  <div className="orders-page dark-background">
-    <Fade duration={500}>
-      <h1>Your Orders</h1>
-      {orders.length === 0 ? (
-        <p className="no-orders-text">
-          You have no orders yet. Place an order now and get started!
-        </p>
-      ) : (
-        <div className="orders-list">
-          {orders.map((order) => (
-            <div key={order._id} className="order-card">
-              <h3>Order #{order._id}</h3>
-              <p>Status: <span className={`status ${order.status.toLowerCase()}`}>{order.status}</span></p>
-              <p>Total: Rs. {order.total + 300} <span className="shipping-info">(Including Rs. 300 shipping)</span></p>
-              <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
+  <div className="orders-page">
+  <div className="csu-header">
+    <button onClick={() => navigate('/customer-dashboard')} className="csu-back-btn">
+      ← Back to Dashboard
+    </button>
+    <h1 className="csu-title">Your Orders</h1>
+  </div>
 
-              {/* Product Details */}
-              {order.products.map((product) => (
-                <div key={product.productId} className="order-product">
-                  <img 
-                    src={
-                      product.image?.startsWith('uploads\\') || product.image?.startsWith('uploads/')
-                        ? `http://localhost:5000/${product.image.replace(/\\/g, '/')}`
-                        : product.image
-                    } 
-                    alt={product.title} 
-                    className="product-img"
-                  />
-                  <div className="product-info">
-                    <h4>{product.title}</h4>
-                    <p>Price: Rs. {product.price}</p>
-                    <p>Quantity: {product.quantity}</p>
-                  </div>
-                </div>
-              ))}
+  {loading ? (
+    <p style={{textAlign:'center', color:'white'}}>Loading orders...</p>
+  ) : orders.length === 0 ? (
+    <p className="no-orders-text">
+      You have no orders yet. Place an order now and get started!
+    </p>
+  ) : (
+    <div className="orders-list">
+      {orders.map((order) => (
+        <div key={order._id} className="order-card">
+          <h3>Order #{order._id}</h3>
+          <p>Status: <span className={`status ${order.status.toLowerCase()}`}>{order.status}</span></p>
+          <p>Total: Rs. {order.total + 300} <span className="shipping-info">(Including Rs. 300 shipping)</span></p>
+          <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
 
-              {/* Cancel Button */}
-              {order.status === "Pending" || order.status === "" ? (
-                <button
-                  className="cancel-button"
-                  onClick={() => handleCancel(order._id)}
-                  disabled={cancellingId === order._id}
-                >
-                  {cancellingId === order._id ? "Cancelling..." : "Cancel Order"}
-                </button>
-              ) : null}
+          {order.products.map((product) => (
+            <div key={product.productId} className="order-product">
+              <img 
+                src={
+                  product.image?.startsWith('uploads\\') || product.image?.startsWith('uploads/')
+                    ? `http://localhost:5000/${product.image.replace(/\\/g, '/')}`
+                    : product.image
+                } 
+                alt={product.title} 
+                className="product-img"
+              />
+              <div className="product-info">
+                <h4>{product.title}</h4>
+                <p>Price: Rs. {product.price}</p>
+                <p>Quantity: {product.quantity}</p>
+              </div>
             </div>
           ))}
+
+          {(order.status === "Pending" || order.status === "") && (
+            <button
+              className="cancel-button"
+              onClick={() => handleCancel(order._id)}
+              disabled={cancellingId === order._id}
+            >
+              {cancellingId === order._id ? "Cancelling..." : "Cancel Order"}
+            </button>
+          )}
         </div>
-      )}
-    </Fade>
-  </div>
+      ))}
+    </div>
+  )}
+</div>
+
 );
 }
 

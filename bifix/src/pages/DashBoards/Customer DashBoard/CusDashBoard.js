@@ -77,6 +77,13 @@ function CustomerDashBoard() {
             <div className="cusdashboard-sections">
 
               <div className="cusdashboard-section">
+                <Link to="/customer-scheduling">
+                  <h2>Your Appointments</h2>
+                  <p>View and manage your service appointments</p>
+                </Link>
+              </div>
+
+              <div className="cusdashboard-section">
                 <Link to="/cusorders">
                   <h2>Your Orders</h2>
                   <p>You have no orders yet. Start shopping now!</p>
